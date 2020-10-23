@@ -8,13 +8,13 @@ using InteractiveUtils
 begin
 	using LinearAlgebra
 	function myjacobi(A::Array,b::Array,x::Array)
-	    D=diag(A)
-	    L=tril(A,-1)./D
-	    U=triu(A,1)./D
+	    D=Diagonal(A)
+	    L=inv(D)*tril(A,-1)
+	    U=inv(D)*triu(A,1)
 	    tol=1000*eps()
 	    d=1.0
 	    B=-(L+U)
-	    c=b./D
+	    c=inv(D)*b
 	    q=norm(B,Inf)
 	    # @show q
 	    while d>tol
@@ -122,6 +122,11 @@ x_{k+1}=-Lx_{k+1}-Ux_k+D^{-1}b,$$
 converges towards the solution $x$.
 """
 
+# ╔═╡ 1ea94870-1389-11eb-1619-47636ac1d230
+md"
+Let us see the factorization $A=D(L+I+U)$:
+"
+
 # ╔═╡ 583e17b2-e189-49ae-8c80-0014d53c40c2
 begin
 	import Random
@@ -132,6 +137,21 @@ begin
 	A=A+n*I
 	b=rand(n)
 end
+
+# ╔═╡ 4471d452-1389-11eb-39dc-67039a7b60e9
+A
+
+# ╔═╡ 47576810-1389-11eb-3e05-97dc3c3af6c8
+D=Diagonal(A)
+
+# ╔═╡ 4c917320-1389-11eb-2c06-9dd64ebf12cd
+inv(D)*A
+
+# ╔═╡ 52b234b0-1389-11eb-3d14-717752260ec5
+L=inv(D)*tril(A,-1)
+
+# ╔═╡ 5abe2470-1389-11eb-1a3e-43f6103379d2
+U=inv(D)*triu(A,1)
 
 # ╔═╡ 213d2b7b-b742-4274-9bb0-e029aec6f892
 # Starting vector
@@ -151,14 +171,14 @@ norm(r)/(norm(A)*norm(x))
 
 # ╔═╡ adbd72cb-4dcf-490b-bbcb-1d681358c455
 function mygaussseidel(A::Array,b::Array,x::Array)
-    D=diag(A)
-    L=tril(A,-1)./D
-    U=triu(A,1)./D
+    D=Diagonal(A)
+    L=inv(D)*tril(A,-1)
+    U=inv(D)*triu(A,1)
     tol=1000*eps()
     d=1.0
     # B=-inv(I+L)*U
     B=-(I+L)\U
-    c=(I+L)\(b./D)
+    c=(I+L)\(inv(D)*b)
     # @show norm(U,Inf)
     y=Vector{Float64}(undef,n)
     while d>tol
@@ -206,8 +226,14 @@ __Problem.__ Try to rewrite our functions to allocate less memory.
 # ╔═╡ Cell order:
 # ╟─1a406352-1739-4709-85bc-6ca3ecb19253
 # ╟─610ef7a4-f0a6-42c8-a2cc-1a03cb155a22
-# ╠═5aba7e24-0424-45f2-9716-3b32a71fc610
+# ╟─1ea94870-1389-11eb-1619-47636ac1d230
 # ╠═583e17b2-e189-49ae-8c80-0014d53c40c2
+# ╠═4471d452-1389-11eb-39dc-67039a7b60e9
+# ╠═47576810-1389-11eb-3e05-97dc3c3af6c8
+# ╠═4c917320-1389-11eb-2c06-9dd64ebf12cd
+# ╠═52b234b0-1389-11eb-3d14-717752260ec5
+# ╠═5abe2470-1389-11eb-1a3e-43f6103379d2
+# ╠═5aba7e24-0424-45f2-9716-3b32a71fc610
 # ╠═213d2b7b-b742-4274-9bb0-e029aec6f892
 # ╠═91b52c67-de20-4bfc-9da6-3e04ed73b990
 # ╠═0d07f057-9012-42ad-bf52-31a0f14614df

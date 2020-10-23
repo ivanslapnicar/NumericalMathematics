@@ -27,11 +27,13 @@ From
 $$A=\begin{pmatrix}\alpha & a^T \cr a  & B \end{pmatrix}=
 \begin{pmatrix} \beta & 0 \cr l & I \end{pmatrix}
 \begin{pmatrix} \beta & l^T \cr 0 & C \end{pmatrix}
-=LL^T=\begin{pmatrix} \beta^2 & \beta l^T \cr l\beta & ll^T+ C\end{pmatrix}$$
+=\begin{pmatrix} \beta^2 & \beta l^T \cr l\beta & ll^T+ C\end{pmatrix}$$
 
 it follows
 
 $$\beta=\sqrt{\alpha},\quad l=a\beta^{-1}=a\alpha^{-1/2},\quad C=B-ll^T=B-a\alpha^{-1}a^T.$$
+
+We see that we must have $\alpha>0$. Also, since matrix $B$ is symmetric, so is $C$.
 
 Induction yields the following algorithm:
 
