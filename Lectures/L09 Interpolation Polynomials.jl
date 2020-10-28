@@ -18,8 +18,8 @@ begin
 	n=6
 	x=rand(n)
 	y=rand(n)
-	a=minimum(x)
-	b=maximum(x)
+	x₀=minimum(x)
+	xₙ=maximum(x)
 end
 
 # ╔═╡ 724b6f69-0f5c-4bcf-8363-42f308897070
@@ -32,7 +32,16 @@ $$T_i=(x_i,y_i), \quad i=0,1,\ldots,n,\quad x_i\neq x_j.$$
 
 ## Standard basis
 
-Through given points we can fit __interpolation polynomial__ $p_n(x)$. Coefficients of this polynomial satisfy the system of (linear) equations 
+In the basis
+
+$$1,x,x^2,x^3\ldots,x^n$$
+
+through given points we can fit __interpolation polynomial__ $p_n(x)$,
+
+$$p_n(x)={\displaystyle {\begin{aligned}a_{0}&+a_{1}x+a_{2}x^{2}+a_{3}x^{3}+\cdots +a_{n}x^{n}.\end{aligned}}}$$
+
+
+Coefficients of this polynomial satisfy the system of (linear) equations 
 
 $$p_n(x_i)=y_i, \quad i=0,\ldots,n,$$
 
@@ -95,10 +104,10 @@ begin
 end
 
 # ╔═╡ 99d7f5e3-01c6-46e7-b16f-d42b46214738
-c=A\y
+a=A\y
 
 # ╔═╡ 366d7a3e-ff6e-4bd4-a92d-935bd0d30c35
-p=Polynomial(c)
+p=Polynomial(a)
 
 # ╔═╡ f719cad8-cd2c-4013-9014-1caef03cc575
 # Given points
@@ -111,7 +120,7 @@ plot!(p,label="Polynomial",xlims=(0,1),ylims=(-20,20))
 # ╔═╡ 51668880-461a-45ce-82fe-204543677c75
 begin
 	# Plot the polynomial using our function
-	xx=range(a,stop=b,length=100)
+	xx=range(x₀,stop=xₙ,length=100)
 	pS=p.(xx)
 	plot(xx,pS)
 	scatter!(x,y)
@@ -221,7 +230,7 @@ function mynewton(x,y)
 end  
 
 # ╔═╡ 4976320f-d288-49a3-a1cf-44d2d223b488
-cₙ=mynewton(x,y)
+c=mynewton(x,y)
 
 # ╔═╡ b85666e1-49c3-4f2d-b55b-9c48df27159a
 # Evaluating Newton polynomial through abscissas x and 
@@ -238,7 +247,7 @@ end
 begin
 	pN=Array{Float64}(undef,length(xx))
 	for i=1:length(xx)
-	    pN[i]=evalnewton(cₙ,x,xx[i])
+	    pN[i]=evalnewton(c,x,xx[i])
 	end
 end
 
