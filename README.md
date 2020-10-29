@@ -3,7 +3,7 @@
 Notebooks for the course _Numerical Analysis_ or _Numerical Mathematics_ as a first (introductory) one-semester course which is standardly thought to STEM students.
 
 Notebooks are used in the course
-  _[Numerička analiza](https://nastava.fesb.unist.hr/nastava/predmeti/8183)_ to Master's students of Computer Science at [FESBu](https://www.fesb.unist.hr/).
+  _[Numerical Analysis](https://nastava.fesb.unist.hr/nastava/predmeti/8183)_ to Master's students of Computer Science at [FESBu](https://www.fesb.unist.hr/).
   Notebooks are jointly written by Jesse Barlow from the Penn State University and Ivan Slapničar from University of Split.  
 
 Notebooks are particularly useful in on-line teaching. Notebooks are written in [Julia](https://julialang.org).
@@ -15,8 +15,8 @@ Notebooks can be used in the following ways:
 
 ### In Web Browser
 You can view notebooks using following links:
-* [Jupyter notebook viewer](http://nbviewer.ipython.org/url/github.com/ivanslapnicar/Numericka_analiza/tree/master/src/)
-* [Pluto](https://ivanslapnicar.github.io/Numericka_analiza/)
+* [Jupyter notebook viewer](http://nbviewer.ipython.org/url/github.com/ivanslapnicar/NumericalMathematics/tree/master/src/)
+* [Pluto](https://ivanslapnicar.github.io/NumerickaMathematics/)
 
 ###  Local Installation and Running
 * Download the notebooks (repository) using `git` command:
