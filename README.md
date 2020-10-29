@@ -15,7 +15,7 @@ Notebooks can be used in the following ways:
 
 ### In Web Browser
 You can view notebooks using following links:
-* [Jupyter notebook viewer](http://nbviewer.ipython.org/url/github.com/ivanslapnicar/NumericalMathematics/tree/master/src/)
+* [Jupyter notebook viewer](http://nbviewer.ipython.org/url/github.com/ivanslapnicar/NumericalMathematics/tree/master/Lectures/)
 * [Pluto](https://ivanslapnicar.github.io/NumerickaMathematics/)
 
 ###  Local Installation and Running
