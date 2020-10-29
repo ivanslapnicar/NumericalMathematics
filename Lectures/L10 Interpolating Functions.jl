@@ -12,7 +12,7 @@ end
 
 # ╔═╡ df89a063-e647-4bfe-91eb-167be078ac0e
 md"""
-# Interpolating functions
+# Interpolating Functions
 
 
 Consider a function $f(x)$ on an interval $[a,b]$.
@@ -361,7 +361,7 @@ end
 
 # ╔═╡ bcf8a882-eca1-4739-9789-43a9de96cb94
 begin
-	# Čebiševljeve točke
+	# Chebyshev points
 	xt₃=(a₃+b₃)/2 .+(b₃-a₃)/2*[cos((2*k-1)*pi/(2*n₃)) for k=n₃+1:-1:1]
 	yt₃=f₃(xt₃)
 	At₃=Vandermonde(xt₃)
@@ -376,7 +376,7 @@ end
 xt₃
 
 # ╔═╡ Cell order:
-# ╟─df89a063-e647-4bfe-91eb-167be078ac0e
+# ╠═df89a063-e647-4bfe-91eb-167be078ac0e
 # ╠═6a0417bf-00aa-47db-bf22-5842f1cc736e
 # ╠═c88bd3a2-a46d-4931-b4cf-0b940696aa89
 # ╠═3a599b53-077b-47e7-a1cf-17e15da6aa1f
