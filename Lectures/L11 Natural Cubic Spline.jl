@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.4
+# v0.12.6
 
 using Markdown
 using InteractiveUtils
@@ -56,7 +56,7 @@ $$\begin{aligned}
 C_i(x_{i-1})&=y_{i-1}, \quad &i=1,\ldots,n, \\
 C_i(x_{i})&=y_{i} \quad &i=1,\ldots, n,\\
 C'_i(x_i)&=C'_{i+1}(x_i), \quad &i=1,\ldots,n-1, \\
-C'_i(x_i)&=C'_{i+1}(x_i), \quad &i=1,\ldots,n-1,
+C''_i(x_i)&=C''_{i+1}(x_i), \quad &i=1,\ldots,n-1,
 \end{aligned}$$
 
 which is a system of $4n-2$ equations and $4n$ unknowns (each of $n$ cubic polynomials has 4 coefficients).
@@ -211,8 +211,8 @@ $$f(x)=1-|x-1|,\quad  x\in[0,2].$$
 
 # ╔═╡ 20f11b0f-110e-465a-84d5-0f78e99b14ff
 begin
-	# n₁=5; a=0; b=pi; f(x)=sin.(x)
-	n₁=10; a=0; b=2; f(x)=1 .-abs.(x .-1)
+	n₁=6; a=0; b=pi; f(x)=sin.(x)
+	# n₁=10; a=0; b=2; f(x)=1 .-abs.(x .-1)
 	
 	x₁=collect(range(a,stop=b,length=n₁+1))
 	y₁=f(x₁)

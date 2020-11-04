@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.4
+# v0.12.6
 
 using Markdown
 using InteractiveUtils
@@ -82,7 +82,7 @@ end
 
 # ╔═╡ 3a599b53-077b-47e7-a1cf-17e15da6aa1f
 begin
-	n=6
+	n=7
 	a=0
 	b=pi
 	x=range(a,stop=b,length=n)
@@ -164,7 +164,7 @@ On the interval $[-1,1]$, the polynomial $T_n(x)$ attains values in the interval
 
 
 
-### Primjer
+### Example
 """
 
 # ╔═╡ 45533a9a-caa8-401b-9c22-40e9afb46bbe
@@ -303,7 +303,8 @@ begin
 	# x₂=range(a,stop=b,length=100)
 	p₂=pₜ.(x₀)
 	F₂=f.(x₀)
-	plot(x₀,[p₂ F₂],label=["Polynomial" "Function"])
+	scatter(xₜ,yₜ,label="Chebyshev points")
+	plot!(x₀,[p₂ F₂],label=["Polynomial" "Function"])
 end
 
 # ╔═╡ e147f5fa-6826-4b21-80a4-1fbd14593c8c
@@ -335,9 +336,9 @@ __Remark.__ For the sake of simplicity, we have used the least accurate method o
 Let us look at another interesting example (see [Numerička matematika, p. 24](http://www.mathos.unios.hr/pim/Materijali/Num.pdf)). Let us interpolate the function 
 
 $$
-f(x)=1-|x-1|,\quad x\in[0,2]$$
-
-using polynomials of degree 10.
+f(x)=1-|x-1|,\quad x\in[0,2]$$.
+ 
+using polynomials of degree 10. Large deviations of interpolation polynomial from the function on the edges are called __Runge's phenomenon__. The phenomenon dissapears when the function is interpolated using Chebyshev points.
 """
 
 # ╔═╡ c6b0381f-dd60-42f3-8f6a-df8771bbf3c6
@@ -376,7 +377,7 @@ end
 xt₃
 
 # ╔═╡ Cell order:
-# ╠═df89a063-e647-4bfe-91eb-167be078ac0e
+# ╟─df89a063-e647-4bfe-91eb-167be078ac0e
 # ╠═6a0417bf-00aa-47db-bf22-5842f1cc736e
 # ╠═c88bd3a2-a46d-4931-b4cf-0b940696aa89
 # ╠═3a599b53-077b-47e7-a1cf-17e15da6aa1f
