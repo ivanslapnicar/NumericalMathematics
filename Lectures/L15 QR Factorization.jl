@@ -1,28 +1,14 @@
 ### A Pluto.jl notebook ###
-# v0.12.7
+# v0.12.8
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 24c9f0ba-6e18-4362-840b-1a3581032ff5
+# ╔═╡ b897b490-2422-11eb-29f2-c1b07eae9d6e
 begin
 	using LinearAlgebra
-	function GramSchmidtQR(A::Array)
-	    m,n=size(A)
-	    R=zeros(n,n)
-	    Q=Array{Float64}(undef,m,n)
-	    R[1,1]=norm(A[:,1])
-	    Q[:,1]=A[:,1]/R[1,1]
-	    for k=2:n
-	        for i=1:k-1
-	            R[i,k]=Q[:,i]⋅A[:,k]
-	        end
-	        t=A[:,k]-sum([R[i,k]*Q[:,i] for i=1:k-1])
-	        R[k,k]=norm(t)
-	        Q[:,k]=t/R[k,k]
-	    end
-	    Q,R
-	end 
+	import Random
+	Random.seed!(123)
 end
 
 # ╔═╡ fb66b990-4511-476f-8e77-87aa9c265041
@@ -114,12 +100,26 @@ q_{:3}&=t\frac{1}{r_{33}}.
 Induction yields __Gram-Schmidt orthogonalization procedure__.
 """
 
+# ╔═╡ 24c9f0ba-6e18-4362-840b-1a3581032ff5
+function GramSchmidtQR(A::Array)
+    m,n=size(A)
+    R=zeros(n,n)
+    Q=Array{Float64}(undef,m,n)
+    R[1,1]=norm(A[:,1])
+    Q[:,1]=A[:,1]/R[1,1]
+    for k=2:n
+        for i=1:k-1
+            R[i,k]=Q[:,i]⋅A[:,k]
+        end
+        t=A[:,k]-sum([R[i,k]*Q[:,i] for i=1:k-1])
+        R[k,k]=norm(t)
+        Q[:,k]=t/R[k,k]
+    end
+    return Q,R
+end 
+
 # ╔═╡ b6ee2c00-78e7-4d22-a851-d22c4a4946bc
-begin
-	import Random
-	Random.seed!(123)
-	A=rand(8,5)
-end
+A=rand(8,5)
 
 # ╔═╡ b8994eec-d651-4921-b1a3-184a029e83b7
 Q,R=GramSchmidtQR(A)
@@ -160,7 +160,7 @@ v=\begin{bmatrix}
 x_1\pm \|x\|_2 \\ x_2 \\ x_3 \\ \vdots \\ x_m
 \end{bmatrix}.$$ 
 
-__Householder reflector__ $H$ is __symmatric__ and __orthogonal__ matrix (__prove it!__). Depending on the choice of sign in the definition of the vector $v$, we have
+__Householder reflector__ $H$ is __symmetric__ and __orthogonal__ matrix (__prove it!__). Depending on the choice of sign in the definition of the vector $v$, we have
 
 $$
 r=\begin{bmatrix} \mp \|x\| \\ 0 \\ \vdots \\ 0
@@ -325,6 +325,7 @@ $$
 
 # ╔═╡ Cell order:
 # ╟─fb66b990-4511-476f-8e77-87aa9c265041
+# ╠═b897b490-2422-11eb-29f2-c1b07eae9d6e
 # ╠═24c9f0ba-6e18-4362-840b-1a3581032ff5
 # ╠═b6ee2c00-78e7-4d22-a851-d22c4a4946bc
 # ╠═b8994eec-d651-4921-b1a3-184a029e83b7

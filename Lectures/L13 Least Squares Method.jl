@@ -1,8 +1,14 @@
 ### A Pluto.jl notebook ###
-# v0.12.7
+# v0.12.8
 
 using Markdown
 using InteractiveUtils
+
+# ╔═╡ bb659710-2421-11eb-25d4-af6542e470eb
+begin
+	import Random
+	using LinearAlgebra
+end
 
 # ╔═╡ fcc44b72-e162-4351-8601-f7402e2ed694
 md"""
@@ -52,7 +58,7 @@ Q(x+h)&=(x^T+h^T)A^TA(x+h)-2(x^T+h^T)A^Tb+b^Tb \\
 
 so the minimum is indeed attained at $x$.
 
-This solution is unique since $Q(x)=Q(y)$ implies $\|Ax\|_2=0$, so either $h=0$ or $\mathop{\mathrm{rang}} A<n$, which is a contradiction, and the theorem is proved.
+This solution is unique since $Q(x)=Q(y)$ implies $\|Ah\|_2=0$, so either $h=0$ or $\mathop{\mathrm{rang}} A<n$, which is a contradiction, and the theorem is proved.
 "
 
 # ╔═╡ b4ddcb00-1eaa-11eb-23c6-d15643cd207a
@@ -101,11 +107,8 @@ b=[0//1,1,0,1,0]
 x=(A'*A)\(A'*b)
 
 # ╔═╡ 49874317-1bb6-4882-ae83-4644094bf87e
-begin
-	# relative residual
-	using LinearAlgebra
-	q=sqrt(norm(A*x-b)/norm(b))
-end
+# Relative residual	
+sqrt(norm(A*x-b)/norm(b))
 
 # ╔═╡ 1052a0b7-748d-46d5-a5fb-9d3b1ba2b65e
 md"
@@ -126,7 +129,6 @@ md"""
 
 # ╔═╡ d92d5bed-8689-481f-b56f-d46fa4f835c1
 begin
-	import Random
 	Random.seed!(123)
 	A₁=rand(20,10)
 	b₁=rand(20);
@@ -228,6 +230,7 @@ Therefore, the relative error of the solution obtained using normal equation dep
 # ╟─a062b872-1eaa-11eb-005f-9d66fad5ee28
 # ╟─a6fc5380-1eaa-11eb-11a9-3544f456255c
 # ╟─b4ddcb00-1eaa-11eb-23c6-d15643cd207a
+# ╠═bb659710-2421-11eb-25d4-af6542e470eb
 # ╟─5c65704d-666f-4f15-bc8f-7741457f9af0
 # ╠═365fc919-988d-4a1b-b42c-b8ab6931f860
 # ╠═dea071d2-66b7-44f0-a75c-e0c67e574561

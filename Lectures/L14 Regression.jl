@@ -1,11 +1,14 @@
 ### A Pluto.jl notebook ###
-# v0.12.7
+# v0.12.8
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ cda9b377-09e7-4a7a-8f84-f50de595a7c0
-using Plots
+# ╔═╡ 25c68fb0-2422-11eb-3214-6fbc147f322d
+begin
+	using LinearAlgebra
+	using Plots
+end
 
 # ╔═╡ ec0b9159-1c36-4112-8ce7-ec69c6709861
 md"""
@@ -51,17 +54,14 @@ and compute the relative residual.
 
 # ╔═╡ 64ebb9c6-9c26-42bb-9141-45f5efab3d36
 begin
-	x=collect([1,2,4,6,7])
-	y=collect([1,3,2,4,3])
+	x=[1,2,4,6,7]
+	y=[1,3,2,4,3]
 	A=[x ones(Int,length(x))]
 end
 
 # ╔═╡ 5a57b1b6-eabb-46be-9986-1c48dcaf1785
-begin
-	# Coefficients of the regression line
-	using LinearAlgebra
-	(k,l)=A\y
-end
+# Coefficients of the regression line
+(k,l)=A\y
 
 # ╔═╡ 748be150-4eee-4c29-93fe-bdc1058cb3e8
 begin
@@ -94,8 +94,8 @@ $$
 
 # ╔═╡ a786bb3e-e442-4deb-a7ce-ed25fbf6bd75
 begin
-	x₁=collect([1,2,4,5,6])
-	y₁=collect([0,1,4,8,14])
+	x₁=[1,2,4,5,6]
+	y₁=[0,1,4,8,14]
 	A₁=[x₁.^2 x₁ ones(Int,length(x₁))]
 end
 
@@ -114,7 +114,7 @@ begin
 end
 
 # ╔═╡ 65f7a8eb-df16-4a01-91ff-0214ac092e61
-# Kvaliteta prilagodbe
+# Relative residual
 sqrt(norm(A₁*[a;b;c]-y₁)/norm(y₁))
 
 # ╔═╡ b6166388-1d3b-4dce-969a-b7fce38426c1
@@ -157,8 +157,8 @@ __Not all points lie on the same curve__, so system is not solvable, and we are 
 # ╔═╡ d86cd66b-5e87-4f06-b991-a9c734e5b9fb
 begin
 	nₚ=9
-	t=collect([1750,1800,1850,1900,1950,1999,2008,2010,2012])
-	P=collect([791,978,1262,1650,2521,5978,6707,6896,7052])
+	t=[1750,1800,1850,1900,1950,1999,2008,2010,2012]
+	P=[791,978,1262,1650,2521,5978,6707,6896,7052]
 	Aₚ=[t ones(Int,length(t))]
 	(kₚ,C)=Aₚ\log.(P)
 end
@@ -203,10 +203,10 @@ P₂(2050)
 
 # ╔═╡ Cell order:
 # ╟─ec0b9159-1c36-4112-8ce7-ec69c6709861
-# ╠═108def07-d919-498c-82c2-7c43c7fd27f3
+# ╟─108def07-d919-498c-82c2-7c43c7fd27f3
+# ╠═25c68fb0-2422-11eb-3214-6fbc147f322d
 # ╠═64ebb9c6-9c26-42bb-9141-45f5efab3d36
 # ╠═5a57b1b6-eabb-46be-9986-1c48dcaf1785
-# ╠═cda9b377-09e7-4a7a-8f84-f50de595a7c0
 # ╠═748be150-4eee-4c29-93fe-bdc1058cb3e8
 # ╠═1b894260-f180-4407-8c68-ad93ad40c55b
 # ╟─986e6cb9-4a13-49e2-9891-29020262d002
