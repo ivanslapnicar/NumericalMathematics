@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.7
+# v0.12.10
 
 using Markdown
 using InteractiveUtils
@@ -431,7 +431,8 @@ begin
 	k=2
 	# Center
 	Random.seed!(541)
-	center=[rand(-5:5);rand(-5:5)]
+	# center=[rand(-5:5),rand(-5:5)]
+	center=[0,0]
 	# Radii
 	radii=randperm(10)[1:k]
 	# Number of points in circles
@@ -505,7 +506,7 @@ This is the same partitioning as obtained by `kmeans()`. Let us try Gaussian ker
 
 # ╔═╡ bb9d4d98-3aff-439e-b8a3-8347cf345839
 begin
-	σ=1.0 # 0.1
+	σ=0.7 # 0.1
 	W₂=exp.(-pairwise(SqEuclidean(),X)/σ^2)-I
 	L₂=Diagonal(vec(sum(W₂,dims=2)))-W₂
 	E₂=eigs(L₂,nev=2,which=:SM, v0=ones(m))
