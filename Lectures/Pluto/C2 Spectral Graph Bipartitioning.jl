@@ -270,7 +270,7 @@ md"""
 
 Consider the following partitions (all edges have unit weights):
 
- $(load(\"cut2.png\"))
+ $(load(\"../files/cut2.png\"))
 
 Left partition is $\pi$, right partition is $\pi'$.
 

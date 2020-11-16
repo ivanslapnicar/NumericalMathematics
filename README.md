@@ -3,7 +3,7 @@
 Notebooks for the course _Numerical Analysis_ or _Numerical Mathematics_ as a first (introductory) one-semester course which is standardly thought to STEM students.
 
 Notebooks are used in the course
-  _[Numerical Analysis](https://nastava.fesb.unist.hr/nastava/predmeti/8183)_ to Master's students of Computer Science at [FESBu](https://www.fesb.unist.hr/).
+  _[Numerical Analysis](https://nastava.fesb.unist.hr/nastava/predmeti/8183)_ to Master's students of Computer Science at [FESB](https://www.fesb.unist.hr/).
   Notebooks are jointly written by Jesse Barlow from the Penn State University and Ivan Slapničar from University of Split.  
 
 Notebooks are particularly useful in on-line teaching. Notebooks are written in [Julia](https://julialang.org).
@@ -43,4 +43,4 @@ and Pluto notebook server (for notebooks with extension `.jl`) is started with c
 > Pluto.run()
 ```
 
-You can now run notebooks which are located in the directory `NumericalMathematics/Lectures`
+You can now run notebooks which are located in the directories `NumericalMathematics/Lectures/Jupyter/` and `NumericalMathematics/Lectures/Pluto/`.

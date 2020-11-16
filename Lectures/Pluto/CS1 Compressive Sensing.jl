@@ -427,7 +427,7 @@ TestImages.remotefiles
 
 # ╔═╡ 01fff994-6b74-45e9-ab65-b52c6339fe45
 img=testimage("lena_gray_256.tif")
-# img=map(Gray,load("./files/RDuarte.png"))
+# img=map(Gray,load("../files/RDuarte.png"))
 
 # ╔═╡ 9c0a1f14-f63d-4387-905d-809d9ffbf63a
 typeof(img)

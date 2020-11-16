@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.7
+# v0.12.10
 
 using Markdown
 using InteractiveUtils
@@ -129,7 +129,7 @@ md"
 2. While $c<k$ repeat
 
    - compute bipartitions of each of the subpartitions of $(T,D)$,
-   - among all $(c+1)$-subpartitions, choose the one with the smallest $pcut(\pi_{c+1})$ or $ncut(\pi_{c+1})$, respectively.
+   - among all $(c+1)$-subpartitions, choose the one with the smallest $\mathop{\mathrm{pcut}}(\pi_{c+1})$ or $\mathop{\mathrm{ncut}}(\pi_{c+1})$, respectively.
    - Set $c=c+1$
 
 3. Stop

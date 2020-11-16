@@ -33,7 +33,7 @@ Here is an example of image compression.
 """
 
 # ╔═╡ 3d91d5e7-e134-464a-a0a4-032a28254715
-img=load("P8040001a.jpg")
+img=load("../files/P8040001a.jpg")
 
 # ╔═╡ 464d999f-f530-4cc0-b9c8-fa094d8a138c
 # Description of data

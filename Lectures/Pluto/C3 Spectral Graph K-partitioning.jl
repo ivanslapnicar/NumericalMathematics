@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.7
+# v0.12.10
 
 using Markdown
 using InteractiveUtils
@@ -219,7 +219,7 @@ begin
 	k=4
 	Random.seed!(541)
 	# Center
-	center=[0;0]
+	center=[0,0]
 	# Radii
 	radii=Random.randperm(10)[1:k]
 	# Number of points in circles
@@ -249,7 +249,7 @@ end
 begin
 	S=pairwise(SqEuclidean(),X,dims=2)
 	# S=pairwise(Cityblock(),X)
-	β=100
+	β=60
 	W₁=exp.(-β*S);
 end
 
