@@ -14,8 +14,9 @@ Materials are written as [Jupyter](http://jupyter.org/) notebooks and/or [Pluto]
 Notebooks can be used in the following ways:
 
 ### In Web Browser
+
 You can view notebooks using following links:
-* [Jupyter notebook viewer](http://nbviewer.ipython.org/url/github.com/ivanslapnicar/NumericalMathematics/tree/master/Lectures/)
+* [Jupyter notebook viewer](http://nbviewer.ipython.org/url/github.com/ivanslapnicar/NumericalMathematics/tree/master/Lectures/Jupyter/)
 * [Pluto](https://ivanslapnicar.github.io/NumericalMathematics/)
 
 ###  Local Installation and Running
