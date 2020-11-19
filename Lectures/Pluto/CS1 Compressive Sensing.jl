@@ -325,8 +325,9 @@ where $x$ is the original signal.
 
 4. If $k$ is known in advance, $A$ satisfies RIP with $\delta_{3k}<1/15$, and $\|A\|_2<1$, the $k$-sparse aproximation of $x$ can be computed
 by the __Iterative Hard Thresholding__ algorithm:
-    1. __Initialization:__ $x=0$.
-    2. __Iteration:__ repeat until convergence $x=H_k(x+A^T(b-Ax))$.
+
+1. __Initialization:__ $x=0$.
+2. __Iteration:__ repeat until convergence $x=H_k(x+A^T(b-Ax))$.
 """
 
 # ╔═╡ 022cecdf-945c-4fa9-a26e-a13b11068ca7

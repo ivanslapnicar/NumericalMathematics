@@ -211,6 +211,9 @@ norm(L-Iᵧ*Iᵧ')
 # Facts 2 and 7
 issymmetric(L), eigs(L)[1], 2*maximum(diag(L))
 
+# ╔═╡ 7192f7d0-28b9-11eb-28dd-8db0019504ca
+eigen(Matrix(L))
+
 # ╔═╡ e5890dca-368f-437e-bc45-6a395714dae2
 # Fact 3
 L*ones(n)
@@ -593,6 +596,7 @@ _There is no guarantee for optimality of this algorithm. Clearly, the optimal $k
 # ╟─a9ba64a6-bd17-4b86-acb4-e7c7d8f87dc1
 # ╠═6a6f5db5-7dd4-4a26-ac1a-ef3ca3a5d6be
 # ╠═e11bc23d-03e2-4780-9488-93f0adfc2fcb
+# ╠═7192f7d0-28b9-11eb-28dd-8db0019504ca
 # ╠═e5890dca-368f-437e-bc45-6a395714dae2
 # ╠═61a978a7-b2d2-43e7-b3f7-95bf4c4f54b9
 # ╠═da7f85ed-73b0-44b9-a97f-4a8ed5e9a1d1

@@ -170,9 +170,6 @@ begin
 	centers, sizes
 end
 
-# ╔═╡ 573316a0-1f76-11eb-2865-bddb3aa2370a
-length(X[1])
-
 # ╔═╡ 99aba610-1f75-11eb-1b5e-2f2ee211ed7f
 X
 
@@ -322,7 +319,6 @@ end
 # ╟─48914840-1f69-11eb-30a9-3943767bc261
 # ╟─2b76953c-edf2-41cf-9d75-7efb2d6a58f1
 # ╠═d0233ece-1f69-11eb-3da1-43b8ddc9fbe1
-# ╠═573316a0-1f76-11eb-2865-bddb3aa2370a
 # ╠═86d55833-ee5a-4f73-b0bf-e8b6e6d65617
 # ╟─e15fa4cf-930a-4065-b839-c2ec944afcfa
 # ╠═bacdc83d-1acd-46df-8d06-3e0279978a33
