@@ -72,7 +72,7 @@ Let $A\in\mathbb{R}^{m\times n}$ with $m<n$, $x\in\mathbb{R}^n$ and $b\in\mathbb
 
 The system $Ax=b$ is __underdetermined__.
 
-$\|x\|_0$ is the number of nonzero entries of $x$ (__a quasi-norm__).
+ $\|x\|_0$ is the number of nonzero entries of $x$ (__a quasi-norm__).
 
 A matrix $A$ satisfies the __restricted isometry property__ (RIP) of order $k$ with constant $\delta_k\in(0,1)$ 
 if 
@@ -323,11 +323,10 @@ where $x$ is the original signal.
 
 3. The $l_1$ problem is a convex programming problem and can be efficiently solved. The solution methods are beyond the scope of this course. 
 
-4. If $k$ is known in advance, $A$ satisfies RIP with $\delta_{3k}<1/15$, and $\|A\|_2<1$, the $k$-sparse aproximation of $x$ can be computed
-by the __Iterative Hard Thresholding__ algorithm:
+4. If $k$ is known in advance, $A$ satisfies RIP with $\delta_{3k}<1/15$, and $\|A\|_2<1$, the $k$-sparse aproximation of $x$ can be computed by the __Iterative Hard Thresholding__ algorithm:
 
-1. __Initialization:__ $x=0$.
-2. __Iteration:__ repeat until convergence $x=H_k(x+A^T(b-Ax))$.
+   1. __Initialization:__ $x=0$.
+   2. __Iteration:__ repeat until convergence $x=H_k(x+A^T(b-Ax))$.
 """
 
 # ╔═╡ 022cecdf-945c-4fa9-a26e-a13b11068ca7
