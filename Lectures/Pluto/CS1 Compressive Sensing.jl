@@ -270,11 +270,17 @@ begin
 	# Generate random sparse vector
 	xₛ=sprand(n,k/n)
 	# Generate sampling matrix, "Random", "Normal", "Bernoulli", "Fourier"
-	kind="Fourier"
+	kind="Random"
 	Aₛ=SamplingMatrix(m,n,kind)
 	# Check incoherence
 	maximum(abs,Aₛ'*Aₛ-I),nnz(xₛ)
 end
+
+# ╔═╡ 5d2c0100-2a4f-11eb-333c-3b9c294f0797
+Aₛ'*Aₛ
+
+# ╔═╡ 7a0df490-2a4f-11eb-1c7c-03989000930b
+nnz(xₛ)
 
 # ╔═╡ c17eac6a-1ab5-406a-b063-95c91dd81e46
 # Sample x
@@ -285,6 +291,9 @@ xᵣ=recovery(Aₛ,bₛ);
 
 # ╔═╡ b59c4990-234b-11eb-2b2c-91b62567688f
 xᵣ
+
+# ╔═╡ a3e6d890-2a4f-11eb-26a0-1b13eec2dbf2
+norm(xₛ-xᵣ)
 
 # ╔═╡ 372b7d99-b6e8-4656-aaa5-a5c489105e80
 begin
@@ -436,7 +445,7 @@ typeof(img)
 size(img)
 
 # ╔═╡ a37a00b6-608b-4d99-be2c-a91cb1fa9bcd
-show(img[1,1])
+img[1,1]
 
 # ╔═╡ 5dd3690b-6957-49f2-95db-4d8ab223acf7
 begin
@@ -555,9 +564,12 @@ size(bᵢ)
 # ╠═4c96769b-ec49-4134-91e3-df77545fcc61
 # ╠═9e02f055-6f3d-42f8-940e-f3bd944942fd
 # ╠═9d5e6751-9e3e-4b0a-8fd3-35a43e079ee7
+# ╠═5d2c0100-2a4f-11eb-333c-3b9c294f0797
+# ╠═7a0df490-2a4f-11eb-1c7c-03989000930b
 # ╠═c17eac6a-1ab5-406a-b063-95c91dd81e46
 # ╠═acab203d-f158-4460-9452-7037895559bd
 # ╠═b59c4990-234b-11eb-2b2c-91b62567688f
+# ╠═a3e6d890-2a4f-11eb-26a0-1b13eec2dbf2
 # ╠═372b7d99-b6e8-4656-aaa5-a5c489105e80
 # ╟─8825ba12-98ff-48c9-b33a-a1d1c0da2eb3
 # ╠═022cecdf-945c-4fa9-a26e-a13b11068ca7
