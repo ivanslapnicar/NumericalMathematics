@@ -1,2 +1,2 @@
-*.jl linguist-language=Julia (Pluto)
-*.ipynb linguist-language=Jupyter (Julia)
+*.jl linguist-language=Julia(Pluto)
+*.ipynb linguist-language=Jupyter(Julia)
