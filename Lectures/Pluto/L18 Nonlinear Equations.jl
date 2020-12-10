@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.10
+# v0.12.16
 
 using Markdown
 using InteractiveUtils
@@ -263,9 +263,6 @@ To estimate derivative we can use the package `Calculus.jl` which approximates d
 # ╔═╡ 21495df3-1163-4d7f-afce-ad3600a5411a
 varinfo(ForwardDiff.ForwardDiff)
 
-# ╔═╡ 00b34180-267c-11eb-2064-055cf350457c
-
-
 # ╔═╡ 492a1939-ea1e-4912-b8d3-0330624f0ffd
 md"""
 ### Example
@@ -316,7 +313,7 @@ scatter!([Iteration(φ,-0.5)[1],Iteration(Ψ,1.0)[1]],[0,0],label="Zeros")
 md"""
 ### Square root of 2
 
-Let us approximate $\sqrt(2)$, that is, find the positive solution of the equation 
+Let us approximate $\sqrt{2}$, that is, find the positive solution of the equation 
 
 $$
 x^2-2=0.$$
@@ -347,6 +344,20 @@ end
 
 # ╔═╡ 25640f91-4b47-4bcf-b360-499541077c80
 Iteration(φ₁,1.0,1e-15), sqrt(2)
+
+# ╔═╡ 96619f40-3a10-11eb-1529-29d9aa539c03
+# Manual computation using rational numbers
+begin
+	y=1//1
+	y1=(y+2//y)//2
+	y2=(y1+2//y1)//2
+	y3=(y2+2//y2)//2
+	y4=(y3+2//y3)//2
+	y5=(y4+2//y4)//2
+end
+
+# ╔═╡ bc84a732-3a10-11eb-11ed-1b1abc4f530b
+y5-sqrt(2)
 
 # ╔═╡ cf6ff8ea-2c1e-442a-bfc6-5eac4f7269dd
 begin
@@ -539,7 +550,6 @@ Secant(f₆,-1,0), Secant(f₆,1,2)
 # ╟─5cc494f2-a789-4455-9ac9-925428d274fe
 # ╠═a2c79625-bb3d-4cb3-972c-14fa1763d1e6
 # ╠═21495df3-1163-4d7f-afce-ad3600a5411a
-# ╠═00b34180-267c-11eb-2064-055cf350457c
 # ╟─492a1939-ea1e-4912-b8d3-0330624f0ffd
 # ╠═7dab9934-414d-44dd-94b5-96a849184687
 # ╠═1e5be7af-8236-4a8c-ab10-4f988350bd6a
@@ -551,6 +561,8 @@ Secant(f₆,-1,0), Secant(f₆,1,2)
 # ╟─5dee83f3-2171-478a-b811-04c3ccef1a0e
 # ╠═b27404ef-ac18-4dce-804c-07255ab001c2
 # ╠═25640f91-4b47-4bcf-b360-499541077c80
+# ╠═96619f40-3a10-11eb-1529-29d9aa539c03
+# ╠═bc84a732-3a10-11eb-11ed-1b1abc4f530b
 # ╠═cf6ff8ea-2c1e-442a-bfc6-5eac4f7269dd
 # ╠═4fa06267-97f2-409f-8025-c160362014a9
 # ╠═46bebd7f-69ba-402f-91aa-6ad864add60b
