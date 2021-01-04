@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.8
+# v0.12.18
 
 using Markdown
 using InteractiveUtils
@@ -21,12 +21,13 @@ $$(x_i,y_i),\quad i=1,2,\ldots, m,$$
 where $m>n$, so that the __norm of deviations is minimal__:
 
 $$
-\| f(x_i)-y_i\|_{1,2,\infty}\to \min.$$
+\| f(\mathbf{x})-\mathbf{y}\|_{1,2,\infty}\to \min,\quad f(\mathbf{x})=\begin{pmatrix}f(x_1) \\ f(x_2) \\ \vdots \\ f(x_m)\end{pmatrix},\quad
+\mathbf{y}=\begin{pmatrix}y_1 \\ y_2 \\ \vdots \\ y_m\end{pmatrix}.$$
 
 Regression in the __least squares sense__ is
 
 $$
-\| f(x_i)-y_i\|_{2}\to \min.$$
+\| f(\mathbf{x})-\mathbf{y}\|_{2}\to \min.$$
 
 When $f$ is a line,
 
