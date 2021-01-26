@@ -178,7 +178,7 @@ solution₁(1)-yy₁[end]
 
 # ╔═╡ 12ceb8e5-f976-4639-9175-047e84321c85
 md"""
-### Primjer 2
+### Example 2
 
 The solution of the problem
 
