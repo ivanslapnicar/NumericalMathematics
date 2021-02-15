@@ -24,8 +24,8 @@ You can view notebooks using following links:
 ```
 git clone https://github.com/ivanslapnicar/NumericalMathematics.git
 ```
-If you are unfamiliar with `git` tool, you can taka a look at GitHub's [help pages](https://help.github.com/articles/set-up-git/) or you can download repository directly as zip file.
-* Intall [Julia](https://julialang.org/downloads/). In Julia terminal run the commands
+If you are unfamiliar with `git` tool, you can take a look at GitHub's [help pages](https://help.github.com/articles/set-up-git/) or you can download repository directly as zip file.
+* Install [Julia](https://julialang.org/downloads/). In Julia terminal run the commands
 ```
 > using Pkg
 > Pkg.add("IJulia")
