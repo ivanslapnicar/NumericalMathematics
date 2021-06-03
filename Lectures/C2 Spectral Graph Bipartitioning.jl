@@ -15,8 +15,7 @@ begin
 		Pkg.PackageSpec(name="SparseArrays"),
 		Pkg.PackageSpec(name="Plots"),
 		Pkg.PackageSpec(name="Distances"),
-		Pkg.PackageSpec(name="Arpack"),
-		Pkg.PackageSpec(name="Images")
+		Pkg.PackageSpec(name="Arpack")
     ])
 end
 
@@ -24,7 +23,7 @@ end
 begin
 	# Necessary packages
 	using PlutoUI, Random, LinearAlgebra, LightGraphs, GraphPlot
-	using SparseArrays, Plots, Distances, Arpack, Images
+	using SparseArrays, Plots, Distances, Arpack
 end
 
 # ╔═╡ 7ef4b0b3-9d0a-4356-bd16-14487f14e0ab
@@ -281,7 +280,8 @@ md"""
 
 Consider the following partitions (all edges have unit weights):
 
- $(load(\"./files/cut2.png\"))
+![](https://ivanslapnicar.github.io/NumericalMathematics/files/cut2.png)
+
 
 Left partition is $\pi$, right partition is $\pi'$.
 
@@ -557,9 +557,6 @@ If we want to cluster vertices of graph $G=(V,E)$ into $k$ clusters, we can appl
 There is no guarantee for optimality of this algorithm. Clearly, the optimal $k$-partiton may be a subpartition of one of the discarded partitions.
 """
 
-# ╔═╡ f3eb8ad4-55a8-4e76-a581-07f9a7cc75f7
-
-
 # ╔═╡ Cell order:
 # ╠═77c3ba33-a12d-4e48-bbeb-727166771e63
 # ╠═0cd92d78-1da6-435b-ad8e-60af29502e1d
@@ -606,4 +603,3 @@ There is no guarantee for optimality of this algorithm. Clearly, the optimal $k$
 # ╟─e004e4bf-ca04-4b41-947b-9f1ecd058abb
 # ╠═bb9d4d98-3aff-439e-b8a3-8347cf345839
 # ╟─012fa54a-5171-4980-a0ba-474a22c25981
-# ╠═f3eb8ad4-55a8-4e76-a581-07f9a7cc75f7
