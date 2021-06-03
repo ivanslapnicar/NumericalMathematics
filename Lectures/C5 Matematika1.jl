@@ -37,6 +37,11 @@ Package `TextAnalysis.jl` has some needed functionality.
 
 # ╔═╡ ac9a53ff-6c20-4ae5-82c9-ce633dd0233a
 # Create directory
+if !isdir("files")
+	mkdir("files")
+end
+
+# ╔═╡ ecf03ccc-288c-4e0c-b376-5277ad53fd1a
 if !isdir("files/Mat1")
 	mkdir("files/Mat1")
 end
@@ -159,6 +164,7 @@ scatter(outU.assignments,xlabel="Documents",ylabel="Clusters",legend=false)
 # ╠═dc81344e-7d8c-4ce2-91b0-535f8295d112
 # ╟─2abb6d30-2079-11eb-2d32-47713a476605
 # ╠═ac9a53ff-6c20-4ae5-82c9-ce633dd0233a
+# ╠═ecf03ccc-288c-4e0c-b376-5277ad53fd1a
 # ╠═621ed340-2072-11eb-1742-3b4d0b042fb9
 # ╠═30498550-2071-11eb-0f6b-33372a37909e
 # ╟─b59d17a0-2100-11eb-27de-c3196ecc1268
