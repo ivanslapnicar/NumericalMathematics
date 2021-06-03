@@ -21,7 +21,7 @@ You can run the notebooks in two ways:
 1. Go to [https://ivanslapnicar.github.io/NumericalMathematics/](https://ivanslapnicar.github.io/NumericalMathematics/) and choose the desired notebook.
 2. Press `Edit or run this notebook` button and choose `binder`. This will read all the necessary packages and start the notebook (within several minutes).
 
-### Running on your comoputer
+### Running on your computer
 
 1. Clone the entire repository using `git` command:
 ```
