@@ -15,6 +15,7 @@ begin
 		Pkg.PackageSpec(name="GraphPlot"),
 		Pkg.PackageSpec(name="Clustering"),
 		Pkg.PackageSpec(name="SparseArrays"),
+		Pkg.PackageSpec(name="Arpack"),
 		Pkg.PackageSpec(name="Plots")
     ])
 end
@@ -23,11 +24,8 @@ end
 begin
 	# Packages
 	using PlutoUI, LightGraphs, GraphPlot, Clustering, SparseArrays
-	using LinearAlgebra, Plots, Random
+	using LinearAlgebra, Arpack, Plots, Random
 end
-
-# ╔═╡ 9ab98160-3e37-44c3-b219-a3e1bf95fd68
-using Arpack
 
 # ╔═╡ 0f6cd296-6cb8-4a9d-a21f-02b689dfe4e9
 TableOfContents(title="📚 Table of Contents", aside=true)
@@ -228,7 +226,7 @@ begin
 	Pts=Array{Any}(undef,3)
 	Random.seed!(421)
 	for i=1:3
-	    # Generate sparse random
+	    # Generate sparse random, not with sprandn
 	    Pts[i]=sprand(m[i],n[i],density[i])
 	end
 	B=blockdiag(Pts[1],Pts[2],Pts[3])
@@ -334,7 +332,6 @@ end
 # ╟─5f27f1a2-80de-41d1-b1e2-da3a99493217
 # ╠═7cd3af86-f459-4e4b-8e35-c29bc6966eed
 # ╠═e1149b05-d594-4d75-ae56-1ce18bd0f60d
-# ╠═9ab98160-3e37-44c3-b219-a3e1bf95fd68
 # ╠═b95d4070-c127-4db0-987b-5fc17421b667
 # ╠═57d472c1-548d-4678-b884-85f863771aa7
 # ╠═4806378b-63cb-445a-8c71-583458fce846
