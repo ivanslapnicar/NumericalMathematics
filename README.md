@@ -1,46 +1,39 @@
 # NumericalMathematics
 
-Notebooks for the course _Numerical Analysis_ or _Numerical Mathematics_ as a first (introductory) one-semester course which is standardly thought to STEM students.
+Lecture notebooks for the course _Numerical Analysis_ or _Numerical Mathematics_ as a first (introductory) one-semester course which is standardly thought to STEM students.
 
 Notebooks are used in the course
   _[Numerical Analysis](https://nastava.fesb.unist.hr/nastava/predmeti/8183)_ to Master's students of Computer Science at [FESB](https://www.fesb.unist.hr/).
   Notebooks are jointly written by Jesse Barlow from the Penn State University and Ivan Slapničar from University of Split.  
 
-Notebooks are particularly useful in on-line teaching. Notebooks are written in [Julia](https://julialang.org).
+Notebooks are particularly useful in on-line teaching. Notebooks are written in [Julia](https://julialang.org) using [Pluto.jl](https://github.com/fonsp/Pluto.jl).
 
-## Usage
+## Viewing the notebooks
 
-Materials are written as [Jupyter](http://jupyter.org/) notebooks and/or [Pluto](https://github.com/fonsp/Pluto.jl) notebooks.
-Notebooks can be used in the following ways:
+You can view the notebooks at [https://ivanslapnicar.github.io/NumericalMathematics/](https://ivanslapnicar.github.io/NumericalMathematics/)
 
-### In Web Browser
+## Running the notebooks
 
-You can view notebooks using following links:
-* [Jupyter notebook viewer](http://nbviewer.ipython.org/url/github.com/ivanslapnicar/NumericalMathematics/tree/master/Lectures/Jupyter/)
-* [Pluto](https://ivanslapnicar.github.io/NumericalMathematics/)
+You can run the notebooks in two ways:
 
-###  Local Installation and Running
-* Download the notebooks (repository) using `git` command:
+### Running on `binder`
+
+1. Go to [https://ivanslapnicar.github.io/NumericalMathematics/](https://ivanslapnicar.github.io/NumericalMathematics/) and choose the desired notebook.
+2. Press `Edit or run this notebook` button and choose `binder`. This will read all the necessary packages and start the notebook (within several minutes).
+
+### Running on your comoputer
+
+1. Clone the entire repository using `git` command:
 ```
-git clone https://github.com/ivanslapnicar/NumericalMathematics.git
+git clone https://github.com/ivanslapnicar/Matematika.git
 ```
-If you are unfamiliar with `git` tool, you can take a look at GitHub's [help pages](https://help.github.com/articles/set-up-git/) or you can download repository directly as zip file.
-* Install [Julia](https://julialang.org/downloads/). In Julia terminal run the commands
+If you are unfamiliar with the `git` tool, check GitHub [help pages](https://help.github.com/articles/set-up-git/). You can also download the repository as a zip file.
+2. Install [Julia](https://julialang.org/downloads/). In Julia terminal run the commands
 ```
 > using Pkg
-> Pkg.add("IJulia")
 > Pkg.add("Pluto")
-```
-The above commands need to be executed only once.
-* Jupyter notebook server (for notebooks with extension `.ipynb`) is started with commands
-```
-> using IJulia
-> notebook(detached=true)
-```
-and Pluto notebook server (for notebooks with extension `.jl`) is started with commands
-```
 > using Pluto
 > Pluto.run()
 ```
-
-You can now run notebooks which are located in the directories `NumericalMathematics/Lectures/Jupyter/` and `NumericalMathematics/Lectures/Pluto/`.
+This opens local Pluto server in your browser. Now you can choose the notebook and run it
+(the notebboks are located in the directory `NumericalMathematics/Lectures/`).
