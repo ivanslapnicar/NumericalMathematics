@@ -28,6 +28,7 @@ You can run the notebooks in two ways:
 git clone https://github.com/ivanslapnicar/Matematika.git
 ```
 If you are unfamiliar with the `git` tool, check GitHub [help pages](https://help.github.com/articles/set-up-git/). You can also download the repository as a zip file.
+
 2. Install [Julia](https://julialang.org/downloads/). In Julia terminal run the commands
 ```
 > using Pkg
