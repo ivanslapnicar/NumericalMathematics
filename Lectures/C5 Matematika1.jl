@@ -58,7 +58,7 @@ end
 
 # ╔═╡ b59d17a0-2100-11eb-27de-c3196ecc1268
 md"
-__N.B.__ Added `ii,iii,iv,v,nbsp,times,home` to `Languages/.../data/stopwords/Croatian.txt`. Correct the filename if it is `Croation.txt`.
+__N.B.__ Add `ii,iii,iv,v,nbsp,times,home` to `Languages/.../data/stopwords/Croatian.txt`.
 "
 
 # ╔═╡ 08057a10-20dd-11eb-300e-f52ff0eaf35f
@@ -75,7 +75,7 @@ begin
 end
 
 # ╔═╡ 68174819-9f40-4627-ab86-5bda4f6cc652
-# Entire docuiment as one line
+# Entire document as one line
 frjoin
 
 # ╔═╡ 6c615a00-20de-11eb-0841-c30b5cf7d68a
