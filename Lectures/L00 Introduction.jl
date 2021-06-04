@@ -1,12 +1,22 @@
 ### A Pluto.jl notebook ###
-# v0.12.4
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ a1bdf5a0-0ee6-11eb-16dc-c55bc6758a85
-# Yet another package, follow instructions if not installed.
-using Polynomials
+# ╔═╡ d358978b-fa6a-4ac5-afdc-242d5556cc82
+begin
+	import Pkg
+	Pkg.activate(mktempdir())
+	Pkg.add("PlutoUI")
+	Pkg.add("Polynomials")
+end
+
+# ╔═╡ de15c2d3-d314-47cc-9bd1-9c7f3109b92e
+using PlutoUI, Polynomials
+
+# ╔═╡ 7b2b10d7-46d6-406b-ab2b-951fbaedf8e9
+TableOfContents(title="📚 Table of Contents", aside=true)
 
 # ╔═╡ a481f540-027d-11eb-10b5-5bd4e827e274
 md"""
@@ -22,12 +32,12 @@ Let us just give a couple of examples.
 md"""
 ## Computation of $\pi \approx 3.14159265358979$
 
-$\pi$ is known as the ratio of the circumference of a circle and its diameter.
+ $\pi$ is known as the ratio of the circumference of a circle and its diameter.
 """
 
 # ╔═╡ eab6ace0-027d-11eb-0f82-db588f0a253b
 md"""
-__Archimedes Method__
+### Archimedes Method
 
 Inscribe a regular $n$-gon in a circle of radius $1$. Compute the perimeter of its
 upper half. This is easiest to do if $n=2^k$. Using geometric reasoning,
@@ -54,9 +64,8 @@ p(1)= 2 \cdot \sin \: \frac{\pi}{2} =2, \quad p(2) = 4 \cdot \sin \: \frac{\pi}{
 
 but what is $p(4) = 8 \cdot \sin \: \displaystyle\frac{\pi}{8}$. Use half angle formulas!
 
-\begin{eqnarray}
-\sin \: \frac{\theta}{2} = \sqrt{\frac{1-\cos \: \theta }{2}}, \quad \cos \: \theta = \sqrt{1-\sin^2 \: \theta } .
-\end{eqnarray}
+$$
+\sin \: \frac{\theta}{2} = \sqrt{\frac{1-\cos \: \theta }{2}}, \quad \cos \: \theta = \sqrt{1-\sin^2 \: \theta }.$$
 
 That yields
 
@@ -91,12 +100,12 @@ let
 	for n=1:steps
     	s=sqrt((1-c)/2)
     	c=sqrt(1-s^2)
-    	println("2n = ", 2^(n+1), ", približna vrijednost od π = ",2^(n+1)*s)
+    	println("2n = ", 2^(n+1), ", approximation of π = ",2^(n+1)*s)
 	end
 end
 
 # ╔═╡ 4d68f850-027b-11eb-14a1-1741ea4ce7c2
-# Točan π
+# Accurate π
 π
 
 # ╔═╡ 6ac49527-05f0-4a0a-ad99-aba5d4b07c17
@@ -113,7 +122,7 @@ $$
 p(n) = \frac{\sin \: \pi h}{h} = \pi -a_2 h^2 + a_4 h^4 - \cdots$$
 
 where $a_k = \pi^{k+1}/(k+1)!$. Thus this converges to $\pi$ at roughly the rate of
-$O(h^2)$. This is an _approximation problem_. There is no finite algorithm
+$O(h^2)$. This is an __approximation problem__. There is no finite algorithm
 to compute $\pi$, since it is a transcendental number (irrational and not the root of
 any polynomial with integer coefficients). However, we can approximate it arbitrarily
 well.
@@ -284,11 +293,11 @@ md"""
 """
 
 # ╔═╡ b57ce420-0ee6-11eb-3909-9342f41a5255
-# Contents of a package
+# Contents of package Polynomials
 varinfo(Polynomials)
 
 # ╔═╡ c0a55620-0ee6-11eb-2297-d56f329d7bd1
-?Polynomial
+# ?Polynomial
 
 # ╔═╡ d3cbd530-0ee6-11eb-1a80-4ded54e128cd
 p=Polynomial([c,b,a])
@@ -314,6 +323,9 @@ most recent version.
 @code_native quadroots(1,0,7)
 
 # ╔═╡ Cell order:
+# ╠═d358978b-fa6a-4ac5-afdc-242d5556cc82
+# ╠═de15c2d3-d314-47cc-9bd1-9c7f3109b92e
+# ╠═7b2b10d7-46d6-406b-ab2b-951fbaedf8e9
 # ╟─a481f540-027d-11eb-10b5-5bd4e827e274
 # ╟─c2a8c4e0-027d-11eb-26fe-1f7bf12091f4
 # ╟─eab6ace0-027d-11eb-0f82-db588f0a253b
@@ -332,7 +344,6 @@ most recent version.
 # ╠═cd29c4bc-9cfa-40bc-bc80-74ee5a635a94
 # ╠═af57717b-4dca-4b54-8272-e98fe76fd845
 # ╟─8c4dfbc0-0ee6-11eb-2055-a7fdabff7984
-# ╠═a1bdf5a0-0ee6-11eb-16dc-c55bc6758a85
 # ╠═b57ce420-0ee6-11eb-3909-9342f41a5255
 # ╠═c0a55620-0ee6-11eb-2297-d56f329d7bd1
 # ╠═d3cbd530-0ee6-11eb-1a80-4ded54e128cd
