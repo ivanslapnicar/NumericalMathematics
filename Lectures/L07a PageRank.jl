@@ -1,14 +1,26 @@
 ### A Pluto.jl notebook ###
-# v0.12.10
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ aa7480bd-e15a-4f07-bcea-f3f2c9f3f5fb
-using LinearAlgebra
+# ╔═╡ 4bd8fed7-e6da-4512-bce4-83683ea9234b
+# If running on your computer, comment this cell
+begin
+	import Pkg
+    Pkg.activate(mktempdir())
+    Pkg.add([	
+		Pkg.PackageSpec(name="PlutoUI"),
+		Pkg.PackageSpec(name="SparseArrays"),
+		Pkg.PackageSpec(name="DelimitedFiles")
+    ])
+end
 
-# ╔═╡ 6075a4cb-5931-49d1-987c-ffc0f40ebb12
-using DelimitedFiles
+# ╔═╡ bc0768e0-ca87-46da-9260-7b2caabcdf7a
+using PlutoUI, SparseArrays, LinearAlgebra, DelimitedFiles
+
+# ╔═╡ e1fea405-5099-4c2c-8fd4-a02469ead9f6
+TableOfContents(title="📚 Table of Contents", aside=true)
 
 # ╔═╡ c1dc1294-a3a7-431f-8ecf-ea3c8448c44a
 md"""
@@ -28,7 +40,7 @@ google (and others)
 
 ## PageRank
 
-* Graph Theory and Linearna Algebra
+* Graph Theory and Linear Algebra
 * [C. Moler, Google PageRank](https://www.mathworks.com/moler/exm/chapters/pagerank.pdf)
 
 Some programs:
@@ -47,10 +59,7 @@ begin
 end
 
 # ╔═╡ daf1a60f-9827-418b-adbe-06d2046b1c96
-begin
-	using SparseArrays
-	G=sparse(i,j,1.0)
-end
+G=sparse(i,j,1.0)
 
 # ╔═╡ f874ba0c-9d9e-437b-9709-723ce34756c3
 Matrix(G)
@@ -109,7 +118,7 @@ x_3&=A\cdot x_2\cr
 
 Map $A(x)=Ax$ is not a contraction in the sence of the Banach Fixed Point Theorem since $\|A\|_1=1$, but is can be shown that it has a fixed point. Also, id $x\geq 0$ (componentwise), then $\|Ax\|_1=\|x\|_1$.
 
-When the iterations _stabilize_ :
+When the iterations __stabilize__:
 
 $$
 A\cdot x\approx x,$$
@@ -167,8 +176,18 @@ md"""
 A bigger test problem.
 """
 
+# ╔═╡ eb9f4ac4-53fb-4a92-b33e-1d0074d83edb
+# Create directory
+if !isdir("files")
+	mkdir("files")
+end
+
+# ╔═╡ b46547c4-6a2d-45b5-bad3-75ebf8b4451f
+# Download the test file
+download("https://ivanslapnicar.github.io/NumericalMathematics/files/web-Stanford.txt","./files/web-Stanford.txt")
+
 # ╔═╡ 47394960-0f02-11eb-1ddf-cb6b81f096b4
-W=readdlm("../files/web-Stanford.txt",Int,comments=true)
+W=readdlm("./files/web-Stanford.txt",Int,comments=true)
 
 # ╔═╡ fb14f5c1-2b83-4534-95a3-4647d8e50738
 #?sparse
@@ -193,10 +212,10 @@ sort(x100,rev=true)
 # Pages
 sortperm(x100,rev=true)
 
-# ╔═╡ 2188e21d-f3bb-41f3-8a9c-c425ba4f0887
-
-
 # ╔═╡ Cell order:
+# ╠═4bd8fed7-e6da-4512-bce4-83683ea9234b
+# ╠═bc0768e0-ca87-46da-9260-7b2caabcdf7a
+# ╠═e1fea405-5099-4c2c-8fd4-a02469ead9f6
 # ╟─c1dc1294-a3a7-431f-8ecf-ea3c8448c44a
 # ╟─85992dca-d40f-461a-8984-ac57ddfff970
 # ╠═d761f999-c402-49c4-bb4f-b52c23475db1
@@ -210,7 +229,6 @@ sortperm(x100,rev=true)
 # ╠═420af1cd-becc-4005-8534-96a6aaddbde5
 # ╠═9d3b7528-4035-4304-bee9-a9407bced36f
 # ╟─90edb7b5-c882-41a6-a48b-ba15373f2283
-# ╠═aa7480bd-e15a-4f07-bcea-f3f2c9f3f5fb
 # ╠═fece3020-0f09-11eb-0f69-237286bd58af
 # ╠═739c238c-03db-4ee6-9fb7-f8e5b93282f8
 # ╠═6c6a8ce2-5483-45ed-b5c8-61e924b3eb1c
@@ -221,7 +239,8 @@ sortperm(x100,rev=true)
 # ╠═023e6d22-6505-4211-8fec-55ae732405bc
 # ╠═fae1bfcb-ef52-4cd8-a066-cf138c8697f8
 # ╟─5a02f8ad-3f97-4201-b903-9ed789721f81
-# ╠═6075a4cb-5931-49d1-987c-ffc0f40ebb12
+# ╠═eb9f4ac4-53fb-4a92-b33e-1d0074d83edb
+# ╠═b46547c4-6a2d-45b5-bad3-75ebf8b4451f
 # ╠═47394960-0f02-11eb-1ddf-cb6b81f096b4
 # ╠═fb14f5c1-2b83-4534-95a3-4647d8e50738
 # ╠═573a625a-ad1c-4133-bae3-342a7501b492
@@ -230,4 +249,3 @@ sortperm(x100,rev=true)
 # ╠═d94eacf3-0008-4e8c-a5cd-a92fa1fd76d4
 # ╠═12eb4b3f-6fe1-4bba-9556-4378eab6e191
 # ╠═a445d5e2-adef-4d13-b0b3-0af37f7039d6
-# ╠═2188e21d-f3bb-41f3-8a9c-c425ba4f0887

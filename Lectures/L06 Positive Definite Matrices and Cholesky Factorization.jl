@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.4
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
@@ -19,8 +19,7 @@ Positive definite matrix can be factored (without pivoting) as
 $$
 A=L L^T$$
 
-where $L$ is lower triangular matrix with non-negative diagonal elements. This factorization is called
-__Cholesky factorization__ (see [Matrix Computations, section 4.2](https://books.google.hr/books?id=X5YfsuCWpxMC&printsec=frontcover&hl=hr#v=onepage&q&f=false)).
+where $L$ is lower triangular matrix with non-negative diagonal elements. This factorization is called __Cholesky factorization__ (see [Matrix Computations, section 4.2](https://books.google.hr/books?id=X5YfsuCWpxMC&printsec=frontcover&hl=hr#v=onepage&q&f=false)).
 
 From
 
@@ -33,7 +32,7 @@ it follows
 
 $$\beta=\sqrt{\alpha},\quad l=a\beta^{-1}=a\alpha^{-1/2},\quad C=B-ll^T=B-a\alpha^{-1}a^T.$$
 
-We see that we must have $\alpha>0$. Also, since matrix $B$ is symmetric, so is $C$.
+We see that we must have $\alpha>0$. Also, since the matrix $B$ is symmetric, so is $C$.
 
 Induction yields the following algorithm:
 
@@ -83,17 +82,13 @@ L₁=mychol(A)
 # Residual
 L₁'*L₁-A
 
-# ╔═╡ 7decf367-ee06-401c-b742-b910e4b647a9
-
-
 # ╔═╡ Cell order:
+# ╠═c162d7c0-0efc-11eb-16ad-3d5ff641f6e0
 # ╟─70942b12-0bd1-44e6-8e04-862d4948e8a0
 # ╠═a808c71a-97bb-4106-89fd-dcc0e902d2cb
 # ╠═ea4f0c1f-55e7-4423-a8df-b9de1889e511
-# ╠═c162d7c0-0efc-11eb-16ad-3d5ff641f6e0
 # ╠═dfea6e0a-a718-49ef-8e60-bd0ad6e204db
 # ╠═396ba935-a1fc-4978-a64e-990bb1d78f44
 # ╠═1ff3e65c-8253-47d7-9caa-466a1359a434
 # ╠═286a74e5-6a3b-41ee-a227-cb5d88dd027e
 # ╠═2e54b52f-2ba0-4de0-a7bf-73bf1c0d5b6f
-# ╠═7decf367-ee06-401c-b742-b910e4b647a9

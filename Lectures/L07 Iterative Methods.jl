@@ -1,31 +1,21 @@
 ### A Pluto.jl notebook ###
-# v0.12.4
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 5aba7e24-0424-45f2-9716-3b32a71fc610
+# ╔═╡ c86c9c92-3383-4c08-8db4-d162e01a86a2
 begin
-	using LinearAlgebra
-	function myjacobi(A::Array,b::Array,x::Array)
-	    D=Diagonal(A)
-	    L=inv(D)*tril(A,-1)
-	    U=inv(D)*triu(A,1)
-	    tol=1000*eps()
-	    d=1.0
-	    B=-(L+U)
-	    c=inv(D)*b
-	    q=norm(B,Inf)
-	    # @show q
-	    while d>tol
-	        y=B*x+c
-	        d=norm(x-y,Inf)
-	        # @show d
-	        x=y
-	    end
-	    x,d
-	end
+	import Pkg
+	Pkg.activate(mktempdir())
+	Pkg.add("PlutoUI")
 end
+
+# ╔═╡ c83e3f47-b1ea-443c-a235-457ed28bcb18
+using PlutoUI, Random, LinearAlgebra
+
+# ╔═╡ 5f87bb8e-34f9-4734-841b-066e906a28b3
+TableOfContents(title="📚 Table of Contents", aside=true)
 
 # ╔═╡ 1a406352-1739-4709-85bc-6ca3ecb19253
 md"""
@@ -129,7 +119,6 @@ Let us see the factorization $A=D(L+I+U)$:
 
 # ╔═╡ 583e17b2-e189-49ae-8c80-0014d53c40c2
 begin
-	import Random
 	Random.seed!(123)
 	n=8
 	A=rand(n,n)
@@ -152,6 +141,26 @@ L=inv(D)*tril(A,-1)
 
 # ╔═╡ 5abe2470-1389-11eb-1a3e-43f6103379d2
 U=inv(D)*triu(A,1)
+
+# ╔═╡ 5aba7e24-0424-45f2-9716-3b32a71fc610
+function myjacobi(A::Array,b::Array,x::Array)
+    D=Diagonal(A)
+    L=inv(D)*tril(A,-1)
+    U=inv(D)*triu(A,1)
+    tol=1000*eps()
+    d=1.0
+    B=-(L+U)
+    c=inv(D)*b
+    q=norm(B,Inf)
+    # @show q
+    while d>tol
+        y=B*x+c
+        d=norm(x-y,Inf)
+        # @show d
+        x=y
+    end
+    x,d
+end
 
 # ╔═╡ 213d2b7b-b742-4274-9bb0-e029aec6f892
 # Starting vector
@@ -220,10 +229,10 @@ md"
 __Problem.__ Try to rewrite our functions to allocate less memory.
 "
 
-# ╔═╡ 76473de1-3b58-4162-a442-eb9f189d111a
-
-
 # ╔═╡ Cell order:
+# ╠═c86c9c92-3383-4c08-8db4-d162e01a86a2
+# ╠═c83e3f47-b1ea-443c-a235-457ed28bcb18
+# ╠═5f87bb8e-34f9-4734-841b-066e906a28b3
 # ╟─1a406352-1739-4709-85bc-6ca3ecb19253
 # ╟─610ef7a4-f0a6-42c8-a2cc-1a03cb155a22
 # ╟─1ea94870-1389-11eb-1619-47636ac1d230
@@ -246,4 +255,3 @@ __Problem.__ Try to rewrite our functions to allocate less memory.
 # ╠═8794b613-ddab-4fa9-82e6-eec4192705dd
 # ╠═02d632a3-3ab8-4b02-ba94-709880df6313
 # ╟─aba2f7f6-8690-4ede-8282-ad925e4aae8d
-# ╠═76473de1-3b58-4162-a442-eb9f189d111a
