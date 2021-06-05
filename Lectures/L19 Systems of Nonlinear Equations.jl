@@ -1,22 +1,31 @@
 ### A Pluto.jl notebook ###
-# v0.12.16
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 57657193-e72f-432f-965b-13f36c104874
+# ╔═╡ 271cba4c-ed08-497e-8142-c99aea337cd8
+# On your computer, comment this cell
 begin
-	using ForwardDiff
-	using Plots
-	plotly()
-	using LinearAlgebra
+	import Pkg
+	Pkg.activate(mktempdir())
+    Pkg.add([
+        Pkg.PackageSpec(name="PlutoUI"),
+		Pkg.PackageSpec(name="ForwardDiff"),
+		Pkg.PackageSpec(name="Plots"),
+		Pkg.PackageSpec(name="NLsolve"),
+		Pkg.PackageSpec(name="Optim")
+    ])
 end
 
-# ╔═╡ 616715da-a44e-4835-8975-dc346ea6f27b
-using NLsolve
+# ╔═╡ 57657193-e72f-432f-965b-13f36c104874
+begin
+	using PlutoUI, ForwardDiff, Plots, LinearAlgebra, NLsolve, Optim
+	plotly()
+end
 
-# ╔═╡ 633106d1-4f49-467d-9acd-2ddc5b951c87
-using Optim
+# ╔═╡ 63690bb6-5749-429d-8c39-dd9c727bc938
+TableOfContents(title="📚 Table of Contents", aside=true)
 
 # ╔═╡ 94da0d5c-6dfe-487a-9711-9d101f20e97a
 md"""
@@ -45,12 +54,12 @@ We shall describe the __Newton's method__ and three __quasi-Newton__ methods:
 
 Given starting approximation $x^{(0)}$, all methods generate sequence of points $x^{(n)}$ which, under certain condditions, converges towards the solution $\xi$. 
 
-__Remark.__ Description of the methods and examples are taken from the textbook [Numerička matematika, poglavlje 4.4](http://www.mathos.unios.hr/pim/Materijali/Num.pdf).
+__Remark.__ For detailed description of the methods and examples see [Numerical Methods for Unconstrained Optimization and Nonlinear Equations](https://epubs.siam.org/doi/book/10.1137/1.9781611971200?mobileUi=0) or [Numerička matematika, section 4.4](http://www.mathos.unios.hr/pim/Materijali/Num.pdf).
 """
 
 # ╔═╡ 125c9230-cc68-493f-92c5-8a83a78b5863
 md"""
-## Newton's method
+# Newton's method
 
 __Jacobian__ or __Jacobi matrix__ of functions $f$ in the point $x$ is the matrix of first partial derivatives
 
@@ -93,9 +102,11 @@ end
 
 # ╔═╡ ed8971fd-1420-41af-b736-e052439a2c65
 md"""
-### Example 1
+## Examples
 
-(Dennis and Schnabel, 1996) The solutions of the system
+### $2\times 2$ nonlinear system
+
+The solutions of the system
 
 $$\begin{aligned}
 2(x+y)^2+(x-y)^2-8&=0\\
@@ -158,9 +169,9 @@ Newton(f₁,J₁,[1.0,1.0]), Newton(f₁,J₁,[0.0,0.0])
 
 # ╔═╡ 3cfa6d61-75f0-4897-97d1-b94c8de2458e
 md"""
-### Example 2
+### $2\times 2$ nonlinear system
 
-(Dennis and Schnabel, 1996) The solutions of the system
+The solutions of the system
 
 $$\begin{aligned}
 x_1^2-x_2^2-2&=0\\
@@ -186,9 +197,9 @@ end
 
 # ╔═╡ 2f2a6ae5-755d-4f65-9c16-4db2e1aa48f4
 md"""
-### Example 3
+### $3\times 3$ nonlinear system
 
-(Dennis and Schnabel, 1996) Solve $f(x)=0$, where
+Solve $f(x)=0$, where
 
 $$
 f(x)=\begin{bmatrix}x_1 \\ x_2^2-x_2 \\ e^{x_3}-1 \end{bmatrix}.$$
@@ -208,9 +219,9 @@ Newton(f₃,J₃,[-1.0,1,-10]),Newton(f₃,J₃,[0.5,-1.5,0])
 
 # ╔═╡ e195e6ad-f3ea-4a74-a91a-d16d0384a054
 md"""
-### Example 4
+### Rosenbrock parabolic valley
 
-(Rosenbrock parabolic valley) Given is the function 
+Given is the function 
 
 $$
 f(x)=100\,(x_2-x_1)^2+(1-x_1)^2.$$
@@ -249,13 +260,12 @@ Newton(g₄,x->ForwardDiff.hessian(f₄,x),[-1.0,2.0])
 
 # ╔═╡ 9625fb8d-5e0e-4e07-bc49-b4cb9ab259ef
 md"""
-### Example 5
+### Least-squares fitting of sum of exponentials
 
 Let
 
 $$
-f(x)=\sum_{i=1}^{11} \bigg(x_3 \cdot \exp\bigg(-\frac{(t_i-x_1)^2}{x_2}\bigg)-y_i\bigg)^2,
-$$
+f(x)=\sum_{i=1}^{11} \bigg(x_3 \cdot \exp\bigg(-\frac{(t_i-x_1)^2}{x_2}\bigg)-y_i\bigg)^2,$$
 
 where the pairs  $(t_i,y_i)$ are given by the table:
 
@@ -264,29 +274,14 @@ $$
  i & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\ \hline
 t_i & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 &10 \\
  y_i & 0.001 & .01 & .04 & .12 & .21 & .25 & .21 & .12 & .04 & .01 & .001 
-\end{array}
-$$
+\end{array}$$
 
 We want to solve the equation
 
 $$
-\mathop{\mathrm{grad}} f(x)=0.
-$$
+\mathop{\mathrm{grad}} f(x)=0.$$
 
-
-Unlike previous examples, where the condition number is
-
-$$\kappa(J)=O(10)$$ 
-
-in Examples 1, 2 and 3 and
-
-$$\kappa(J)=O(1000)$$ 
-
-in Example 4, here
-
-$$\kappa(J)>O(10^6)$$ 
-
-so the method is inaccurate and does not converge towrds the exact solution $x=(4.93,2.62,0.28)$.
+Unlike previous examples, where the condition number is $\kappa(J)=O(10)$ in the first three examples and $\kappa(J)=O(1000)$ in the previous example, here $\kappa(J)>O(10^6)$ so the method is inaccurate and does not converge towards the exact solution $x=(4.93,2.62,0.28)$.
 """
 
 # ╔═╡ 33ca0d51-92fe-4313-ba67-7792af17b11e
@@ -317,7 +312,7 @@ Newton(g₅,J₅,[4.9,2.62,0.28],1e-8)
 
 # ╔═╡ e823348a-1ea3-45b7-b1ad-d51096f224dc
 md"""
-## Broyden's method
+# Broyden's method
 
 Given starting approximation $x_0$ and matrix $B_0$, for each $k=0,1,2,\ldots$, we compute:
 
@@ -346,6 +341,11 @@ function Broyden(f::Function,B::Matrix,x::Vector{T},ϵ::Float64=1e-10) where T
     end
     ξ,iter
 end
+
+# ╔═╡ 19dc36a5-6d13-4d61-a9b4-863e7fbe60fe
+md"
+## Examples
+"
 
 # ╔═╡ 6059b96d-8ba0-475c-9929-8cc613355562
 # Example 1
@@ -389,10 +389,9 @@ g₅(x₆)
 
 # ╔═╡ 11259db5-f754-47c7-9e92-600adf6896f8
 md"""
-## Davidon-Fletcher-Powell (DFP) method
+# Davidon-Fletcher-Powell (DFP) method
 
-DFP is an optimization method which finds extremal points of the function 
-$F:\mathbb{R}^n \to \mathbb{R}$, in which case $f(x)=\mathop{\mathrm{grad}}F(x)$.
+DFP is an optimization method which finds extremal points of the function $F:\mathbb{R}^n \to \mathbb{R}$, in which case $f(x)=\mathop{\mathrm{grad}}F(x)$.
 
 Given initial approximation $x_0$ and matrix $H_0$, for $k=0,1,2,\ldots$, we compute:
 
@@ -405,8 +404,7 @@ y_k&=f(x_{k+1})-f(x_{k})\\
 H_{k+1}&=H_k+ \frac{s_k s_k^T}{y_k\cdot s_k}-\frac{H_k y_k y_k^T H_k}{y_k\cdot (H_k y_k)}.
 \end{aligned}$$
 
-We can take $H_0=I$. Notice that the iteration step does not require solving a system linear equations. Instead,
-all updates are performed using $O(n^2)$ operations.
+We can take $H_0=I$. Notice that the iteration step does not require solving a system linear equations. Instead, all updates are performed using $O(n^2)$ operations.
 
 The one-dimensional minimzation along the line $x_{k}+\beta s_k$ is preformed by finding zeros of the directional derivative using bisection.
 """
@@ -465,7 +463,7 @@ end
 
 # ╔═╡ 7f7672da-787f-4628-83aa-e9297f7da322
 md"""
-### Example 6
+### Minimum of a function of $2$ variables
 
 Let us find extremal points of the function 
 
@@ -497,15 +495,13 @@ DFP(g₅,eye(3),[4.9,2.6,0.2])
 
 # ╔═╡ f7483843-9cc9-4799-ad56-1e74bd0a08e7
 md"""
-## Broyden-Fletcher-Goldfarb-Schano (BFGS) method
+# Broyden-Fletcher-Goldfarb-Schano (BFGS) method
 
-BFGS is an optimization method for finding extremal points of the function
-$F:\mathbb{R}^n \to \mathbb{R}$, in which case $f(x)=\mathop{\mathrm{grad}}F(x)$.
+BFGS is an optimization method for finding extremal points of the function $F:\mathbb{R}^n \to \mathbb{R}$, in which case $f(x)=\mathop{\mathrm{grad}}F(x)$.
 
 The method is similar to the DFP method, with somewhat better convergence properties.
 
-Let $F:\mathbb{R}^n \to \mathbb{R}$, whose minmum we seek, and let
-$f(x)=\mathop{\mathrm{grad}} F(x)$.
+Let $F:\mathbb{R}^n \to \mathbb{R}$, whose minmum we seek, and let $f(x)=\mathop{\mathrm{grad}} F(x)$.
 
 Given initial approximation $x_0$ and matrix $H_0$, for $k=0,1,2,\ldots$, we compute:
 
@@ -519,8 +515,7 @@ H_{k+1}&=\bigg(I-\frac{s_k y_k^T}{y_k\cdot s_k}\bigg)H_k
 \bigg( I-\frac{y_k s_k^T}{y_k\cdot s_k}\bigg)+\frac{s_k s_k^T}{y_k\cdot s_k}.
 \end{aligned}$$
 
-We can take $H_0=I$. Notice that the iteration step does not require solving a system linear equations. Instead,
-all updates are performed using $O(n^2)$ operations.
+We can take $H_0=I$. Notice that the iteration step does not require solving a system linear equations. Instead, all updates are performed using $O(n^2)$ operations.
 
 The one-dimensional minimzation along the line $x_{k}+\beta s_k$ is preformed by finding zeros of the directional derivative using bisection.
 """
@@ -561,10 +556,12 @@ BFGS(g₅,eye(3),[4.9,2.6,0.2])
 
 # ╔═╡ cef37fa4-df23-4267-bde4-c1fe6ddade23
 md"""
-## Julia packages
+# Julia packages
 
 Previous programs are simple illustrative implementations of the mentioned algorithms.
 Julia package [NLsolve.jl](https://github.com/JuliaNLSolvers/NLsolve.jl) is used for solving systems of linear equations and the package [Optim.jl](https://github.com/JuliaNLSolvers/Optim.jl) is used for nonlinear optimization.
+
+## Examples
 """
 
 # ╔═╡ 92d27828-c97b-41d0-85e9-0d3b1738dfed
@@ -610,13 +607,12 @@ optimize(f₄,[-1.0,2],Optim.BFGS())
 # Example 5 - again there is no convergence
 optimize(f₅,[4.9,2.6,0.2],Optim.BFGS())
 
-# ╔═╡ 55953361-fc9b-42b9-9c5e-0f7ca2dcefa3
-
-
 # ╔═╡ Cell order:
+# ╠═271cba4c-ed08-497e-8142-c99aea337cd8
+# ╠═57657193-e72f-432f-965b-13f36c104874
+# ╠═63690bb6-5749-429d-8c39-dd9c727bc938
 # ╟─94da0d5c-6dfe-487a-9711-9d101f20e97a
 # ╟─125c9230-cc68-493f-92c5-8a83a78b5863
-# ╠═57657193-e72f-432f-965b-13f36c104874
 # ╠═77095a05-eb64-47e2-a2e0-5053a4fbc837
 # ╟─ed8971fd-1420-41af-b736-e052439a2c65
 # ╠═96eb13a8-ca15-447b-a252-76d481b30912
@@ -649,6 +645,7 @@ optimize(f₅,[4.9,2.6,0.2],Optim.BFGS())
 # ╠═82fffd1c-9ec0-459c-b033-d926641268dc
 # ╟─e823348a-1ea3-45b7-b1ad-d51096f224dc
 # ╠═73ad34ac-e4fc-4e35-9d96-25969b37a4d6
+# ╟─19dc36a5-6d13-4d61-a9b4-863e7fbe60fe
 # ╠═6059b96d-8ba0-475c-9929-8cc613355562
 # ╠═64d397ac-ed6f-426c-9139-af21222723da
 # ╠═ba09dd4f-b114-45bb-9b6a-41c2ed9dbec5
@@ -672,13 +669,10 @@ optimize(f₅,[4.9,2.6,0.2],Optim.BFGS())
 # ╠═a0e4f6af-d4ab-4b04-9863-49de95eec947
 # ╠═c20593d7-885f-4f36-984c-ecded0884ecc
 # ╟─cef37fa4-df23-4267-bde4-c1fe6ddade23
-# ╠═616715da-a44e-4835-8975-dc346ea6f27b
 # ╠═92d27828-c97b-41d0-85e9-0d3b1738dfed
 # ╠═6055ba96-dd58-420b-854e-277b60a3c1e7
 # ╠═ca176d00-70f9-42b4-a3f4-fd5d37c9f31a
 # ╠═a8080f5e-6797-482e-84ca-7ddfcd40264d
 # ╠═2a644f10-2683-4ea8-bd25-95343abb7e48
-# ╠═633106d1-4f49-467d-9acd-2ddc5b951c87
 # ╠═bc477197-2ac5-4798-a62b-62f89791fb94
 # ╠═90043461-3f6a-45e6-a661-57c8df3a2a93
-# ╠═55953361-fc9b-42b9-9c5e-0f7ca2dcefa3

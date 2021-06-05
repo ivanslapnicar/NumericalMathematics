@@ -1,14 +1,28 @@
 ### A Pluto.jl notebook ###
-# v0.12.16
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 3a20c826-03cd-4c06-a0c6-7dc657067feb
-using Plots
+# ╔═╡ d0d29fe8-6542-4968-a695-03371ba85543
+begin
+	import Pkg
+	Pkg.activate(mktempdir())
+    Pkg.add([
+        Pkg.PackageSpec(name="PlutoUI"),
+		Pkg.PackageSpec(name="Plots"),
+		Pkg.PackageSpec(name="ForwardDiff")
+    ])
+end
 
-# ╔═╡ a2c79625-bb3d-4cb3-972c-14fa1763d1e6
-using ForwardDiff
+# ╔═╡ 3a20c826-03cd-4c06-a0c6-7dc657067feb
+begin
+	using PlutoUI, Plots, ForwardDiff
+	plotly()
+end
+
+# ╔═╡ 7bab2ccd-e6d7-479c-abef-d9ed8eefaf2a
+TableOfContents(title="📚 Table of Contents", aside=true)
 
 # ╔═╡ 1198a836-bb14-4b8e-9f30-160097bc4507
 md"""
@@ -48,13 +62,13 @@ Method has __order of convergence__ equal to $r>0$ if there exists $A>0$ such th
 $$
 |\xi-x_{n+1}|\leq A|\xi-x_n|^r.$$
 
-__Remark.__ Proofs of statements in this notebook and examples can be found in many textbooks (see e.g. [Numerička matematika, section 4.1](http://www.mathos.unios.hr/pim/Materijali/Num.pdf)).
+__Remark.__ Proofs of statements in this notebook and examples can be found in many textbooks.
 
 """
 
 # ╔═╡ 7942e1ac-57f4-493c-9d09-de4154dcd7b9
 md"""
-## Bisection
+# Bisection
 
 Starting with the interval $[a,b]\equiv [a_0,b_0]$, construct a sequence of intervals  
 
@@ -106,7 +120,7 @@ end
 
 # ╔═╡ 0233a80f-dfc6-420c-ae39-60828b19010a
 md"""
-### Examples
+## Examples
 
 Given are functions and intervals:
 
@@ -203,7 +217,7 @@ plot!(legend=:bottomright)
 
 # ╔═╡ 69c1d80b-3d24-4ded-a226-391b337805e5
 md"""
-## Simple iterations
+# Simple iterations
 
 We are solving equation of the form 
 
@@ -238,6 +252,8 @@ $$\begin{aligned}
 \end{aligned}$$
 
 Thus, the convergence is __linear__.
+
+__Problem.__ Find and study the proof of the theorem.
 """
 
 # ╔═╡ d794399b-9c03-47a1-8a37-40f8545a0d46
@@ -265,7 +281,7 @@ varinfo(ForwardDiff.ForwardDiff)
 
 # ╔═╡ 492a1939-ea1e-4912-b8d3-0330624f0ffd
 md"""
-### Example
+## Example
 
 Let us find zeros of the function $f_1(x)=e^x-x-\frac{5}{4}$. The form
 
@@ -311,7 +327,7 @@ scatter!([Iteration(φ,-0.5)[1],Iteration(Ψ,1.0)[1]],[0,0],label="Zeros")
 
 # ╔═╡ 5dee83f3-2171-478a-b811-04c3ccef1a0e
 md"""
-### Square root of 2
+## Square root of 2
 
 Let us approximate $\sqrt{2}$, that is, find the positive solution of the equation 
 
@@ -343,31 +359,31 @@ begin
 end
 
 # ╔═╡ 25640f91-4b47-4bcf-b360-499541077c80
-Iteration(φ₁,1.0,1e-15), sqrt(2)
+Iteration(φ₁,1.0,1e-15), √2
 
 # ╔═╡ 96619f40-3a10-11eb-1529-29d9aa539c03
 # Manual computation using rational numbers
 begin
 	y=1//1
-	y1=(y+2//y)//2
-	y2=(y1+2//y1)//2
-	y3=(y2+2//y2)//2
-	y4=(y3+2//y3)//2
-	y5=(y4+2//y4)//2
+	y₁=(y+2//y)//2
+	y₂=(y₁+2//y₁)//2
+	y₃=(y₂+2//y₂)//2
+	y₄=(y₃+2//y₃)//2
+	y₅=(y₄+2//y₄)//2
 end
 
 # ╔═╡ bc84a732-3a10-11eb-11ed-1b1abc4f530b
-y5-sqrt(2)
+y₅-√2
 
 # ╔═╡ cf6ff8ea-2c1e-442a-bfc6-5eac4f7269dd
 begin
-	# Let us try sqrt(10)
+	# Let us try √10
 	φ₂(x)=(9x+10.0/x)/10.0
 	plot([φ₂,x->ForwardDiff.derivative(φ₂,x)],3.0,4.0,label=["φ₂(x)" "φ₂'(x)"])
 end
 
 # ╔═╡ 4fa06267-97f2-409f-8025-c160362014a9
-Iteration(φ₂,3.0,1e-10), sqrt(10) # 1e-15
+Iteration(φ₂,3.0,1e-10), √10 # 1e-15
 
 # ╔═╡ 46bebd7f-69ba-402f-91aa-6ad864add60b
 begin
@@ -377,11 +393,11 @@ begin
 end
 
 # ╔═╡ 9b237357-f6dc-4054-bee8-1cac4a5aad07
-Iteration(φ₃,3.0,1e-10), sqrt(10) # 1e-15
+Iteration(φ₃,3.0,1e-10), √10 # 1e-15
 
 # ╔═╡ 4f3b3c3a-0cf4-4bcd-a8ad-9061c7653386
 md"""
-## Newton's method
+# Newton's method
 
 __Newton's method__ or __Tangent method__ is based on the following idea: in the vicinity of the starting point $x_0$, the function $f(x)$ is approximated by the tangent line through the point $(x_0,f(x_0))$,
 
@@ -417,6 +433,8 @@ M_2=\max_{x\in(a,b)}|f''(x)|,\quad
 m_1=\min_{x\in(a,b)}|f'(x)|.$$
 
 Therefore, the speed of convergence is __quadratic__.
+
+## Example
 """
 
 # ╔═╡ d8d1e5e8-13c6-43cd-b2ca-aa6e96c142e3
@@ -493,7 +511,7 @@ Newton(f₆,0)
 
 # ╔═╡ 1db0ba3d-e82e-4e4d-8b5d-c1100d04fd2d
 md"""
-## Secant method
+# Secant method
 
 If, in the formula (4), the derivative $f'(x_n)$ is approximated by the finite difference (secant line) though the  __two__ previously obtained points,
 
@@ -525,9 +543,11 @@ end
 Secant(f₆,-1,0), Secant(f₆,1,2)
 
 # ╔═╡ Cell order:
+# ╠═d0d29fe8-6542-4968-a695-03371ba85543
+# ╠═3a20c826-03cd-4c06-a0c6-7dc657067feb
+# ╠═7bab2ccd-e6d7-479c-abef-d9ed8eefaf2a
 # ╟─1198a836-bb14-4b8e-9f30-160097bc4507
 # ╟─7942e1ac-57f4-493c-9d09-de4154dcd7b9
-# ╠═3a20c826-03cd-4c06-a0c6-7dc657067feb
 # ╠═9d707705-29a2-47fc-87b8-d39ff967efb5
 # ╟─0233a80f-dfc6-420c-ae39-60828b19010a
 # ╠═0be4ad52-497f-48a4-9f53-b6d1291beb58
@@ -548,7 +568,6 @@ Secant(f₆,-1,0), Secant(f₆,1,2)
 # ╟─69c1d80b-3d24-4ded-a226-391b337805e5
 # ╠═d794399b-9c03-47a1-8a37-40f8545a0d46
 # ╟─5cc494f2-a789-4455-9ac9-925428d274fe
-# ╠═a2c79625-bb3d-4cb3-972c-14fa1763d1e6
 # ╠═21495df3-1163-4d7f-afce-ad3600a5411a
 # ╟─492a1939-ea1e-4912-b8d3-0330624f0ffd
 # ╠═7dab9934-414d-44dd-94b5-96a849184687
