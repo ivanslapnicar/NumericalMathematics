@@ -40,7 +40,7 @@ with the given __initial condition__
 $$
 y(x_0)=y_0.$$
 
-__Theorem.__ If the functions $f$ and $\displaystyle \frac{\partial f}{\partial y}$ are continuous in some neighbourhood of the point $(x_0,y_0)$, then, for some $\varepsilon > 0$, the given initial value pbolem has unique solution $y(x)$ on the interval $\displaystyle [x_{0}-\varepsilon ,x_{0}+\varepsilon ]$.
+__Theorem.__ If the functions $f$ and $\displaystyle \frac{\partial f}{\partial y}$ are continuous in some neighbourhood of the point $(x_0,y_0)$, then, for some $\varepsilon > 0$, the given initial value problem has unique solution $y(x)$ on the interval $\displaystyle [x_{0}-\varepsilon ,x_{0}+\varepsilon ]$.
 
 __Remark.__ The independent variable is often denoted by $t$ (time). 
 """
