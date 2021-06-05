@@ -1,24 +1,24 @@
 ### A Pluto.jl notebook ###
-# v0.12.10
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 2d895d76-dcb9-4d43-b985-b7e9c97d0cd0
+# ╔═╡ 916addfe-fcb2-4ab1-ab3e-dd9041221fad
 begin
-	using Polynomials
-	using Plots
-	using SpecialMatrices
+	import Pkg
+	Pkg.activate(mktempdir())
+    Pkg.add([
+        Pkg.PackageSpec(name="SpecialMatrices"),
+		Pkg.PackageSpec(name="Polynomials"),
+		Pkg.PackageSpec(name="Plots")
+    ])
 end
 
-# ╔═╡ cf690c86-f1eb-418f-992f-e569937ff499
+# ╔═╡ 2d895d76-dcb9-4d43-b985-b7e9c97d0cd0
 begin
-	# Generate points
-	using Random, LinearAlgebra
-	Random.seed!(123)
-	n=5
-	x=sort(rand(n+1))
-	y=rand(n+1)
+	using Random, LinearAlgebra, Polynomials, Plots, SpecialMatrices
+	plotly()
 end
 
 # ╔═╡ 5ec7a38e-cecd-45c0-94a1-39d58e437add
@@ -135,6 +135,15 @@ md"""
 ## Interpolation of random points
 """
 
+# ╔═╡ cf690c86-f1eb-418f-992f-e569937ff499
+begin
+	# Generate points
+	Random.seed!(123)
+	n=5
+	x=sort(rand(n+1))
+	y=rand(n+1)
+end
+
 # ╔═╡ a990adad-3abe-4dc3-be83-02e3ce5c46d4
 function Spline(x,y)
     h=x[2:end]-x[1:end-1]
@@ -236,9 +245,10 @@ begin
 end
 
 # ╔═╡ Cell order:
+# ╠═916addfe-fcb2-4ab1-ab3e-dd9041221fad
+# ╠═2d895d76-dcb9-4d43-b985-b7e9c97d0cd0
 # ╟─5ec7a38e-cecd-45c0-94a1-39d58e437add
 # ╟─c12ee2d1-c5fa-44de-92e5-3c4e096e0187
-# ╠═2d895d76-dcb9-4d43-b985-b7e9c97d0cd0
 # ╠═cf690c86-f1eb-418f-992f-e569937ff499
 # ╠═a990adad-3abe-4dc3-be83-02e3ce5c46d4
 # ╠═e0f49f72-b3c9-40e8-94ba-6646edb0966d

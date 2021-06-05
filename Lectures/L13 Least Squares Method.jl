@@ -1,14 +1,21 @@
 ### A Pluto.jl notebook ###
-# v0.12.8
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ bb659710-2421-11eb-25d4-af6542e470eb
+# ╔═╡ 28fec75e-f9e4-4077-b647-8ab6e7767106
 begin
-	import Random
-	using LinearAlgebra
+	import Pkg
+	Pkg.activate(mktempdir())
+	Pkg.add("PlutoUI")
 end
+
+# ╔═╡ bb659710-2421-11eb-25d4-af6542e470eb
+using PlutoUI, LinearAlgebra, Random
+
+# ╔═╡ eac37e99-359f-4634-8ba0-7057fce971c9
+TableOfContents(title="📚 Table of Contents", aside=true)
 
 # ╔═╡ fcc44b72-e162-4351-8601-f7402e2ed694
 md"""
@@ -63,7 +70,7 @@ This solution is unique since $Q(x)=Q(y)$ implies $\|Ah\|_2=0$, so either $h=0$ 
 
 # ╔═╡ b4ddcb00-1eaa-11eb-23c6-d15643cd207a
 md"
-__Geometrical interpretation.__ Vektori $Ax$ i $Ax-b$ are mutually orthogonal, 
+__Geometrical interpretation.__ Vectors $Ax$ and $Ax-b$ are mutually orthogonal, 
 
 $$
 (Ax)^T\cdot (Ax - b)=x^T (A^TAx - A^Tb)=0.$$ 
@@ -81,7 +88,7 @@ measures the quality of the solution (adaptation).
 
 # ╔═╡ 5c65704d-666f-4f15-bc8f-7741457f9af0
 md"""
-## Example
+## Small Example
 
 Let us solve the system
 
@@ -124,7 +131,7 @@ float(x)
 
 # ╔═╡ c2f32713-6b34-4c34-9180-d759039891c5
 md"""
-## Example
+## Random example
 """
 
 # ╔═╡ d92d5bed-8689-481f-b56f-d46fa4f835c1
@@ -142,7 +149,7 @@ q₁=sqrt(norm(A₁*x₁-b₁)/norm(b₁))
 
 # ╔═╡ f7f6d6b8-44cc-4337-a601-3c4c5ef3fb77
 md"""
-## Perturbation theory
+# Perturbation theory
 
 __Sensitivity of the least squares problem__ is given by following bounds (see [Matrix Computations, Section 5](https://books.google.hr/books?id=X5YfsuCWpxMC&printsec=frontcover&hl=hr#v=onepage&q&f=false)).
 
@@ -151,8 +158,7 @@ __Condition number__ of a general matrix $A$ is:
 $$
 \kappa_2(A)=\sqrt{\kappa(A^TA)}=\|A\|_2 \|(A^TA)^{-1} A^T\|_2.$$
 
-Let $x$ and $\hat x$ be the least squares solutions of the systems $Ax=b$ and 
-$(A+\delta A)\hat x=b+\delta b$, respectively. The __residuals__ are defined by
+Let $x$ and $\hat x$ be the least squares solutions of the systems $Ax=b$ and  $(A+\delta A)\hat x=b+\delta b$, respectively. The __residuals__ are defined by
 
 $$
 \begin{aligned}
@@ -201,7 +207,7 @@ norm(xp₁-x₁)/norm(x₁), norm(rp₁-r₁)/norm(b₁)
 
 # ╔═╡ 314c1246-1772-415f-9f9a-38b221b6eb96
 md"""
-## Error analysis and accuracy
+# Error analysis and accuracy
 
 If $\mathop{\mathrm{rang}}A =n$, the matrix $A^TA$ is symmetric and positive definite, so the system 
 (*) can be solved using Cholesky factorization.
@@ -226,11 +232,13 @@ Therefore, the relative error of the solution obtained using normal equation dep
 """
 
 # ╔═╡ Cell order:
+# ╠═28fec75e-f9e4-4077-b647-8ab6e7767106
+# ╠═bb659710-2421-11eb-25d4-af6542e470eb
+# ╠═eac37e99-359f-4634-8ba0-7057fce971c9
 # ╟─fcc44b72-e162-4351-8601-f7402e2ed694
 # ╟─a062b872-1eaa-11eb-005f-9d66fad5ee28
 # ╟─a6fc5380-1eaa-11eb-11a9-3544f456255c
 # ╟─b4ddcb00-1eaa-11eb-23c6-d15643cd207a
-# ╠═bb659710-2421-11eb-25d4-af6542e470eb
 # ╟─5c65704d-666f-4f15-bc8f-7741457f9af0
 # ╠═365fc919-988d-4a1b-b42c-b8ab6931f860
 # ╠═dea071d2-66b7-44f0-a75c-e0c67e574561
@@ -240,7 +248,7 @@ Therefore, the relative error of the solution obtained using normal equation dep
 # ╠═de2b7ecb-df68-4280-a23b-d11bff24aa78
 # ╠═d8458b22-f8b3-4fda-8351-3abe5af8dc46
 # ╟─c2f32713-6b34-4c34-9180-d759039891c5
-# ╠═d92d5bed-8689-481f-b56f-d46fa4f835c1
+# ╟─d92d5bed-8689-481f-b56f-d46fa4f835c1
 # ╠═74feeef4-02b4-454c-9d86-c29d775c89c0
 # ╠═73d14810-4471-40ad-b1ca-f1d210ad2eb2
 # ╟─f7f6d6b8-44cc-4337-a601-3c4c5ef3fb77

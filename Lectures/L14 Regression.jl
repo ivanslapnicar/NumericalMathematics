@@ -1,14 +1,28 @@
 ### A Pluto.jl notebook ###
-# v0.12.18
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
 
+# ╔═╡ 7be18986-4e71-48cd-a897-586acfda6c5d
+# When running on your computer, you can comment this cell
+begin
+	import Pkg
+	Pkg.activate(mktempdir())
+    Pkg.add([
+        Pkg.PackageSpec(name="PlutoUI"),
+		Pkg.PackageSpec(name="Plots")
+    ])
+end
+
 # ╔═╡ 25c68fb0-2422-11eb-3214-6fbc147f322d
 begin
-	using LinearAlgebra
-	using Plots
+	using PlutoUI, LinearAlgebra, Plots
+	plotly()
 end
+
+# ╔═╡ bbc5eb02-6f79-4758-9bae-2591458dda5d
+TableOfContents(title="📚 Table of Contents", aside=true)
 
 # ╔═╡ ec0b9159-1c36-4112-8ce7-ec69c6709861
 md"""
@@ -122,13 +136,13 @@ sqrt(norm(A₁*[a;b;c]-y₁)/norm(y₁))
 md"""
 ## Growth of World population
 
-The growth of World population is given in the following table (see http://en.wikipedia.org/wiki/World_population ). 
+The growth of World population is given in the following table, see [http://en.wikipedia.org/wiki/World_population](http://en.wikipedia.org/wiki/World_population): 
 
 
 $$
 \begin{array}{c|c|c|c|c|c|c|c|c|c}
-\textrm{godina} & 1750 & 1800 & 1850 & 1900 & 1950 & 1999 & 2008 & 2010 & 2012 \\ \hline
-\textrm{populacija (milijuni)} & 791 & 978 & 1262 & 1650 & 2521 & 5978 & 6707 & 6896 & 7052 
+\textrm{Year} & 1750 & 1800 & 1850 & 1900 & 1950 & 1999 & 2008 & 2010 & 2012 \\ \hline
+\textrm{Population (milllions)} & 791 & 978 & 1262 & 1650 & 2521 & 5978 & 6707 & 6896 & 7052 
 \end{array}$$
 
 
@@ -203,9 +217,11 @@ end
 P₂(2050)
 
 # ╔═╡ Cell order:
+# ╠═7be18986-4e71-48cd-a897-586acfda6c5d
+# ╠═25c68fb0-2422-11eb-3214-6fbc147f322d
+# ╠═bbc5eb02-6f79-4758-9bae-2591458dda5d
 # ╟─ec0b9159-1c36-4112-8ce7-ec69c6709861
 # ╟─108def07-d919-498c-82c2-7c43c7fd27f3
-# ╠═25c68fb0-2422-11eb-3214-6fbc147f322d
 # ╠═64ebb9c6-9c26-42bb-9141-45f5efab3d36
 # ╠═5a57b1b6-eabb-46be-9986-1c48dcaf1785
 # ╠═748be150-4eee-4c29-93fe-bdc1058cb3e8
