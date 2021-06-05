@@ -1,21 +1,34 @@
 ### A Pluto.jl notebook ###
-# v0.12.18
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 7d2eceff-5dc8-4088-8504-8fa469948983
-using QuadGK, FastGaussQuadrature, LinearAlgebra
+# ╔═╡ 11acfcc3-ea7b-411d-8922-70743f2eb847
+# On your computer, comment this cell
+begin
+	import Pkg
+	Pkg.activate(mktempdir())
+    Pkg.add([
+        Pkg.PackageSpec(name="PlutoUI"),
+		Pkg.PackageSpec(name="QuadGK"),
+		Pkg.PackageSpec(name="FastGaussQuadrature"),
+		Pkg.PackageSpec(name="FFTW")
+    ])
+end
 
-# ╔═╡ 456ae14f-d92c-4561-bcfd-d1b9849b8244
-using FFTW
+# ╔═╡ 7d2eceff-5dc8-4088-8504-8fa469948983
+using PlutoUI, QuadGK, FastGaussQuadrature, LinearAlgebra, FFTW
+
+# ╔═╡ fb6de421-4c12-472e-a1b2-0dc93f3dd20a
+TableOfContents(title="📚 Table of Contents", aside=true)
 
 # ╔═╡ c42b0321-1003-4935-857e-a8422fabd485
 md"""
 
 # Numerical Integration
 
-## Newton-Cotes formulas
+# Newton-Cotes formulas
 
 Function $f(x):[a,b]\to\mathbb{R}$ is interpolated by the polynomial of degree $n$ through $n+1$ equally spaced points, and the integral is approximated by the integral of the interpolation polynomial. The polynomial $P_n(x)$ can be computed in Lagrange form (see the notebook [L10 Interpolating Functions.jl](https://ivanslapnicar.github.io/NumericalMathematics/L10%20Interpolating%20Functions.jl.html)): let 
 
@@ -49,7 +62,7 @@ $$
 
 # ╔═╡ 5071e7f3-d353-4429-8885-ca9431edf5a9
 md"""
-### Trapezoidal rule
+## Trapezoidal rule
 
 For $n=1$,  formula (2) gives 
 
@@ -126,7 +139,7 @@ The derivation of the Trapeziodal rule and the error estimate can be found in th
 
 # ╔═╡ 04f1b0f8-10bc-4aaf-bbf2-c411d740db0e
 md"""
-### Simpson's formula
+## Simpson's formula
 
 For $n=2$, formula (2) gives 
 
@@ -157,7 +170,7 @@ Details can be found in the textbook [Numerical Mathematics and Computing, Secti
 
 # ╔═╡ 7a11ccd0-68c1-46d3-9249-3cc9f867ef65
 md"""
-### Richardson's extrapolation
+## Richardson's extrapolation
 
 Estimation of errors using formulas (3) and (4) can be complex. Provided certain conditions are met, the __Richardson's extrapolation__ enables us to estimate the error using approximation of the integral with $n/2$ points. If the error bound contains the term $(\Delta x)^m$, then the error is approximated by
 
@@ -239,6 +252,9 @@ end
 
 # ╔═╡ 4baefc88-ba8b-43f7-8cec-48bf4d80c314
 md"""
+
+## Examples
+
 ### Elliptic integral
 
 Let us compute the circumference of the ellipse with semi-axes $2$ and $1$. Parametric equations of the ellipse are
@@ -327,7 +343,7 @@ myπ₃[1]-BigFloat(π)
 
 # ╔═╡ e7b2a060-7ae9-4418-a434-1693f73d04ac
 md"""
-## Gaussian quadrature
+# Gaussian quadrature
 
 Similarly to formula (1), the integral is approximated by a sum of products of function values and corresponding weights:
 
@@ -336,8 +352,7 @@ $$
 
 where $\omega(x)$ is the __weight function__.
 
-The points $x_k$ are the zeros of the corresponding orthogonal polynomial $P_{n}(x)$ of degree $n$, for example, __Legendre polynomial__ for $[a,b]=[-1,1]$ and $\omega(x)=1$, or __Chebyshev polynomial__ for 
-$[a,b]=[-1,1]$ and $\omega(x)=\displaystyle\frac{1}{\sqrt{1-x^2}}$ (see the notebook  [L12 Orthogonal Polynomials.ipynb](https://nbviewer.jupyter.org/github/ivanslapnicar/NumericalMathematics/blob/master/Lectures/Jupyter/L12%20Orthogonal%20Polynomials.ipynb)).
+The points $x_k$ are the zeros of the corresponding orthogonal polynomial $P_{n}(x)$ of degree $n$, for example, __Legendre polynomial__ for $[a,b]=[-1,1]$ and $\omega(x)=1$, or __Chebyshev polynomial__ for $[a,b]=[-1,1]$ and $\omega(x)=\displaystyle\frac{1}{\sqrt{1-x^2}}$ (see the notebook  [L12 Orthogonal Polynomials.ipynb](https://nbviewer.jupyter.org/github/ivanslapnicar/NumericalMathematics/blob/master/Lectures/Jupyter/L12%20Orthogonal%20Polynomials.ipynb)).
 
 The __weights__ are
 
@@ -363,7 +378,7 @@ mapnodes(x,a,b)=(b-a)*x/2 .+(a+b)/2
 
 # ╔═╡ 427bfd71-5f3d-4b0b-b6f8-3753b5844a87
 md"""
-### Existing routines
+## Existing routines
 
 Professional routines for numerical integration are rather complex, and majority of the programs have some of them built-in:
 
@@ -373,7 +388,7 @@ Professional routines for numerical integration are rather complex, and majority
 """
 
 # ╔═╡ cb4a8760-9ba7-4bb2-beea-9876a680829f
-# ?quadgk
+#?quadgk
 
 # ╔═╡ 4feab23e-b51b-4818-8343-a73deb67c942
 # 1/8 of the circumference of elipse
@@ -412,7 +427,7 @@ gausschebyshev(16)
 
 # ╔═╡ 75fe9d8a-5e70-4d31-98f2-0ea82c511698
 md"""
-## Clenshaw-Curtis quadrature
+# Clenshaw-Curtis quadrature
 
 With the substitution $x=\cos\theta$, it holds
 
@@ -481,10 +496,10 @@ ClenshawCurtisFFT(f₂,0,1,16),pi
 # ╔═╡ 15905e38-d8f3-450a-9bcc-1d6b7a4fcae1
 ClenshawCurtisFFT(x->exp(-x),0,1000,18)
 
-# ╔═╡ a46784f5-e834-4671-9689-fd7ec3fada6b
-
-
 # ╔═╡ Cell order:
+# ╠═11acfcc3-ea7b-411d-8922-70743f2eb847
+# ╠═7d2eceff-5dc8-4088-8504-8fa469948983
+# ╠═fb6de421-4c12-472e-a1b2-0dc93f3dd20a
 # ╟─c42b0321-1003-4935-857e-a8422fabd485
 # ╟─5071e7f3-d353-4429-8885-ca9431edf5a9
 # ╟─04f1b0f8-10bc-4aaf-bbf2-c411d740db0e
@@ -511,7 +526,6 @@ ClenshawCurtisFFT(x->exp(-x),0,1000,18)
 # ╟─e7b2a060-7ae9-4418-a434-1693f73d04ac
 # ╠═656b359d-9504-4fa3-a327-d0977e10d642
 # ╟─427bfd71-5f3d-4b0b-b6f8-3753b5844a87
-# ╠═7d2eceff-5dc8-4088-8504-8fa469948983
 # ╠═cb4a8760-9ba7-4bb2-beea-9876a680829f
 # ╠═4feab23e-b51b-4818-8343-a73deb67c942
 # ╠═fa5a8850-c845-4328-94ca-cef66b4b52dd
@@ -528,9 +542,7 @@ ClenshawCurtisFFT(x->exp(-x),0,1000,18)
 # ╠═6ab103b9-e138-4c57-8730-83fe6313bbb0
 # ╠═35dbcd72-9f1d-43a2-9134-4116eefacc97
 # ╠═307e81fa-5384-4aad-8fe2-7df9ab5bce0d
-# ╠═456ae14f-d92c-4561-bcfd-d1b9849b8244
 # ╠═748ace02-d80f-4952-883b-de220083d58a
 # ╠═44406f97-1a7e-490b-9e75-3ab42e7f353f
 # ╠═41654b34-29c9-44d9-a0a2-d30a77d1b29c
 # ╠═15905e38-d8f3-450a-9bcc-1d6b7a4fcae1
-# ╠═a46784f5-e834-4671-9689-fd7ec3fada6b

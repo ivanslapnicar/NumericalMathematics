@@ -1,14 +1,29 @@
 ### A Pluto.jl notebook ###
-# v0.12.18
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 0d4fbf25-a629-416a-bb67-b087144a5862
-using Plots
+# ╔═╡ 9184c630-a890-4f9e-b714-47ea830b31d0
+# On your computer, comment this cell
+begin
+	import Pkg
+	Pkg.activate(mktempdir())
+    Pkg.add([
+        Pkg.PackageSpec(name="PlutoUI"),
+		Pkg.PackageSpec(name="Plots"),
+		Pkg.PackageSpec(name="ODE")
+    ])
+end
 
-# ╔═╡ 69cef7ae-8c14-46fc-8583-942c1bdec167
-using ODE
+# ╔═╡ 0d4fbf25-a629-416a-bb67-b087144a5862
+begin
+	using PlutoUI, Plots, ODE
+	plotly()
+end
+
+# ╔═╡ ac1342d7-a80c-4942-b424-6cb44904a07e
+TableOfContents(title="📚 Table of Contents", aside=true)
 
 # ╔═╡ b5d87000-5af5-11eb-0594-57573e58e809
 md"""
@@ -32,7 +47,7 @@ __Remark.__ The independent variable is often denoted by $t$ (time).
 
 # ╔═╡ 68a29859-4ba6-46ed-97ef-fdffec416003
 md"""
-## Euler's method
+# Euler's method
 
 Taylor's formula in the neighbourhood of the point $x$ can be written as
 (with the assumption that $y'''(x)$ is bounded) 
@@ -95,7 +110,7 @@ end
 
 # ╔═╡ 934a054a-f31d-497e-bcf8-295dac6db83b
 md"""
-### Example 1
+## Example 1
 
 The solution of the initial value problem
 
@@ -130,6 +145,8 @@ end
 
 # ╔═╡ 5e6c51c1-c7a9-4542-89fd-9c7b0846437c
 md"""
+## Error bound
+
 Notice that the given problem is badly conditioned.
 Accurate bound for the global error is given by the following theorem:
 
@@ -178,7 +195,7 @@ solution₁(1)-yy₁[end]
 
 # ╔═╡ 12ceb8e5-f976-4639-9175-047e84321c85
 md"""
-### Example 2
+## Example 2
 
 The solution of the problem
 
@@ -212,13 +229,13 @@ __Problem.__ Estimate the accuracy of the computed value $y(1)$ using the bound 
 
 # ╔═╡ 2d44d600-5af7-11eb-0958-b3eab7ae938d
 md"""
-## Runge-Kutta methods
+# Runge-Kutta methods
 
 Euler's method is a first-order method, and it not accurate enough. Thus, in practice we use methods of higher order which approximate $y(x)$ in the point $x_{k+1}$ using values of the function $f(x,y)$ in several points from the interval 
 
 $$[x_k,x_{k+1}]\equiv[x_k,x_k+h].$$
 
-### Heun's method
+## Heun's method
 
 $$\begin{aligned}
 k_1&=hf(x_k,y_k),\\
@@ -245,7 +262,7 @@ The Trapezoid formula has an error of the order of magnitude $O(h^2)$, so the gl
 # ╔═╡ 8b933ce6-7fea-4190-940a-bd7720fc93be
 md"""
 
-### Standard Runge-Kutta method
+## Standard Runge-Kutta method
 
 $$\begin{aligned}
 k_1&=hf(x_k,y_k),\\
@@ -279,10 +296,9 @@ end
 
 # ╔═╡ ad54ce7f-8caa-46f8-9a57-f3710ca89f40
 md"""
-### Example 3
+## Example
 
-Let us solve problems from Examples 1 and 2. For Example 1 the numerical solution graphically overlaps the exact solution. 
-For Example 2 the solution using the function `RungeKutta4()` is an order of magnitude more accurate than the solution obtained using the function  red `Euler()`.  
+Let us solve problems from Examples 1 and 2. For Example 1 the numerical solution graphically overlaps the exact solution. For Example 2 the solution using the function `RungeKutta4()` is an order of magnitude more accurate than the solution obtained using the function  red `Euler()`.  
 """
 
 # ╔═╡ 4adf6672-5ae1-42e1-85e9-e522d6069fab
@@ -308,16 +324,14 @@ solution₂(1), yEuler[end],yRK4[end]
 
 # ╔═╡ d52999d7-2644-4793-a36a-413ad8011e09
 md"""
-### Existing routines
+# Existing routines
 
-Most programming languages have built-in routines for numerical solution of ordinary differential equations.
-For example, 
+Most programming languages have built-in routines for numerical solution of ordinary differential equations. For example, 
 
 * Matlab has commands `ode*` (see [Matlab, Ordinary Differential Equations](https://www.mathworks.com/help/matlab/ordinary-differential-equations.html?searchHighlight=ordinary%20differential&s_tid=srchtitle)), a 
 * Julia has the package [ODE.jl](https://github.com/JuliaODE/ODE.jl).
 
-Standard Runge-Kutta method is implemented in the function `ode4()`, and Heun's method is implemented in the function 
-`ODE.ode2_heun()`. 
+Standard Runge-Kutta method is implemented in the function `ode4()`, and Heun's method is implemented in the function `ODE.ode2_heun()`. 
 
 __Remark.__ Function `ODE.ode2_heun()` is not visible with the function `varinfo()` since it is not being exported, but it can be found in the file `runge_kutta.jl`.
 """
@@ -333,7 +347,7 @@ methods(ode4)
 methods(ODE.ode2_heun)
 
 # ╔═╡ e50cf9c2-972d-4916-a3ca-6c20a0c73519
-# Let us solve the problem of Example 2.
+# Let us solve the problem from Example 2.
 # Computed values yₖ are the first elements of the output vectors.
 yode4=ode4(f₂,0.0,range(0,stop=1,length=21))[2]
 
@@ -346,7 +360,7 @@ yode2=ODE.ode2_heun(f₂,0.0,range(0,stop=1,length=21))[2];
 
 # ╔═╡ 471ddc14-d7ba-4d94-a902-9ca459be5ce3
 md"""
-## Systems of differential equations
+# Systems of differential equations
 
 Let us solve the system of $n$ equations
 
@@ -379,7 +393,7 @@ The system is successfully solved using Euler's method and Runge-Kutta methods i
 
 # ╔═╡ 705ebcb9-bfa6-4357-8610-27c43c0c3f96
 md"""
-### Lotka-Volterra equations
+## Lotka-Volterra equations
 
 Modeling of the __predator-prey__ system gives __Lotka-Volterra__ equations (see  [Lotka-Volterra equations](https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations)):
 
@@ -463,7 +477,7 @@ plot(Z,V,xlabel="Z",ylabel="V", label=:none)
 
 # ╔═╡ 5308aa28-6da6-4943-b393-c08592b98c27
 md"""
-### Scaled Lotka-Volterra equations
+## Scaled Lotka-Volterra equations
 
 Plotting the exact solution (7) in the phase space is impractical since plotting of implicitly defined functions on a large area is time consuming. However, using transformations (see [Modeling Complex Systems, section 2.1](http://www.springer.com/us/book/9781441965615))
 
@@ -515,11 +529,11 @@ plot(X₁,Y₁,xlabel="Z",ylabel="V", label=:none)
 
 # ╔═╡ 3ada3bbf-cc3b-46b4-adbd-c3685568781a
 md"""
-## Differential equations of higher order
+# Differential equations of higher order
 
 Using substitutions, differential equation of higher order can be reduced to a system of differential equations of the first order.
 
-### Example 4
+## Example
 
 The solution of the initial value problem 
 
@@ -578,15 +592,14 @@ end
 # ╔═╡ 12c6cb02-6bc0-4558-bc10-9ca1d8cd029a
 # Norm of errors in the used points
 # import LinearAlgebra; LinearAlgebra.norm(solution₅.(x)-Y)
-sqrt(sum((solution₅.(x₅)-YRK4₅).^2))
-
-# ╔═╡ ae54d9f1-bed6-4f56-83a2-832e819b5068
-
+√(sum((solution₅.(x₅)-YRK4₅).^2))
 
 # ╔═╡ Cell order:
+# ╠═9184c630-a890-4f9e-b714-47ea830b31d0
+# ╠═0d4fbf25-a629-416a-bb67-b087144a5862
+# ╠═ac1342d7-a80c-4942-b424-6cb44904a07e
 # ╟─b5d87000-5af5-11eb-0594-57573e58e809
 # ╟─68a29859-4ba6-46ed-97ef-fdffec416003
-# ╠═0d4fbf25-a629-416a-bb67-b087144a5862
 # ╠═fce92627-56f1-482e-983a-083b7281fbcb
 # ╟─934a054a-f31d-497e-bcf8-295dac6db83b
 # ╠═4f30e023-2c8d-42b7-a124-c240e5464769
@@ -606,7 +619,6 @@ sqrt(sum((solution₅.(x₅)-YRK4₅).^2))
 # ╠═a262689c-74f3-46bb-bd55-1aa7eec5379f
 # ╠═481e7da8-95f2-4972-863c-fcd7a79cf417
 # ╟─d52999d7-2644-4793-a36a-413ad8011e09
-# ╠═69cef7ae-8c14-46fc-8583-942c1bdec167
 # ╠═1a0815c9-900d-4ba5-855a-7fa582e8d498
 # ╠═d8e15baa-34a9-447d-90d2-8dfe8065ee1b
 # ╠═f35f1bb2-bc2c-4bb7-9dc9-367bc5a6c15d
@@ -626,4 +638,3 @@ sqrt(sum((solution₅.(x₅)-YRK4₅).^2))
 # ╟─3ada3bbf-cc3b-46b4-adbd-c3685568781a
 # ╠═39d0b178-70bd-4815-bee8-3738bdaea250
 # ╠═12c6cb02-6bc0-4558-bc10-9ca1d8cd029a
-# ╠═ae54d9f1-bed6-4f56-83a2-832e819b5068
