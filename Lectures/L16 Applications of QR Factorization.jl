@@ -1,16 +1,28 @@
 ### A Pluto.jl notebook ###
-# v0.12.10
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
 
+# ╔═╡ b7cc077b-960b-41ad-bb20-51bd0cfbd4e6
+begin
+	import Pkg
+	Pkg.activate(mktempdir())
+    Pkg.add([
+        Pkg.PackageSpec(name="PlutoUI"),
+		Pkg.PackageSpec(name="Plots")
+    ])
+end
+
 # ╔═╡ 881ed68b-ac65-434a-9d62-df963fb033b1
 begin
-	using LinearAlgebra
-	using Plots
-	import Random
+	using PlutoUI, Random, LinearAlgebra, Plots
 	Random.seed!(123)
+	plotly()
 end
+
+# ╔═╡ 07eaaf8d-3326-49b0-9413-402497753ec2
+TableOfContents(title="📚 Table of Contents", aside=true)
 
 # ╔═╡ e0f03ec0-f136-411f-a270-bcc85fde0579
 md"""
@@ -28,7 +40,7 @@ and the second property follows from
 
 $$\|Qx\|_2^2=(Qx)^T(Qx)=x^TQ^TQx=x^Tx=\|x\|_2^2.$$
 
-## System of linear equations
+## Systems of linear equations
 
 QR factorization can be used to solve system of linear equations $Ax=b$: premultiplying $QRx=b$ by $Q^T$ yields $Rx=Q^Tb$, so it remains to solve triangular system.
 
@@ -37,6 +49,8 @@ With respect to the solution using Gaussian elimination, it holds:
 * the number of floating-point operations doubles,
 * the solution is somewhat more accurate, and
 * there is no element growth (pivoting is not necessary).
+
+### Example
 """
 
 # ╔═╡ d0aa1de2-f2e5-4c59-b7ce-a0022bf6dbef
@@ -79,6 +93,8 @@ $$
 R_0x=c$$
     
 is the solution of the least squares problem. Let us solve the problem from the regression notebook:
+
+### Small example
 """
 
 # ╔═╡ 2e4f479e-9a3a-4495-abb9-52a3203a35c4
@@ -101,13 +117,18 @@ end
 # Built-in function
 A₁\y₁
 
+# ╔═╡ a565c881-4f9a-4ab4-92a1-04e6fe0a8315
+md"
+### Random example
+"
+
 # ╔═╡ 881daa94-e922-4b76-bca3-6b255049ba67
 begin
 	# Bigger example
 	m₂=8
 	n₂=5
-	A₂=rand(m₂,n₂)
-	b₂=rand(m₂)
+	A₂=randn(m₂,n₂)
+	b₂=randn(m₂)
 	F₂=qr(A₂)
 end
 
@@ -148,6 +169,11 @@ end
 plot(xₒ,V,title="Standard basis",legend=:bottomright,
 	label=["1" "x" "x^2" "x^3" "x^4" "x^5"])
 
+# ╔═╡ 2b294375-d2de-4aeb-bf01-7646bc9a935a
+md"
+### Legendre polynomials
+"
+
 # ╔═╡ f157bb76-8445-4994-b08e-260b2a51ad51
 begin
 	# Orthogonalization with the weight function ω(x)=1 produces Legendre polynomials.
@@ -160,9 +186,11 @@ plot(xₒ,Qₒ,title="Legendre polynomials",label=["L₀" "L₁" "L₂" "L₃" "
 
 # ╔═╡ 4b343213-f8d2-45d3-bae8-999dee675089
 md"""
-Given normalized vectors are values of scaled Legendre polynomials from notebook [NA12 Orthogonal Polynomials.ipynb](L12%20Orthogonal%20Polynomials.ipynb).
+### Chebyshev polynomials
 
-In order to obtain Chebyshev polynomials, we need to use weight function $\omega(x)=\displaystyle\frac{1}{\sqrt{1-x^2}}$ and modify function `GramSchmidtQR()` from notebook [L15 QR Factorization.ipynb](L15%20QR%20Factorization.ipynb) such that it computes __weighted scalar products__. The obtained normalized vectors are values of scaled Chebyshev polynomials.
+Given normalized vectors are values of scaled Legendre polynomials from notebook [L12 Orthogonal Polynomials.jl](https://ivanslapnicar.github.io/NumericalMathematics/L12%20Orthogonal%20Polynomials.jl.html).
+
+In order to obtain Chebyshev polynomials, we need to use weight function $\omega(x)=\displaystyle\frac{1}{\sqrt{1-x^2}}$ and modify function `GramSchmidtQR()` from notebook [L15 QR Factorization.jl](https://ivanslapnicar.github.io/NumericalMathematics/L15%20QR%20Factorization.jl.html) such that it computes __weighted scalar products__. The obtained normalized vectors are values of scaled Chebyshev polynomials.
 """
 
 # ╔═╡ 830acec9-74f1-4b02-a5f7-b65b05f457ef
@@ -206,8 +234,10 @@ __Problem.__ Normalize columns of the matrix $Q$ such that the vectors attain al
 """
 
 # ╔═╡ Cell order:
-# ╟─e0f03ec0-f136-411f-a270-bcc85fde0579
+# ╠═b7cc077b-960b-41ad-bb20-51bd0cfbd4e6
 # ╠═881ed68b-ac65-434a-9d62-df963fb033b1
+# ╠═07eaaf8d-3326-49b0-9413-402497753ec2
+# ╟─e0f03ec0-f136-411f-a270-bcc85fde0579
 # ╠═d0aa1de2-f2e5-4c59-b7ce-a0022bf6dbef
 # ╠═fbfa49ba-8c53-4fdf-ae26-d9b678fcce2e
 # ╟─45923270-4d63-4eaf-8d99-f9e9baab558e
@@ -215,6 +245,7 @@ __Problem.__ Normalize columns of the matrix $Q$ such that the vectors attain al
 # ╠═743b75c7-d6a0-4fa0-bd99-6412378453e2
 # ╠═04bb12df-5d6a-460f-a381-23058dcfe0b7
 # ╠═c4762bb2-56fd-4e2a-9255-4922f41addfe
+# ╠═a565c881-4f9a-4ab4-92a1-04e6fe0a8315
 # ╠═881daa94-e922-4b76-bca3-6b255049ba67
 # ╠═16461985-6cb3-4ddb-9eab-bd13917b8b69
 # ╠═d01748e8-169d-4d39-bf79-90c0c0d2df56
@@ -223,6 +254,7 @@ __Problem.__ Normalize columns of the matrix $Q$ such that the vectors attain al
 # ╟─0ad1e3dc-e5d4-416a-b3e0-21fd710ed241
 # ╠═24ac4e43-b99d-439e-aa6b-ba3bc494b8dd
 # ╠═9006213a-325f-4296-a0ec-d5c02b4ec5e8
+# ╟─2b294375-d2de-4aeb-bf01-7646bc9a935a
 # ╠═f157bb76-8445-4994-b08e-260b2a51ad51
 # ╠═68d56539-22ab-4a89-ad51-fb3c2f37ee8d
 # ╟─4b343213-f8d2-45d3-bae8-999dee675089

@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.10
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
@@ -13,12 +13,21 @@ macro bind(def, element)
     end
 end
 
+# ╔═╡ b9c7ca7b-a5ca-4b9e-bb1c-5f237aa98894
+begin
+	import Pkg
+	Pkg.activate(mktempdir())
+    Pkg.add([
+        Pkg.PackageSpec(name="PlutoUI"),
+		Pkg.PackageSpec(name="Images"),
+		Pkg.PackageSpec(name="Plots")
+    ])
+end
+
 # ╔═╡ 1dd2098b-8d4d-4fa4-a794-49badf9790c2
 begin
-	using Images
-	using LinearAlgebra
-	using Plots
-	using PlutoUI
+	using PlutoUI, Images, LinearAlgebra, Plots
+	plotly()
 end
 
 # ╔═╡ c94e89d0-1049-4b0d-aa26-d5a1eda436b9
@@ -33,7 +42,19 @@ Here is an example of image compression.
 """
 
 # ╔═╡ 3d91d5e7-e134-464a-a0a4-032a28254715
-img=load("../files/P8040001a.jpg")
+# Create directory
+if !isdir("files")
+	mkdir("files")
+end
+
+# ╔═╡ ccbc114d-b5ff-4874-be91-008bc1b8e794
+# Download the image
+download("https://ivanslapnicar.github.io/NumericalMathematics/files/P8040001a.jpg",
+	"files/P8040001a.jpg")
+
+# ╔═╡ 0fa72a51-e9d4-4d23-a0a1-e477d2fb1611
+# Load the image
+img=load("files/P8040001a.jpg")
 
 # ╔═╡ 464d999f-f530-4cc0-b9c8-fa094d8a138c
 # Description of data
@@ -80,11 +101,13 @@ scatter(abs.(diag(R.R)),
     title="Diagonal elements of R",legend=false)
 
 # ╔═╡ d7fd21c0-25ae-11eb-217c-51b165642c9b
-@bind k Slider(10:10:200)
+md"
+k = $(@bind k Slider(10:10:300, show_value=true, default=100))
+"
 
 # ╔═╡ feebc2d6-e495-4145-8e90-3b0d7d073d04
 begin
-	# Compute compressed matrices for each channel, 
+	# Compute approximations of rank k for each channel, 
 	# RedC, GreenC, and BlueC, respectively.
 	# Function Matrix() is needed for faster manipulation with Q
 	RedC=Matrix(R.Q)[:,1:k]*R.R[1:k,invperm(R.p)]
@@ -93,19 +116,22 @@ begin
 end
 
 # ╔═╡ 955201fd-cb90-4c0f-bf50-ac1ca1850d26
-# Nacrtajmo komprimiranu sliku
+# The compressed image
 colorview(RGB, RedC, GreenC, BlueC)
 
 # ╔═╡ 5bb5fe50-2466-11eb-175c-e1ff94b7840c
 k
 
 # ╔═╡ b1c18ee7-4b8f-4b44-a960-d759040a29cd
-k, norm(Red-RedC)/norm(Red)
+norm(Red-RedC)/norm(Red)
 
 # ╔═╡ Cell order:
-# ╟─c94e89d0-1049-4b0d-aa26-d5a1eda436b9
+# ╠═b9c7ca7b-a5ca-4b9e-bb1c-5f237aa98894
 # ╠═1dd2098b-8d4d-4fa4-a794-49badf9790c2
+# ╟─c94e89d0-1049-4b0d-aa26-d5a1eda436b9
 # ╠═3d91d5e7-e134-464a-a0a4-032a28254715
+# ╠═ccbc114d-b5ff-4874-be91-008bc1b8e794
+# ╠═0fa72a51-e9d4-4d23-a0a1-e477d2fb1611
 # ╠═464d999f-f530-4cc0-b9c8-fa094d8a138c
 # ╠═86818c56-6d28-463a-aa87-3c0a715ef8ce
 # ╠═ce428ce6-9bc5-4ce2-bb17-3bb8173fc937
@@ -118,5 +144,5 @@ k, norm(Red-RedC)/norm(Red)
 # ╠═feebc2d6-e495-4145-8e90-3b0d7d073d04
 # ╠═5bb5fe50-2466-11eb-175c-e1ff94b7840c
 # ╠═955201fd-cb90-4c0f-bf50-ac1ca1850d26
-# ╠═d7fd21c0-25ae-11eb-217c-51b165642c9b
+# ╟─d7fd21c0-25ae-11eb-217c-51b165642c9b
 # ╠═b1c18ee7-4b8f-4b44-a960-d759040a29cd

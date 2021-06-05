@@ -1,15 +1,24 @@
 ### A Pluto.jl notebook ###
-# v0.12.8
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
 
+# ╔═╡ b3adb110-f081-485e-8df0-8059a59d77c3
+begin
+	import Pkg
+	Pkg.activate(mktempdir())
+	Pkg.add("PlutoUI")
+end
+
 # ╔═╡ b897b490-2422-11eb-29f2-c1b07eae9d6e
 begin
-	using LinearAlgebra
-	import Random
+	using PlutoUI, Random, LinearAlgebra
 	Random.seed!(123)
 end
+
+# ╔═╡ 7d696568-5099-453a-bc62-b5cc9da014cd
+TableOfContents(title="📚 Table of Contents", aside=true)
 
 # ╔═╡ fb66b990-4511-476f-8e77-87aa9c265041
 md"""
@@ -77,7 +86,11 @@ r_{11} & r_{12} & r_{13} \\
 0 & 0 & r_{33}
 \end{bmatrix}.
 \end{aligned}$$
+"""
 
+# ╔═╡ af380e90-aa7c-411a-8b4d-ab16d5df6312
+md"""
+# Gram-Schmidt orthogonalization
 
 Equating columns starting from the first one, gives:
 
@@ -118,6 +131,11 @@ function GramSchmidtQR(A::Array)
     return Q,R
 end 
 
+# ╔═╡ d98a860c-b31c-40df-bb9e-0993c9e69dd6
+md"
+## Example
+"
+
 # ╔═╡ b6ee2c00-78e7-4d22-a851-d22c4a4946bc
 A=rand(8,5)
 
@@ -144,7 +162,7 @@ Algorithm `GramSchmidtQR()` is numerically unstable, so it is better to use __mo
 
 # ╔═╡ 3fd60d80-25d7-45e2-9776-7250841e8f74
 md"""
-## Householder reflectors
+# Householder reflectors
 
 __QR factorization of vector__ $x$ is
 
@@ -324,9 +342,13 @@ $$
 """
 
 # ╔═╡ Cell order:
-# ╟─fb66b990-4511-476f-8e77-87aa9c265041
+# ╠═b3adb110-f081-485e-8df0-8059a59d77c3
 # ╠═b897b490-2422-11eb-29f2-c1b07eae9d6e
+# ╠═7d696568-5099-453a-bc62-b5cc9da014cd
+# ╟─fb66b990-4511-476f-8e77-87aa9c265041
+# ╟─af380e90-aa7c-411a-8b4d-ab16d5df6312
 # ╠═24c9f0ba-6e18-4362-840b-1a3581032ff5
+# ╠═d98a860c-b31c-40df-bb9e-0993c9e69dd6
 # ╠═b6ee2c00-78e7-4d22-a851-d22c4a4946bc
 # ╠═b8994eec-d651-4921-b1a3-184a029e83b7
 # ╠═19a0f0b8-dbab-4609-9f7f-17339af6bf63
