@@ -1,8 +1,15 @@
 ### A Pluto.jl notebook ###
-# v0.12.4
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
+
+# ╔═╡ 53cc64c9-a755-4643-95b2-c27a4409744a
+begin
+	import Pkg
+	Pkg.activate(mktempdir())
+	Pkg.add("Polynomials")
+end
 
 # ╔═╡ 08b094da-0680-4727-bdc4-83f71de41b32
 using Polynomials
@@ -151,8 +158,9 @@ myhorner(pb₂,-sqrt(map(BigFloat,10000)))
 
 
 # ╔═╡ Cell order:
-# ╟─70d60c9a-ff90-4003-a2e9-b3f0b5c88fb2
+# ╠═53cc64c9-a755-4643-95b2-c27a4409744a
 # ╠═08b094da-0680-4727-bdc4-83f71de41b32
+# ╟─70d60c9a-ff90-4003-a2e9-b3f0b5c88fb2
 # ╠═5c6e0ac4-9b1e-498b-a2f5-994e2a596783
 # ╠═d40a5115-1f38-4e4a-9bde-37408f90a5f5
 # ╠═58d8436a-740c-4801-aba3-92d01070a4e6

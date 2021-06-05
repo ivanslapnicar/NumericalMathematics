@@ -1,25 +1,64 @@
 ### A Pluto.jl notebook ###
-# v0.12.10
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 01708c02-1542-49de-b9ce-ef19b589d76e
+# ╔═╡ 4e42f72c-9b68-4f32-99d3-04443e353d3c
 begin
-	using Polynomials
-	using Plots
+	import Pkg
+	Pkg.activate(mktempdir())
+    Pkg.add([
+        Pkg.PackageSpec(name="PlutoUI"),
+		Pkg.PackageSpec(name="Polynomials"),
+		Pkg.PackageSpec(name="Plots")
+    ])
 end
+
+# ╔═╡ 8d74e339-3df8-482a-a1c9-ce02369fa5e9
+begin
+	using PlutoUI, Random, Polynomials, Plots, LinearAlgebra
+	plotly()
+end
+
+# ╔═╡ a6ce470f-9c2f-4dc8-9c92-878d1eaed316
+TableOfContents(title="📚 Table of Contents", aside=true)
 
 # ╔═╡ 68cc76f3-e124-4129-9339-98a21093bf1f
 begin
 	# Generate random points
-	using Random
 	Random.seed!(125)
 	n=6
 	x=rand(n)
 	y=rand(n)
 	x₀=minimum(x)
 	xₙ=maximum(x)
+end
+
+# ╔═╡ 8cb77244-7845-4e64-920e-11a024f880e6
+begin
+	# Functions to manipulate Vandermonde matrices
+	import Base.getindex, Base.size
+	struct Vandermonde{T} <: AbstractMatrix{T}
+		c :: AbstractVector{T}
+	end
+	
+	getindex(V::Vandermonde, i::Int, j::Int) = V.c[i]^(j-1)
+	isassigned(V::Vandermonde, i::Int, j::Int) = isassigned(V.c, i)
+	
+	size(V::Vandermonde, r::Int) = (r==1 || r==2) ? length(V.c) :
+	    throw(ArgumentError("Invalid dimension $r"))
+	size(V::Vandermonde) = length(V.c), length(V.c)
+	
+	function Matrix(V::Vandermonde{T}) where T
+		n=size(V, 1)
+		M=Array{T}(undef,n, n)
+		for i=1:n
+			M[:,i] = V.c.^(i-1)
+		end
+		M
+	end
+	
 end
 
 # ╔═╡ 724b6f69-0f5c-4bcf-8363-42f308897070
@@ -67,41 +106,8 @@ Therefore, the matrix $A$ is non-singular and the system has unique solution. We
 > the interpolation polynomial is __unique__.
 """
 
-# ╔═╡ 8cb77244-7845-4e64-920e-11a024f880e6
-begin
-	# Functions to manipulate Vandermonde matrices
-	import Base.getindex, Base.size
-	struct Vandermonde{T} <: AbstractMatrix{T}
-		c :: AbstractVector{T}
-	end
-	
-	getindex(V::Vandermonde, i::Int, j::Int) = V.c[i]^(j-1)
-	isassigned(V::Vandermonde, i::Int, j::Int) = isassigned(V.c, i)
-	
-	size(V::Vandermonde, r::Int) = (r==1 || r==2) ? length(V.c) :
-	    throw(ArgumentError("Invalid dimension $r"))
-	size(V::Vandermonde) = length(V.c), length(V.c)
-	
-	function Matrix(V::Vandermonde{T}) where T
-		n=size(V, 1)
-		M=Array{T}(undef,n, n)
-		for i=1:n
-			M[:,i] = V.c.^(i-1)
-		end
-		M
-	end
-	
-end
-
 # ╔═╡ 4f060d90-7b59-4447-ae59-856663acf3d7
 A=Vandermonde(x)
-
-# ╔═╡ d29a09b2-7cc6-477b-82fd-0591f1f0ec8f
-begin
-	# Vandermonde matrix has large condition number
-	using LinearAlgebra
-	cond(A)
-end
 
 # ╔═╡ 99d7f5e3-01c6-46e7-b16f-d42b46214738
 a=A\y
@@ -120,11 +126,15 @@ plot!(p,label="Polynomial",xlims=(0,1),ylims=(-20,20))
 # ╔═╡ 51668880-461a-45ce-82fe-204543677c75
 begin
 	# Plot the polynomial using our function
-	xx=range(x₀,stop=xₙ,length=100)
-	pS=p.(xx)
-	plot(xx,pS,label="Polynomial")
+	xᵣ=range(x₀,stop=xₙ,length=100)
+	pS=p.(xᵣ)
+	plot(xᵣ,pS,label="Polynomial")
 	scatter!(x,y,label="Points")
 end
+
+# ╔═╡ d29a09b2-7cc6-477b-82fd-0591f1f0ec8f
+# Vandermonde matrix has large condition number
+cond(A)
 
 # ╔═╡ ea329cb4-5b4b-49e3-825a-eb19d54a4e91
 md"""
@@ -165,15 +175,15 @@ L(t)=sum(y.*[prod(t .-x[[1:j-1;j+1:end]])/prod(x[j].-x[[1:j-1;j+1:end]])
 
 # ╔═╡ ef4cdc9e-7e9a-4b1a-b25c-c8e4266f8d6a
 begin
-	pL=Array{Float64}(undef,length(xx))
-	for i=1:length(xx)
-	    pL[i]=L(xx[i])
+	pL=Array{Float64}(undef,length(xᵣ))
+	for i=1:length(xᵣ)
+	    pL[i]=L(xᵣ[i])
 	end
 end
 
 # ╔═╡ 70cadf28-cb7c-4f44-836d-df7d7af666c2
 begin
-	plot(xx,pL,label="Polynomial")
+	plot(xᵣ,pL,label="Polynomial")
 	scatter!(x,y,label="Points")
 end
 
@@ -190,7 +200,14 @@ md"""
 Here we use the basis
 
 $$
-1, x-x_0, (x-x_0)(x-x_1), (x-x_0)(x-x_1)(x-x_2),\ldots,(x-x_0)(x-x_1)\cdots (x-x_{n-1})$$
+\begin{aligned}
+& 1,\\
+& x-x_0,\\
+& (x-x_0)(x-x_1),\\
+& (x-x_0)(x-x_1)(x-x_2),\\
+& \qquad \vdots\\
+& (x-x_0)(x-x_1)\cdots (x-x_{n-1})
+\end{aligned}$$
 
 so the polynomial is given by
 
@@ -245,15 +262,15 @@ end
 
 # ╔═╡ 3f6a6282-3363-4a51-a5a8-bacc3d7e8880
 begin
-	pN=Array{Float64}(undef,length(xx))
-	for i=1:length(xx)
-	    pN[i]=evalnewton(c,x,xx[i])
+	pN=Array{Float64}(undef,length(xᵣ))
+	for i=1:length(xᵣ)
+	    pN[i]=evalnewton(c,x,xᵣ[i])
 	end
 end
 
 # ╔═╡ 2060e3ad-c95f-4cd6-99c6-673da7dd64ac
 begin
-	plot(xx,pN,label="Polynomial")
+	plot(xᵣ,pN,label="Polynomial")
 	scatter!(x,y,label="Points")
 end
 
@@ -268,12 +285,11 @@ md"""
 We see that values `pN` and `pL` are closer to each other than to `pS` so we conclude that they are more accurate.
 """
 
-# ╔═╡ 7433f2b7-7f03-4d70-9e7a-68df287cc14c
-
-
 # ╔═╡ Cell order:
+# ╠═4e42f72c-9b68-4f32-99d3-04443e353d3c
+# ╠═8d74e339-3df8-482a-a1c9-ce02369fa5e9
+# ╠═a6ce470f-9c2f-4dc8-9c92-878d1eaed316
 # ╟─724b6f69-0f5c-4bcf-8363-42f308897070
-# ╠═01708c02-1542-49de-b9ce-ef19b589d76e
 # ╠═68cc76f3-e124-4129-9339-98a21093bf1f
 # ╠═8cb77244-7845-4e64-920e-11a024f880e6
 # ╠═4f060d90-7b59-4447-ae59-856663acf3d7
@@ -298,4 +314,3 @@ We see that values `pN` and `pL` are closer to each other than to `pS` so we con
 # ╠═0e0637af-4d77-442b-af67-ae3b7fe9075a
 # ╠═da067ec6-5085-467c-ae0d-143e1ba1e922
 # ╟─477e1427-cd04-40f0-9b18-00ce68b1b837
-# ╠═7433f2b7-7f03-4d70-9e7a-68df287cc14c

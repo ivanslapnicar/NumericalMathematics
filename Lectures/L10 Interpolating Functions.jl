@@ -1,13 +1,53 @@
 ### A Pluto.jl notebook ###
-# v0.12.10
+# v0.14.7
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 6a0417bf-00aa-47db-bf22-5842f1cc736e
+# ╔═╡ 51f1b96d-5f15-40a7-bbc3-482a50ecba84
+# On yozr computer, comment this cell.
 begin
-	using Polynomials
-	using Plots
+	import Pkg
+	Pkg.activate(mktempdir())
+    Pkg.add([
+        Pkg.PackageSpec(name="PlutoUI"),
+		Pkg.PackageSpec(name="Polynomials"),
+		Pkg.PackageSpec(name="Plots")
+    ])
+end
+
+# ╔═╡ cb1064be-1689-4fd5-9f10-e3d155e37c18
+begin
+	using PlutoUI, Polynomials, Plots, LinearAlgebra
+	plotly()
+end
+
+# ╔═╡ 7bfec012-b79d-43de-a03f-988d31296619
+TableOfContents(title="📚 Table of Contents", aside=true)
+
+# ╔═╡ c88bd3a2-a46d-4931-b4cf-0b940696aa89
+begin
+	# These function are used to manipulate Vandermonde matrices
+	import Base.getindex, Base.size
+	struct Vandermonde{T} <: AbstractMatrix{T}
+		c :: AbstractVector{T}
+	end
+	
+	getindex(V::Vandermonde, i::Int, j::Int) = V.c[i]^(j-1)
+	isassigned(V::Vandermonde, i::Int, j::Int) = isassigned(V.c, i)
+	
+	size(V::Vandermonde, r::Int) = (r==1 || r==2) ? length(V.c) :
+	    throw(ArgumentError("Invalid dimension $r"))
+	size(V::Vandermonde) = length(V.c), length(V.c)
+	
+	function Matrix(V::Vandermonde{T}) where T
+		n=size(V, 1)
+		M=Array{T}(undef,n, n)
+		for i=1:n
+			M[:,i] = V.c.^(i-1)
+		end
+		M
+	end
 end
 
 # ╔═╡ df89a063-e647-4bfe-91eb-167be078ac0e
@@ -55,31 +95,6 @@ $$
 f(x)=\sin(x), \quad x\in[0,\pi].$$
 """
 
-# ╔═╡ c88bd3a2-a46d-4931-b4cf-0b940696aa89
-begin
-	# These function are used to manipulate Vandermonde matrices
-	import Base.getindex, Base.size
-	struct Vandermonde{T} <: AbstractMatrix{T}
-		c :: AbstractVector{T}
-	end
-	
-	getindex(V::Vandermonde, i::Int, j::Int) = V.c[i]^(j-1)
-	isassigned(V::Vandermonde, i::Int, j::Int) = isassigned(V.c, i)
-	
-	size(V::Vandermonde, r::Int) = (r==1 || r==2) ? length(V.c) :
-	    throw(ArgumentError("Invalid dimension $r"))
-	size(V::Vandermonde) = length(V.c), length(V.c)
-	
-	function Matrix(V::Vandermonde{T}) where T
-		n=size(V, 1)
-		M=Array{T}(undef,n, n)
-		for i=1:n
-			M[:,i] = V.c.^(i-1)
-		end
-		M
-	end
-end
-
 # ╔═╡ 3a599b53-077b-47e7-a1cf-17e15da6aa1f
 begin
 	n=7
@@ -115,7 +130,6 @@ end
 # ╔═╡ 9e80a29c-ea79-489f-8383-60fab341f5be
 begin
 	# Maximal absolute and relative errors
-	using LinearAlgebra
 	norm(p₀[2:end-1]-F₀[2:end-1],Inf), 
 	norm((p₀[2:end-1]-F₀[2:end-1])./F₀[2:end-1],Inf)
 end
@@ -221,6 +235,9 @@ $$
 
 # ╔═╡ 5ab52c00-19e5-11eb-1f4a-7199bdd0be95
 md"""
+
+### Optimality in $\infty$-norm
+
 We have the following important theorem:
 
 __Theorem__. Of all polynomials of degree at most $n$ with leading coefficient equal to $1$, the polynomial $\displaystyle\frac{1}{2^{n-1}}T_n(x)$ has the smallest norm
@@ -264,7 +281,7 @@ $x_0,x_1,\ldots,x_n$ we shall choose zeros of $T_{n+1}(x)$ mapped to the interva
 
 # ╔═╡ 7818f9c0-19e5-11eb-0d31-7d39ee46d05a
 md"""
-### Change of interval
+## Change of interval
 
 The transformation 
 
@@ -331,7 +348,7 @@ We se that the errors attained using Chebyshev points are smaller.
 
 __Remark.__ For the sake of simplicity, we have used the least accurate method of computing interpolation polynomial.
 
-### Example
+## Runge's phenomenon
 
 Let us look at another interesting example (see [Numerička matematika, p. 24](http://www.mathos.unios.hr/pim/Materijali/Num.pdf)). Let us interpolate the function 
 
@@ -377,8 +394,10 @@ end
 xt₃
 
 # ╔═╡ Cell order:
+# ╠═51f1b96d-5f15-40a7-bbc3-482a50ecba84
+# ╠═cb1064be-1689-4fd5-9f10-e3d155e37c18
+# ╠═7bfec012-b79d-43de-a03f-988d31296619
 # ╟─df89a063-e647-4bfe-91eb-167be078ac0e
-# ╠═6a0417bf-00aa-47db-bf22-5842f1cc736e
 # ╠═c88bd3a2-a46d-4931-b4cf-0b940696aa89
 # ╠═3a599b53-077b-47e7-a1cf-17e15da6aa1f
 # ╠═de651f77-3953-4ada-ac74-48bd58d147c1
