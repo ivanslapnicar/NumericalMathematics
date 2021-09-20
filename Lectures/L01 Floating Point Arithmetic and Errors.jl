@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.14.7
+# v0.16.0
 
 using Markdown
 using InteractiveUtils
@@ -13,13 +13,6 @@ macro bind(def, element)
     end
 end
 
-# ╔═╡ a53f60f4-d0ab-4511-925e-086a8688d88b
-begin
-	import Pkg
-	Pkg.activate(mktempdir())
-	Pkg.add("PlutoUI")
-end
-
 # ╔═╡ 62d67e4a-ae9f-43a2-bcc8-53ee5da9e268
 using PlutoUI
 
@@ -30,7 +23,7 @@ TableOfContents(title="📚 Table of Contents", aside=true)
 md"""
 # Floating Point Arithmetic and Errors
 
-## Absolute and relative error
+# Absolute and relative error
 
 Let $\alpha$ approximate $a$. Then
 
@@ -53,13 +46,13 @@ end
 
 # ╔═╡ 91448849-f9f0-459b-87c0-b9fc5a386770
 md"""
-## Floating Point Arithmetic
+# Floating Point Arithmetic
 
 Useful book on IEEE Floating Point standard:
 
 M. Overton, Numerical Computing with IEEE Floating Point Arithmetic, SIAM Publications, Philadephia, 2001.
 
-Useful article: 
+Useful article:
 
 [David Goldberg, What Every Computer Scientist Should Know About Floating-Point Arithmetic](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html).
 
@@ -110,7 +103,7 @@ __Machine unit__ is the maximum relative distance
 between a real number in the floating point range and the nearest floating point number,
 
 $$
-\epsilon = \max_{\lfloor \log_2 
+\epsilon = \max_{\lfloor \log_2
 \:|x|\rfloor \in
 [e_{\min},e_{\max}]} \frac{|x - fl(x)|}{|x|}  = 2^{-t}$$
 
@@ -165,8 +158,8 @@ eps(64.0)
 
 # ╔═╡ aa042b72-246d-432a-9a1c-d014da8ef957
 md"""
-Julia, in particular, has a type system where `Float64` type is a sub-type of `AbstractFloat`, which has four sub-types. 
-In addition to types `Float64` and `Float32`, there is a type `Float16` which uses only two bytes of computer memory and type `BigFloat` which has a 256-bit mantissa.  
+Julia, in particular, has a type system where `Float64` type is a sub-type of `AbstractFloat`, which has four sub-types.
+In addition to types `Float64` and `Float32`, there is a type `Float16` which uses only two bytes of computer memory and type `BigFloat` which has a 256-bit mantissa.
 """
 
 # ╔═╡ dac635a5-7f41-478c-bede-5894410a0b6a
@@ -198,7 +191,7 @@ $$
 fl(x\;op\;y) = (x \; op\; y)\;(1 + \xi),\quad
 |\xi| \leq \epsilon_M.$$
 
-For division, we assume $y \neq 0$. Any IEEE standard computer must follow this rule.  Rounding is one of two limitations that floating point arithmetic has that real arithmetic does not have. You can quickly conclude from the above rule that as long as all that we do is add numbers of the same sign, multiply, and divide, floating point results will almost always come very close to the corresponding real arithmetic results. The difficulty occurs if we either of $x$ or $y$ is rounded, they have different signs and we add or have the same signs and we subtract. 
+For division, we assume $y \neq 0$. Any IEEE standard computer must follow this rule.  Rounding is one of two limitations that floating point arithmetic has that real arithmetic does not have. You can quickly conclude from the above rule that as long as all that we do is add numbers of the same sign, multiply, and divide, floating point results will almost always come very close to the corresponding real arithmetic results. The difficulty occurs if we either of $x$ or $y$ is rounded, they have different signs and we add or have the same signs and we subtract.
 
 That is, suppose we have
 
@@ -210,11 +203,11 @@ where $x$ and $y$ are the exact real results of some computation and $\tilde{x}$
 $$
 z=x-y,\quad  \tilde{z} = fl(\tilde{x} -\tilde{y}).$$
 
-Then, 
+Then,
 
 $$
 \begin{aligned}
-\tilde{z} &=(\tilde{x}-\tilde{y})(1+\xi)= x(1+\delta_x)(1+\xi) -y(1+\delta_y)(1+\xi) 
+\tilde{z} &=(\tilde{x}-\tilde{y})(1+\xi)= x(1+\delta_x)(1+\xi) -y(1+\delta_y)(1+\xi)
 =x-y + \delta_z,
 \end{aligned}$$
 
@@ -231,11 +224,11 @@ $$
 & \leq |x-y| \epsilon_M + (|x|+|y|)\,\delta\,(1+\epsilon_M).
 \end{aligned}$$
 
-Thus, the relative error in $z$ is 
+Thus, the relative error in $z$ is
 
 $$
 \begin{aligned}
-\frac{|\tilde{z}-z|}{|z|}&=\frac{|\delta_z|}{|z|} 
+\frac{|\tilde{z}-z|}{|z|}&=\frac{|\delta_z|}{|z|}
 \leq \epsilon_M + (1+\epsilon_M)\,\delta\,\frac{|x|+|y|}{|x-y|}\approx \delta \,\frac{|x|+|y|}{|x-y|}.
 \end{aligned}$$
 
@@ -303,7 +296,7 @@ $$
 The appropriate MATLAB command to get this value is `omega = eps*realmin` and the equivalent Julia command is `floatmin()*eps()`.
 
 
-__Important and Subtle Point__ 
+__Important and Subtle Point__
 
 Numbers at the bottom of the exponent
 range are not normalized.
@@ -408,8 +401,8 @@ Inf+(-Inf),0*Inf, Inf/Inf, 0.0/0.0
 md"""
 IEEE Arithmetic is a closed system:
 
- $\big\{$ floating point numbers,`Inf`,`-Inf`, `NaN`$\big\}$ 
-$\stackrel{\odot}{\rightarrow}$ 
+ $\big\{$ floating point numbers,`Inf`,`-Inf`, `NaN`$\big\}$
+$\stackrel{\odot}{\rightarrow}$
 $\big\{$ floating point numbers,`Inf`,`-Inf`, `NaN` $\big\}$
 
 no matter what the operation $\odot$ is.
@@ -446,14 +439,14 @@ bitstring(2.0)
 
 # ╔═╡ 037cddff-3663-4fcb-8575-ea7a78e490b8
 md"""
-__Problem.__ Explain the above binary representations. 
+__Problem.__ Explain the above binary representations.
 """
 
 # ╔═╡ 4e97e67b-8ef6-412d-8851-2b6635ff46e6
 md"""
-## Examples
+# Examples
 
-### Using difference of squares
+## Using difference of squares
 
 Compute
 
@@ -500,7 +493,7 @@ f(BigFloat(x))
 
 # ╔═╡ 82ac21a4-384e-47e8-a964-95c8eb0889bd
 md"""
-### Quadratic equation
+## Quadratic equation
 
 In exact arithmetic, the quadratic equation
 
@@ -521,7 +514,7 @@ begin
 	a₂=2.0
 	b₂=123456789.0
 	c₂=4.0
-	
+
 	x₁(a,b,c)=(-b-sqrt(b*b-4*a*c))/(2.0*a)
 	x₂(a,b,c)=(-b+sqrt(b*b-4*a*c))/(2.0*a)
 	x₂ₐ(a,b,c)=(2*c)/(-b-sqrt(b*b-4*a*c))
@@ -541,7 +534,7 @@ x₂(BigFloat(a₂),BigFloat(b₂),BigFloat(c₂))
 
 # ╔═╡ c94ccf15-a0bd-4605-96f2-a27d0508fbeb
 md"""
-### Tangent and sine
+## Tangent and sine
 """
 
 # ╔═╡ 65f44437-4d44-4d93-a9bc-814ab9b6ee02
@@ -556,7 +549,7 @@ However, the trigonometric identities give
 
 $$
 \begin{aligned}
-\tan x - \sin x & = \tan x (1 - \cos x ) 
+\tan x - \sin x & = \tan x (1 - \cos x )
 = \tan x (1-\cos x)\frac{1+\cos x}{1+\cos x}\\ & = \tan x \frac{1-\cos^2 x}{1+\cos x} \\
 &= \tan x \sin^2 x \frac{1}{1+\cos x},
 \end{aligned}$$
@@ -578,9 +571,9 @@ tan(x₃)*sin(x₃)^2/(1+cos(x₃)), x₃^3/2+7*x₃^5/120
 
 # ╔═╡ 4035ef81-4348-4721-9448-48c569a65c9d
 md"""
-### Absolute value of a complex number
+## Absolute value of a complex number
 
-To avoid underflow or overflow, instead of using the standard formula 
+To avoid underflow or overflow, instead of using the standard formula
 
 $$
 |z|=|x+iy|=\sqrt{x^2+y^2}$$
@@ -588,7 +581,7 @@ $$
 we must use the following formulas (Explain!):
 
 $$
-M = \max \{ |x|,|y|\}, \quad m = \min \{ |x|,|y| \}, \quad r = \frac{m}{M}, \quad 
+M = \max \{ |x|,|y|\}, \quad m = \min \{ |x|,|y| \}, \quad r = \frac{m}{M}, \quad
 |z| = M \sqrt{1+r^2}.$$
 
 These formulas are encoded in the function `abs()`.
@@ -614,8 +607,84 @@ __Problem.__ Compare the function [hypot](https://en.wikipedia.org/wiki/Hypot) a
 # ╔═╡ 03679ace-1368-4be3-988c-1f0dcaa1407e
 real(z)^2, imag(z)^2
 
+# ╔═╡ 00000000-0000-0000-0000-000000000001
+PLUTO_PROJECT_TOML_CONTENTS = """
+[deps]
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+
+[compat]
+PlutoUI = "~0.7.9"
+"""
+
+# ╔═╡ 00000000-0000-0000-0000-000000000002
+PLUTO_MANIFEST_TOML_CONTENTS = """
+# This file is machine-generated - editing it directly is not advised
+
+[[Base64]]
+uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+
+[[Dates]]
+deps = ["Printf"]
+uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
+
+[[InteractiveUtils]]
+deps = ["Markdown"]
+uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+
+[[JSON]]
+deps = ["Dates", "Mmap", "Parsers", "Unicode"]
+git-tree-sha1 = "8076680b162ada2a031f707ac7b4953e30667a37"
+uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+version = "0.21.2"
+
+[[Logging]]
+uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
+
+[[Markdown]]
+deps = ["Base64"]
+uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
+
+[[Mmap]]
+uuid = "a63ad114-7e13-5084-954f-fe012c677804"
+
+[[Parsers]]
+deps = ["Dates"]
+git-tree-sha1 = "438d35d2d95ae2c5e8780b330592b6de8494e779"
+uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
+version = "2.0.3"
+
+[[PlutoUI]]
+deps = ["Base64", "Dates", "InteractiveUtils", "JSON", "Logging", "Markdown", "Random", "Reexport", "Suppressor"]
+git-tree-sha1 = "44e225d5837e2a2345e69a1d1e01ac2443ff9fcb"
+uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+version = "0.7.9"
+
+[[Printf]]
+deps = ["Unicode"]
+uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+
+[[Random]]
+deps = ["Serialization"]
+uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[[Reexport]]
+git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
+uuid = "189a3867-3050-52da-a836-e630ba90ab69"
+version = "1.2.2"
+
+[[Serialization]]
+uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
+
+[[Suppressor]]
+git-tree-sha1 = "a819d77f31f83e5792a76081eee1ea6342ab8787"
+uuid = "fd094767-a336-5f1f-9728-57cf17d0bbfb"
+version = "0.2.0"
+
+[[Unicode]]
+uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+"""
+
 # ╔═╡ Cell order:
-# ╠═a53f60f4-d0ab-4511-925e-086a8688d88b
 # ╠═62d67e4a-ae9f-43a2-bcc8-53ee5da9e268
 # ╠═0425b895-a11b-49ee-b715-228384218624
 # ╟─76d37869-e20b-4211-8227-1f0616e3d8f2
@@ -677,3 +746,5 @@ real(z)^2, imag(z)^2
 # ╠═c1acfea2-a60d-4433-a00b-6d3515274a18
 # ╟─b573a376-d60f-4f1d-b876-592dbcd47be4
 # ╠═03679ace-1368-4be3-988c-1f0dcaa1407e
+# ╟─00000000-0000-0000-0000-000000000001
+# ╟─00000000-0000-0000-0000-000000000002

@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.14.7
+# v0.16.0
 
 using Markdown
 using InteractiveUtils
@@ -8,7 +8,7 @@ using InteractiveUtils
 md"""
 # Perturbation Theory, Backward Error and  Stable Algorithms
 
-## Perturbation theory
+# Perturbation theory
 
 __Question:__
 
@@ -45,7 +45,7 @@ so $\kappa_R$ tells us how much is the relative perurbation of input data relati
 
 # ╔═╡ 77a77817-06b7-4cfe-8326-840a8ef11997
 md"""
-## Backward error
+# Backward error
 
 Let the value $f(x)$ be computed by some algorithm $\mathrm{alg(x)}$.
 
@@ -72,7 +72,7 @@ instead. In other words,
 
 # ╔═╡ daef9a23-10bc-4a2e-af92-dccb1657b1aa
 md"""
-## Stable algorithms
+# Stable algorithms
 
 An algoritam is __stable__ if for every input $x$ 
 

@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.15.1
+# v0.16.0
 
 using Markdown
 using InteractiveUtils
@@ -10,22 +10,6 @@ begin
 	using PlutoUI, Random, LinearAlgebra, LightGraphs, GraphPlot
 	using SparseArrays, Plots, Distances, Arpack
 end
-
-# ╔═╡ 77c3ba33-a12d-4e48-bbeb-727166771e63
-#=begin
-	import Pkg
-    Pkg.activate(mktempdir())
-    Pkg.add([
-		Pkg.PackageSpec(name="PlutoUI"),
-		Pkg.PackageSpec(name="LightGraphs"),
-		Pkg.PackageSpec(name="GraphPlot"),
-		Pkg.PackageSpec(name="SparseArrays"),
-		Pkg.PackageSpec(name="Plots"),
-		Pkg.PackageSpec(name="Distances"),
-		Pkg.PackageSpec(name="Arpack")
-    ])
-end
-=#
 
 # ╔═╡ 7ef4b0b3-9d0a-4356-bd16-14487f14e0ab
 TableOfContents(title="📚 Table of Contents", aside=true)
@@ -1457,7 +1441,6 @@ version = "0.9.1+5"
 """
 
 # ╔═╡ Cell order:
-# ╠═77c3ba33-a12d-4e48-bbeb-727166771e63
 # ╠═0cd92d78-1da6-435b-ad8e-60af29502e1d
 # ╠═7ef4b0b3-9d0a-4356-bd16-14487f14e0ab
 # ╟─cb61f761-b2ee-4818-9149-f85d95b76a1e

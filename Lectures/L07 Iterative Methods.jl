@@ -1,15 +1,8 @@
 ### A Pluto.jl notebook ###
-# v0.14.7
+# v0.16.0
 
 using Markdown
 using InteractiveUtils
-
-# ╔═╡ c86c9c92-3383-4c08-8db4-d162e01a86a2
-begin
-	import Pkg
-	Pkg.activate(mktempdir())
-	Pkg.add("PlutoUI")
-end
 
 # ╔═╡ c83e3f47-b1ea-443c-a235-457ed28bcb18
 using PlutoUI, Random, LinearAlgebra
@@ -55,7 +48,7 @@ $$\|x_{k+1}-\tilde x\| \leq q\| x_k-\tilde x\|.$$
 # ╔═╡ 610ef7a4-f0a6-42c8-a2cc-1a03cb155a22
 md"""
 
-## Jacobi and  Gauss-Seidel methods
+# Jacobi and  Gauss-Seidel methods
 
 Let
 
@@ -75,14 +68,14 @@ $$A=D\,(L+I+U)$$
 
 where $D$ is a diagonal matrix, $L$ is strictly lower triangular matrix and $U$ is strictly upper triangular matrix.
 
-### Jacobi method
+## Jacobi method
 
 Let
 
 $$B=-(L+U), \quad c=D^{-1}b.$$
 
 
-If the matrix $A$ is __strictly diagonally dominant__ , 
+If the matrix $A$ is __strictly diagonally dominant__ ,
 
 $$\| B\|_{\infty} = \max_i \sum_{{j=1} \atop {j\neq i}}^n \frac{|a_{ij}|}{|a_{ii}|}<1,$$
 
@@ -92,7 +85,7 @@ $$x_{k+1}=-(L+U)x_k+c$$
 
 converges towards the solution of the system $x$.
 
-### Gauss-Seidel method 
+## Gauss-Seidel method
 
 Let
 
@@ -229,12 +222,97 @@ md"
 __Problem.__ Try to rewrite our functions to allocate less memory.
 "
 
+# ╔═╡ 00000000-0000-0000-0000-000000000001
+PLUTO_PROJECT_TOML_CONTENTS = """
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[compat]
+PlutoUI = "~0.7.9"
+"""
+
+# ╔═╡ 00000000-0000-0000-0000-000000000002
+PLUTO_MANIFEST_TOML_CONTENTS = """
+# This file is machine-generated - editing it directly is not advised
+
+[[Base64]]
+uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+
+[[Dates]]
+deps = ["Printf"]
+uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
+
+[[InteractiveUtils]]
+deps = ["Markdown"]
+uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+
+[[JSON]]
+deps = ["Dates", "Mmap", "Parsers", "Unicode"]
+git-tree-sha1 = "8076680b162ada2a031f707ac7b4953e30667a37"
+uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+version = "0.21.2"
+
+[[Libdl]]
+uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+
+[[LinearAlgebra]]
+deps = ["Libdl"]
+uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[[Logging]]
+uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
+
+[[Markdown]]
+deps = ["Base64"]
+uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
+
+[[Mmap]]
+uuid = "a63ad114-7e13-5084-954f-fe012c677804"
+
+[[Parsers]]
+deps = ["Dates"]
+git-tree-sha1 = "438d35d2d95ae2c5e8780b330592b6de8494e779"
+uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
+version = "2.0.3"
+
+[[PlutoUI]]
+deps = ["Base64", "Dates", "InteractiveUtils", "JSON", "Logging", "Markdown", "Random", "Reexport", "Suppressor"]
+git-tree-sha1 = "44e225d5837e2a2345e69a1d1e01ac2443ff9fcb"
+uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+version = "0.7.9"
+
+[[Printf]]
+deps = ["Unicode"]
+uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+
+[[Random]]
+deps = ["Serialization"]
+uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[[Reexport]]
+git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
+uuid = "189a3867-3050-52da-a836-e630ba90ab69"
+version = "1.2.2"
+
+[[Serialization]]
+uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
+
+[[Suppressor]]
+git-tree-sha1 = "a819d77f31f83e5792a76081eee1ea6342ab8787"
+uuid = "fd094767-a336-5f1f-9728-57cf17d0bbfb"
+version = "0.2.0"
+
+[[Unicode]]
+uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+"""
+
 # ╔═╡ Cell order:
-# ╠═c86c9c92-3383-4c08-8db4-d162e01a86a2
 # ╠═c83e3f47-b1ea-443c-a235-457ed28bcb18
 # ╠═5f87bb8e-34f9-4734-841b-066e906a28b3
 # ╟─1a406352-1739-4709-85bc-6ca3ecb19253
-# ╟─610ef7a4-f0a6-42c8-a2cc-1a03cb155a22
+# ╠═610ef7a4-f0a6-42c8-a2cc-1a03cb155a22
 # ╟─1ea94870-1389-11eb-1619-47636ac1d230
 # ╠═583e17b2-e189-49ae-8c80-0014d53c40c2
 # ╠═4471d452-1389-11eb-39dc-67039a7b60e9
@@ -255,3 +333,5 @@ __Problem.__ Try to rewrite our functions to allocate less memory.
 # ╠═8794b613-ddab-4fa9-82e6-eec4192705dd
 # ╠═02d632a3-3ab8-4b02-ba94-709880df6313
 # ╟─aba2f7f6-8690-4ede-8282-ad925e4aae8d
+# ╟─00000000-0000-0000-0000-000000000001
+# ╟─00000000-0000-0000-0000-000000000002

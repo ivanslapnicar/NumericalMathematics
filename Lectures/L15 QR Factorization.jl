@@ -1,15 +1,8 @@
 ### A Pluto.jl notebook ###
-# v0.14.7
+# v0.16.0
 
 using Markdown
 using InteractiveUtils
-
-# ╔═╡ b3adb110-f081-485e-8df0-8059a59d77c3
-begin
-	import Pkg
-	Pkg.activate(mktempdir())
-	Pkg.add("PlutoUI")
-end
 
 # ╔═╡ b897b490-2422-11eb-29f2-c1b07eae9d6e
 begin
@@ -60,8 +53,8 @@ r_{11} & r_{12} & r_{13} \\
 0 & r_{22} & r_{23} \\
 0 & 0 & r_{33} \\
 0 & 0 & 0 \\
-0 & 0 & 0 
-\end{bmatrix}. 
+0 & 0 & 0
+\end{bmatrix}.
 \end{aligned}$$
 
 The above relation also defines an  __economical QR factorization__
@@ -129,7 +122,7 @@ function GramSchmidtQR(A::Array)
         Q[:,k]=t/R[k,k]
     end
     return Q,R
-end 
+end
 
 # ╔═╡ d98a860c-b31c-40df-bb9e-0993c9e69dd6
 md"
@@ -167,16 +160,16 @@ md"""
 __QR factorization of vector__ $x$ is
 
 $$
-H \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_m 
+H \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_m
 \end{bmatrix}  =r,$$
 
 where
 
 $$
-H=I - \frac{2}{v^Tv}v v^T, \qquad  
+H=I - \frac{2}{v^Tv}v v^T, \qquad
 v=\begin{bmatrix}
 x_1\pm \|x\|_2 \\ x_2 \\ x_3 \\ \vdots \\ x_m
-\end{bmatrix}.$$ 
+\end{bmatrix}.$$
 
 __Householder reflector__ $H$ is __symmetric__ and __orthogonal__ matrix (__prove it!__). Depending on the choice of sign in the definition of the vector $v$, we have
 
@@ -239,7 +232,7 @@ function HouseholderQR(A₁::Array)
     R=triu(A)
     Q',R
 end
-    
+
 
 # ╔═╡ d7ddbafd-8923-45c1-a0f2-55aa1dc86185
 A
@@ -304,7 +297,7 @@ Fₚ.Q*Fₚ.R-A[:,Fₚ.p]
 md"""
 ## Speed
 
-The number of floating point operations needed to compute the QR factorization of a $n\times n$ matrix is $O\big(\frac{4}{3}n^3\big)$ to compute $R$ and $O\big(\frac{4}{3}n^3\big)$ to compute $Q$. 
+The number of floating point operations needed to compute the QR factorization of a $n\times n$ matrix is $O\big(\frac{4}{3}n^3\big)$ to compute $R$ and $O\big(\frac{4}{3}n^3\big)$ to compute $Q$.
 """
 
 # ╔═╡ 7a2fb72c-2c5c-4e1a-895a-fb0eb5608876
@@ -327,22 +320,107 @@ end
 md"""
 ## Accuracy
 
-Matrices $\hat Q$ and $\hat R$ computed with the Householder method satisfy 
+Matrices $\hat Q$ and $\hat R$ computed with the Householder method satisfy
 
 $$
 \begin{aligned}
-\hat Q^T\hat Q& =I+E, \qquad \|E \|_2\approx \varepsilon,\\ 
+\hat Q^T\hat Q& =I+E, \qquad \|E \|_2\approx \varepsilon,\\
 \| A-\hat Q\hat R\|_2& \approx \varepsilon\|A\|_2.
 \end{aligned}$$
 
-Also, there exists an orthogonal matrix $Q$ for which 
+Also, there exists an orthogonal matrix $Q$ for which
 
 $$
 \| A- Q\hat R\|_2\approx \varepsilon\|A\|_2.$$
 """
 
+# ╔═╡ 00000000-0000-0000-0000-000000000001
+PLUTO_PROJECT_TOML_CONTENTS = """
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[compat]
+PlutoUI = "~0.7.9"
+"""
+
+# ╔═╡ 00000000-0000-0000-0000-000000000002
+PLUTO_MANIFEST_TOML_CONTENTS = """
+# This file is machine-generated - editing it directly is not advised
+
+[[Base64]]
+uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+
+[[Dates]]
+deps = ["Printf"]
+uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
+
+[[InteractiveUtils]]
+deps = ["Markdown"]
+uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+
+[[JSON]]
+deps = ["Dates", "Mmap", "Parsers", "Unicode"]
+git-tree-sha1 = "8076680b162ada2a031f707ac7b4953e30667a37"
+uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+version = "0.21.2"
+
+[[Libdl]]
+uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+
+[[LinearAlgebra]]
+deps = ["Libdl"]
+uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[[Logging]]
+uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
+
+[[Markdown]]
+deps = ["Base64"]
+uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
+
+[[Mmap]]
+uuid = "a63ad114-7e13-5084-954f-fe012c677804"
+
+[[Parsers]]
+deps = ["Dates"]
+git-tree-sha1 = "438d35d2d95ae2c5e8780b330592b6de8494e779"
+uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
+version = "2.0.3"
+
+[[PlutoUI]]
+deps = ["Base64", "Dates", "InteractiveUtils", "JSON", "Logging", "Markdown", "Random", "Reexport", "Suppressor"]
+git-tree-sha1 = "44e225d5837e2a2345e69a1d1e01ac2443ff9fcb"
+uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+version = "0.7.9"
+
+[[Printf]]
+deps = ["Unicode"]
+uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+
+[[Random]]
+deps = ["Serialization"]
+uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[[Reexport]]
+git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
+uuid = "189a3867-3050-52da-a836-e630ba90ab69"
+version = "1.2.2"
+
+[[Serialization]]
+uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
+
+[[Suppressor]]
+git-tree-sha1 = "a819d77f31f83e5792a76081eee1ea6342ab8787"
+uuid = "fd094767-a336-5f1f-9728-57cf17d0bbfb"
+version = "0.2.0"
+
+[[Unicode]]
+uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+"""
+
 # ╔═╡ Cell order:
-# ╠═b3adb110-f081-485e-8df0-8059a59d77c3
 # ╠═b897b490-2422-11eb-29f2-c1b07eae9d6e
 # ╠═7d696568-5099-453a-bc62-b5cc9da014cd
 # ╟─fb66b990-4511-476f-8e77-87aa9c265041
@@ -383,3 +461,5 @@ $$
 # ╠═c0eaba40-c919-49af-96f8-700173e3a72a
 # ╠═f6b568ec-20e5-4575-a62c-70d470589ef1
 # ╟─7e40ad34-0497-410d-9669-20ad8a9ca74b
+# ╟─00000000-0000-0000-0000-000000000001
+# ╟─00000000-0000-0000-0000-000000000002

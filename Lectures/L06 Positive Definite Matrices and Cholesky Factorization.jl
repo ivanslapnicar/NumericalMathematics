@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.14.7
+# v0.16.0
 
 using Markdown
 using InteractiveUtils
@@ -82,6 +82,24 @@ L₁=mychol(A)
 # Residual
 L₁'*L₁-A
 
+# ╔═╡ 00000000-0000-0000-0000-000000000001
+PLUTO_PROJECT_TOML_CONTENTS = """
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+"""
+
+# ╔═╡ 00000000-0000-0000-0000-000000000002
+PLUTO_MANIFEST_TOML_CONTENTS = """
+# This file is machine-generated - editing it directly is not advised
+
+[[Libdl]]
+uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+
+[[LinearAlgebra]]
+deps = ["Libdl"]
+uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+"""
+
 # ╔═╡ Cell order:
 # ╠═c162d7c0-0efc-11eb-16ad-3d5ff641f6e0
 # ╟─70942b12-0bd1-44e6-8e04-862d4948e8a0
@@ -92,3 +110,5 @@ L₁'*L₁-A
 # ╠═1ff3e65c-8253-47d7-9caa-466a1359a434
 # ╠═286a74e5-6a3b-41ee-a227-cb5d88dd027e
 # ╠═2e54b52f-2ba0-4de0-a7bf-73bf1c0d5b6f
+# ╟─00000000-0000-0000-0000-000000000001
+# ╟─00000000-0000-0000-0000-000000000002

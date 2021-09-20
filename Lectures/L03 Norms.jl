@@ -1,15 +1,8 @@
 ### A Pluto.jl notebook ###
-# v0.14.7
+# v0.16.0
 
 using Markdown
 using InteractiveUtils
-
-# ╔═╡ cefa7a08-9c72-4629-9b80-5b9ac9167fd1
-begin
-	import Pkg
-	Pkg.activate(mktempdir())
-	Pkg.add("PlutoUI")
-end
 
 # ╔═╡ 6a60299f-8efb-4210-bd51-5efeb88e450d
 using PlutoUI, Random, LinearAlgebra
@@ -87,9 +80,9 @@ norm(A,1), norm(A), norm(A,2), norm(A,Inf), opnorm(A),maximum(svdvals(A))
 
 # ╔═╡ e705726b-842f-4079-a5d9-079872749470
 md"""
-## Scalar (dot)  product, norm and orthogonality 
+# Scalar (dot)  product, norm and orthogonality
 
-__Scalar product__ or __dot product__ on a vector space $X$ is every map 
+__Scalar product__ or __dot product__ on a vector space $X$ is every map
 $\cdot : X\times X \to \mathbb{R}$ with the following properties:
 
 1.  $x\cdot x\geq 0$
@@ -102,13 +95,13 @@ If scalar product is defined on a vector space, we can define norm as
 
 $$\|x\|=\sqrt{x\cdot x}.$$
 
-Also, if $x \cdot y=0$ we say that the vectors $x$ and $y$ are __mutually orthogonal (perpendicular)__.  
+Also, if $x \cdot y=0$ we say that the vectors $x$ and $y$ are __mutually orthogonal (perpendicular)__.
 
-For example, the standard vector norm 
+For example, the standard vector norm
 
 $$\|x\|_2=\sqrt{\sum_{i=1}^n x_i^2}= \sqrt{x\cdot x}$$
 
-is defined by the dot product of vectors, 
+is defined by the dot product of vectors,
 
 $$x\cdot y=\sum_{i=1}^n  x_i y_i,$$
 
@@ -126,8 +119,93 @@ $$\| f\|_2= \sqrt{f\cdot f} = \sqrt{\int_a^b [f(x)]^2 \, dx},$$
 $$f\perp g \Longleftrightarrow f\cdot g =0.$$
 """
 
+# ╔═╡ 00000000-0000-0000-0000-000000000001
+PLUTO_PROJECT_TOML_CONTENTS = """
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[compat]
+PlutoUI = "~0.7.9"
+"""
+
+# ╔═╡ 00000000-0000-0000-0000-000000000002
+PLUTO_MANIFEST_TOML_CONTENTS = """
+# This file is machine-generated - editing it directly is not advised
+
+[[Base64]]
+uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+
+[[Dates]]
+deps = ["Printf"]
+uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
+
+[[InteractiveUtils]]
+deps = ["Markdown"]
+uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+
+[[JSON]]
+deps = ["Dates", "Mmap", "Parsers", "Unicode"]
+git-tree-sha1 = "8076680b162ada2a031f707ac7b4953e30667a37"
+uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+version = "0.21.2"
+
+[[Libdl]]
+uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+
+[[LinearAlgebra]]
+deps = ["Libdl"]
+uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[[Logging]]
+uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
+
+[[Markdown]]
+deps = ["Base64"]
+uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
+
+[[Mmap]]
+uuid = "a63ad114-7e13-5084-954f-fe012c677804"
+
+[[Parsers]]
+deps = ["Dates"]
+git-tree-sha1 = "438d35d2d95ae2c5e8780b330592b6de8494e779"
+uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
+version = "2.0.3"
+
+[[PlutoUI]]
+deps = ["Base64", "Dates", "InteractiveUtils", "JSON", "Logging", "Markdown", "Random", "Reexport", "Suppressor"]
+git-tree-sha1 = "44e225d5837e2a2345e69a1d1e01ac2443ff9fcb"
+uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+version = "0.7.9"
+
+[[Printf]]
+deps = ["Unicode"]
+uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+
+[[Random]]
+deps = ["Serialization"]
+uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[[Reexport]]
+git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
+uuid = "189a3867-3050-52da-a836-e630ba90ab69"
+version = "1.2.2"
+
+[[Serialization]]
+uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
+
+[[Suppressor]]
+git-tree-sha1 = "a819d77f31f83e5792a76081eee1ea6342ab8787"
+uuid = "fd094767-a336-5f1f-9728-57cf17d0bbfb"
+version = "0.2.0"
+
+[[Unicode]]
+uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+"""
+
 # ╔═╡ Cell order:
-# ╠═cefa7a08-9c72-4629-9b80-5b9ac9167fd1
 # ╠═6a60299f-8efb-4210-bd51-5efeb88e450d
 # ╠═d3bf091a-28ba-4e5f-b09d-e5205c5abfa7
 # ╟─b523e28f-4ed0-4b24-ba02-1806e38fe81e
@@ -138,3 +216,5 @@ $$f\perp g \Longleftrightarrow f\cdot g =0.$$
 # ╠═220d4a5d-4cbe-467a-b345-12a57f82aa12
 # ╠═cc19cc86-b88a-486f-a5de-b74d2252999b
 # ╟─e705726b-842f-4079-a5d9-079872749470
+# ╟─00000000-0000-0000-0000-000000000001
+# ╟─00000000-0000-0000-0000-000000000002

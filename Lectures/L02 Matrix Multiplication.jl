@@ -1,16 +1,8 @@
 ### A Pluto.jl notebook ###
-# v0.14.7
+# v0.16.0
 
 using Markdown
 using InteractiveUtils
-
-# ╔═╡ 614a979b-c75c-4854-9a79-aed76b478604
-# Deactivate or comment to run on your computer
-begin
-	import Pkg
-	Pkg.activate(mktempdir())
-	Pkg.add("PlutoUI")
-end
 
 # ╔═╡ 53764ad6-7bee-4307-a599-49627451b86f
 using PlutoUI, LinearAlgebra
@@ -24,11 +16,11 @@ md"""
 
 
 
-We can multiply matrices in  __three different ways__: 
+We can multiply matrices in  __three different ways__:
 
 $$
 \begin{aligned}
-\begin{bmatrix}    
+\begin{bmatrix}
 1& 2& 3\\
   4 &5 &6\\
   7 &8& 9
@@ -39,14 +31,14 @@ $$
    1& -1&  1
  \end{bmatrix}&=
  \begin{bmatrix}
-   (1\cdot 1 + 2\cdot 4+3\cdot 1) & 1\cdot 2+2\cdot 3+3\cdot(-1))&  
+   (1\cdot 1 + 2\cdot 4+3\cdot 1) & 1\cdot 2+2\cdot 3+3\cdot(-1))&
     (1\cdot 0 + 2\cdot 2 + 3\cdot 1)\\
-   (4\cdot 1+5\cdot 4+6\cdot 1) & (4\cdot 2+5\cdot 3+6\cdot (-1)) &  
+   (4\cdot 1+5\cdot 4+6\cdot 1) & (4\cdot 2+5\cdot 3+6\cdot (-1)) &
    (4\cdot 0+5\cdot 2+6\cdot 1)\\
-   (7\cdot 1+8\cdot 5+9\cdot 1) & (7\cdot 2+8\cdot 3+9\cdot (-1)) &  
+   (7\cdot 1+8\cdot 5+9\cdot 1) & (7\cdot 2+8\cdot 3+9\cdot (-1)) &
    (7\cdot 0+8\cdot 2+9\cdot 1)
  \end{bmatrix} \\ \\
-\begin{bmatrix}    
+\begin{bmatrix}
   1& 2& 3\\
   4 &5 &6\\
   7 &8& 9
@@ -57,12 +49,12 @@ $$
    1& -1&  1
  \end{bmatrix}& =
  \begin{bmatrix} 1\\ 4\\ 7 \end{bmatrix}
- \begin{bmatrix} 1&2&0 \end{bmatrix} + 
+ \begin{bmatrix} 1&2&0 \end{bmatrix} +
  \begin{bmatrix} 2\\ 5\\ 8 \end{bmatrix}
- \begin{bmatrix} 4&3&2 \end{bmatrix} + 
+ \begin{bmatrix} 4&3&2 \end{bmatrix} +
  \begin{bmatrix} 3\\ 6\\ 9 \end{bmatrix}
  \begin{bmatrix} 1&-1&1 \end{bmatrix}\\ \\
-\begin{bmatrix}    
+\begin{bmatrix}
   1& 2& 3\\
   4 &5 &6\\
   7 &8& 9
@@ -163,7 +155,7 @@ md"""
 
 # ╔═╡ 05adbae2-88a2-49ed-9ca6-129757f94266
 md"""
-## Basic Linear Algebra Subroutines - [BLAS](http://www.netlib.org/blas/)
+# Basic Linear Algebra Subroutines - [BLAS](http://www.netlib.org/blas/)
 
 For example, [`ddot.f`](http://www.netlib.org/lapack/explore-html/d5/df6/ddot_8f_source.html) - notice _loop unrolling_ :
 """
@@ -245,7 +237,7 @@ DOUBLE PRECISION FUNCTION DDOT(N,DX,INCX,DY,INCY)
 
 # ╔═╡ 85135806-d982-4ca1-b852-fc53cfd0903e
 md"""
-## Speed of Computation
+# Speed of Computation
 """
 
 # ╔═╡ 25d321c6-26bc-4d2d-ab74-8c048560e57c
@@ -284,12 +276,12 @@ operations_in_second=(2*n^3)/0.003
 
 # ╔═╡ ea827322-031d-42b5-aafd-10c2d12fa469
 md"""
-__Problem.__ Calculate largest $n$ for which three square $n\times n$ matrices of `Float64` numbers fit in your computer's RAM. How long will the multiplication last?  
+__Problem.__ Calculate largest $n$ for which three square $n\times n$ matrices of `Float64` numbers fit in your computer's RAM. How long will the multiplication last?
 """
 
 # ╔═╡ 2015d3fc-37d2-43ee-99da-fe7029b73ee4
 md"""
-## Block variant
+# Block variant
 
 To speed-up our program by better usage of cache memory, we need to compute with block-matrices (BLAS 3).
 
@@ -322,8 +314,8 @@ function AB(A::Array{T},B::Array{T}) where T<:Array
 end
 
 # ╔═╡ d1dccfbf-7878-4b48-a376-f0bf9b61ad59
-# Run 2 times, the second measurement is relevant. 
-# Our program is considerably slower!! 
+# Run 2 times, the second measurement is relevant.
+# Our program is considerably slower!!
 @time AB(A₁,B₁);
 
 # ╔═╡ 6fc4fe72-e7ac-4c14-aa9c-37a5459d7004
@@ -343,7 +335,7 @@ end
 
 # ╔═╡ a7de05aa-0ed1-4e11-88de-de70d629d30b
 md"""
-For even better speed-up, we should use all cores, as `*` does. 
+For even better speed-up, we should use all cores, as `*` does.
 
 To run Julia in multi-threading environment in Linux insert the line
 
@@ -358,9 +350,9 @@ Threads.nthreads()
 
 # ╔═╡ 3b096734-bd85-4e21-ad81-6c1ed99e2f43
 md"""
-## Accuracy of computation
+# Accuracy of computation
 
-### Basic operations
+## Basic operations
 
 For operations $\odot \in  \{+,*,/\}$ we have (for simplicity, we use $\epsilon$ for $\epsilon_M$)
 
@@ -368,9 +360,9 @@ $$
 fl(a \odot b)=(1+\varepsilon_\odot)(a\odot b),\qquad |\varepsilon_\odot|\leq \varepsilon.$$
 
 
-### Addition
+## Addition
 
-If we add fully accurately wto numbers which have (small) errors from previous computations, the equality 
+If we add fully accurately wto numbers which have (small) errors from previous computations, the equality
 
 $$a(1+\varepsilon_a)+b(1+\varepsilon_b)= (1+\varepsilon_{ab})(a+b)$$
 
@@ -379,14 +371,14 @@ gives
 $$
 \varepsilon_{ab}=\frac{a\varepsilon_a+b\varepsilon_a}{a+b},$$
 
-so  
+so
 
 $$
 |\varepsilon_{ab}|\leq \varepsilon\, \frac{|a|+  |b|}{|a+b|}.$$
 
 If  $a$ and $b$ are large numbers of different signs and $a-b$ is tiny, the error can be huge (_catastrophic cancelation_ ).
 
-### Scalar (dot) product
+## Scalar (dot) product
 
 For vectors $x$ and $y$ from $\mathbb{R}^n$, the recursive application of the above fomula gives absolute error
 
@@ -398,12 +390,12 @@ $$\frac{|fl(x\cdot y)-x\cdot y|}{|x\cdot y|}\leq O(n\varepsilon) \frac{|x|\cdot 
 
 If vectors $x$ and $y$ are nearly perpendicular, relative error can be large.
 
-### Matrix multiplication
+## Matrix multiplication
 
 
 From formula (1), for matrices $A$ and $B$ of order $n$, it follows
 
-$$|fl(A\cdot B) -A\cdot B| \leq O(n\varepsilon) |A|\cdot |B|.$$ 
+$$|fl(A\cdot B) -A\cdot B| \leq O(n\varepsilon) |A|\cdot |B|.$$
 
 """
 
@@ -465,15 +457,100 @@ abs.(A₃)*abs.(B₃)*n₃*eps()
 
 # ╔═╡ 2b7f29bf-a440-4f07-868b-ae42f3624b05
 md"""
-Here relative error is not easy to establish, so we need better measure. 
-In the next lecture, we shall explain _vector and matrix norms_. 
+Here relative error is not easy to establish, so we need better measure.
+In the next lecture, we shall explain _vector and matrix norms_.
 """
 
 # ╔═╡ bf6a82b0-28a9-4df2-b967-7c87df059416
 
 
+# ╔═╡ 00000000-0000-0000-0000-000000000001
+PLUTO_PROJECT_TOML_CONTENTS = """
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[compat]
+PlutoUI = "~0.7.9"
+"""
+
+# ╔═╡ 00000000-0000-0000-0000-000000000002
+PLUTO_MANIFEST_TOML_CONTENTS = """
+# This file is machine-generated - editing it directly is not advised
+
+[[Base64]]
+uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+
+[[Dates]]
+deps = ["Printf"]
+uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
+
+[[InteractiveUtils]]
+deps = ["Markdown"]
+uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+
+[[JSON]]
+deps = ["Dates", "Mmap", "Parsers", "Unicode"]
+git-tree-sha1 = "8076680b162ada2a031f707ac7b4953e30667a37"
+uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+version = "0.21.2"
+
+[[Libdl]]
+uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+
+[[LinearAlgebra]]
+deps = ["Libdl"]
+uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[[Logging]]
+uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
+
+[[Markdown]]
+deps = ["Base64"]
+uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
+
+[[Mmap]]
+uuid = "a63ad114-7e13-5084-954f-fe012c677804"
+
+[[Parsers]]
+deps = ["Dates"]
+git-tree-sha1 = "438d35d2d95ae2c5e8780b330592b6de8494e779"
+uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
+version = "2.0.3"
+
+[[PlutoUI]]
+deps = ["Base64", "Dates", "InteractiveUtils", "JSON", "Logging", "Markdown", "Random", "Reexport", "Suppressor"]
+git-tree-sha1 = "44e225d5837e2a2345e69a1d1e01ac2443ff9fcb"
+uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+version = "0.7.9"
+
+[[Printf]]
+deps = ["Unicode"]
+uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+
+[[Random]]
+deps = ["Serialization"]
+uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[[Reexport]]
+git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
+uuid = "189a3867-3050-52da-a836-e630ba90ab69"
+version = "1.2.2"
+
+[[Serialization]]
+uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
+
+[[Suppressor]]
+git-tree-sha1 = "a819d77f31f83e5792a76081eee1ea6342ab8787"
+uuid = "fd094767-a336-5f1f-9728-57cf17d0bbfb"
+version = "0.2.0"
+
+[[Unicode]]
+uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+"""
+
 # ╔═╡ Cell order:
-# ╠═614a979b-c75c-4854-9a79-aed76b478604
 # ╠═53764ad6-7bee-4307-a599-49627451b86f
 # ╠═dd774cfc-dfb2-4973-939b-0182ee63159c
 # ╟─1db27bd5-d11b-4cee-8f5e-53427cf82786
@@ -515,3 +592,5 @@ In the next lecture, we shall explain _vector and matrix norms_.
 # ╠═d43cea1b-5574-4341-aa91-c7ea2efc5e55
 # ╟─2b7f29bf-a440-4f07-868b-ae42f3624b05
 # ╠═bf6a82b0-28a9-4df2-b967-7c87df059416
+# ╟─00000000-0000-0000-0000-000000000001
+# ╟─00000000-0000-0000-0000-000000000002
