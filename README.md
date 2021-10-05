@@ -25,7 +25,7 @@ You can run the notebooks in two ways:
 
 1. Clone the entire repository using `git` command:
 ```
-git clone https://github.com/ivanslapnicar/Matematika.git
+git clone https://github.com/ivanslapnicar/NumericalMathematics.git
 ```
 If you are unfamiliar with the `git` tool, check GitHub [help pages](https://help.github.com/articles/set-up-git/). You can also download the repository as a zip file.
 
