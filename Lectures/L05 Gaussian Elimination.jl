@@ -380,6 +380,8 @@ The function is still not optimal since it allocates to much memory.
 
 # ╔═╡ 9a2ef752-2231-4282-aa5c-275894c21de5
 md"""
+# Pivoting
+
 Standard implementations always compute Gaussian elimination using _partial pivoting_ :
 
 In each step, the rows are reordered (interchanged) such that the pivot element has largest absolute value in the active part of the given column. As a consequence
@@ -435,7 +437,7 @@ F₄.L*F₄.U-A[F₄.p,:]
 
 # ╔═╡ 630a82aa-6998-4325-a0c9-d44f60c0df31
 md"""
-# Complete pivoting
+## Complete pivoting
 
 The following function computes Gaussian elimination using __complete pivoting__ - in each step, rows and columns are interchanged such that the element with the largest absolute value in the current submatrix is brought to the pivot position. Theoretically, element growth is bounded, but the bound is $O(2^n)$ which is not useful.
 """
