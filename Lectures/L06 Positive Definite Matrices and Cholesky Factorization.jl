@@ -95,7 +95,7 @@ L-L₁
 md"
 ## Cholesky factorization with pivoting
 
-Due to positive definitesess, the element with largest modulus lies on the main diagonal. Therefore, the complete pivoting can be achieved by inspecting only elements on the main diagonal.
+Due to positive definitesess, the element with largest modulus lies on the main diagonal. Therefore, the complete pivoting is achieved by chosing the largest element on the diagonal of each submatrix.
 "
 
 # ╔═╡ b7696bc8-64b2-44c8-88f5-1d3af2f1d614
