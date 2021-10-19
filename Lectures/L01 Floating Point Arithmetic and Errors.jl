@@ -188,7 +188,7 @@ $$
 Then, in floating point arithmetic with machine unit $\epsilon_M$, it is reasonable to expect that for any two floating point numbers $x$ and $y$, we have
 
 $$
-fl(x\;op\;y) = (x \; op\; y)\;(1 + \xi),\quad
+fl(x\;\odot\;y) = (x \;\odot \; y)\;(1 + \xi),\quad
 |\xi| \leq \epsilon_M.$$
 
 For division, we assume $y \neq 0$. Any IEEE standard computer must follow this rule.  Rounding is one of two limitations that floating point arithmetic has that real arithmetic does not have. You can quickly conclude from the above rule that as long as all that we do is add numbers of the same sign, multiply, and divide, floating point results will almost always come very close to the corresponding real arithmetic results. The difficulty occurs if we either of $x$ or $y$ is rounded, they have different signs and we add or have the same signs and we subtract.
@@ -361,6 +361,32 @@ for T in (Float16, Float32, Float64)
     println((floatmin(T)*eps(T)))
 end
 
+# ╔═╡ 20fa79ac-93c3-4e3f-bf31-f9c0f0e79d4a
+md"""
+## Binary Representation
+"""
+
+# ╔═╡ 1f8f4a15-0eca-4759-bee6-843306e35754
+bitstring(0)
+
+# ╔═╡ 8ca8e4e7-6450-4aaf-b208-6c0aa95ccb12
+bitstring(1)
+
+# ╔═╡ f6f7081b-212a-4c7a-b91c-0d747f4b9fb2
+bitstring(0.0)
+
+# ╔═╡ d7160016-c046-4ab8-b349-27f7a209d853
+bitstring(-0.0)
+
+# ╔═╡ 10dcdca1-71fe-42eb-8f04-6122b3a03666
+bitstring(1.0)
+
+# ╔═╡ f85ec710-1f59-4826-a376-6672bf0552ae
+bitstring(Float16(1.0))
+
+# ╔═╡ 9b7e4278-2f1a-4fff-a6f7-2249f45aaccf
+bitstring(2.0)
+
 # ╔═╡ d0b306c4-6cbc-48dc-90ba-8ef4498f8d73
 md"""
 ##  Special Quantities  $0$, $-0$, `Inf`,`-Inf` i `NaN`
@@ -397,6 +423,32 @@ md"""
 # ╔═╡ 03f1778e-c222-4221-a4e7-eabf1071d298
 Inf+(-Inf),0*Inf, Inf/Inf, 0.0/0.0
 
+# ╔═╡ ca348201-523c-403b-afcf-0bd46be1cc16
+md"""
+In the IEEE Standard, the floating point numbers and the special quantities have the following binary representations:
+
+| Exponent | Mantissa | Represents |
+| :-----    | :-----  | :-----    |
+| $e=e_{\min}-1$ |  $d=0$     | $\pm 0$     |
+| $e=e_{\min}-1$ |  $d\neq 0$ | $0.d\times 2^{e_\min}$ - denormalized numbers |
+| $e_{\min}\leq e\leq e\_\max$ |  $d$      | $1.d \times 2^e$ - standard numbers | 
+| $e=e_{\max}+1$ |  $d=0$      |  $\pm$`Inf`     |
+| $e=e_{\max}+1$ |  $d\neq 0$  |  `NaN`     |
+
+"""
+
+# ╔═╡ cd04621c-711d-4f26-930c-d30fbc73c320
+bitstring(Inf)
+
+# ╔═╡ 2e374a33-1f0f-4702-ade4-3c860240f1eb
+bitstring(-Inf)
+
+# ╔═╡ 9c0dda91-5791-4a36-b826-61572dcbd244
+bitstring(NaN)
+
+# ╔═╡ dcb23fdc-434f-4227-943d-835e871f7724
+bitstring(0.0\0.0)
+
 # ╔═╡ 307a27e6-8128-42be-9ba8-cbdacb498ada
 md"""
 IEEE Arithmetic is a closed system:
@@ -410,32 +462,6 @@ no matter what the operation $\odot$ is.
 Clever programmers take advantage of these features. However, in the coding assignments in this course, if you get
 `NaN` or `Inf` or `-Inf`, you have probably made an error.
 """
-
-# ╔═╡ 20fa79ac-93c3-4e3f-bf31-f9c0f0e79d4a
-md"""
-## Binary Representation
-"""
-
-# ╔═╡ 1f8f4a15-0eca-4759-bee6-843306e35754
-bitstring(0)
-
-# ╔═╡ 8ca8e4e7-6450-4aaf-b208-6c0aa95ccb12
-bitstring(1)
-
-# ╔═╡ f6f7081b-212a-4c7a-b91c-0d747f4b9fb2
-bitstring(0.0)
-
-# ╔═╡ d7160016-c046-4ab8-b349-27f7a209d853
-bitstring(-0.0)
-
-# ╔═╡ 10dcdca1-71fe-42eb-8f04-6122b3a03666
-bitstring(1.0)
-
-# ╔═╡ f85ec710-1f59-4826-a376-6672bf0552ae
-bitstring(Float16(1.0))
-
-# ╔═╡ 9b7e4278-2f1a-4fff-a6f7-2249f45aaccf
-bitstring(2.0)
 
 # ╔═╡ 037cddff-3663-4fcb-8575-ea7a78e490b8
 md"""
@@ -707,14 +733,6 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 # ╠═b9dd627b-5b1a-4113-bfdf-af4dc1901827
 # ╠═0f7ba6b2-aede-4f09-b7c5-adca1295195b
 # ╠═b8647d13-c400-4324-85f7-8994a1f2322f
-# ╟─d0b306c4-6cbc-48dc-90ba-8ef4498f8d73
-# ╠═abe311d5-fbd1-40e2-8bce-2c341301deef
-# ╠═88f1bf59-5eb4-4e2d-b28b-0d9b1004d5bd
-# ╠═36c79f63-7a8c-46c9-afa5-95bbed8fd598
-# ╠═92490cef-70af-417e-8bc8-91b1be0635cc
-# ╟─afc32ff2-014a-43ee-8e6a-d35a57434622
-# ╠═03f1778e-c222-4221-a4e7-eabf1071d298
-# ╟─307a27e6-8128-42be-9ba8-cbdacb498ada
 # ╟─20fa79ac-93c3-4e3f-bf31-f9c0f0e79d4a
 # ╠═1f8f4a15-0eca-4759-bee6-843306e35754
 # ╠═8ca8e4e7-6450-4aaf-b208-6c0aa95ccb12
@@ -723,6 +741,19 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 # ╠═10dcdca1-71fe-42eb-8f04-6122b3a03666
 # ╠═f85ec710-1f59-4826-a376-6672bf0552ae
 # ╠═9b7e4278-2f1a-4fff-a6f7-2249f45aaccf
+# ╟─d0b306c4-6cbc-48dc-90ba-8ef4498f8d73
+# ╠═abe311d5-fbd1-40e2-8bce-2c341301deef
+# ╠═88f1bf59-5eb4-4e2d-b28b-0d9b1004d5bd
+# ╠═36c79f63-7a8c-46c9-afa5-95bbed8fd598
+# ╠═92490cef-70af-417e-8bc8-91b1be0635cc
+# ╟─afc32ff2-014a-43ee-8e6a-d35a57434622
+# ╠═03f1778e-c222-4221-a4e7-eabf1071d298
+# ╟─ca348201-523c-403b-afcf-0bd46be1cc16
+# ╠═cd04621c-711d-4f26-930c-d30fbc73c320
+# ╠═2e374a33-1f0f-4702-ade4-3c860240f1eb
+# ╠═9c0dda91-5791-4a36-b826-61572dcbd244
+# ╠═dcb23fdc-434f-4227-943d-835e871f7724
+# ╟─307a27e6-8128-42be-9ba8-cbdacb498ada
 # ╟─037cddff-3663-4fcb-8575-ea7a78e490b8
 # ╟─4e97e67b-8ef6-412d-8851-2b6635ff46e6
 # ╠═88584373-9519-46fe-ae88-7199e76fb8f7
