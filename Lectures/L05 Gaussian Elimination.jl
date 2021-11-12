@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.16.0
+# v0.17.1
 
 using Markdown
 using InteractiveUtils
@@ -773,19 +773,19 @@ $$\frac{r}{\| A\| \cdot \|\hat x \|}$$
 
 has large norm, then  _the solution is not computed stably._
 
-On the other side, if the relative residual is small in norm, then _the solution is computed stably_. Indeed, for
+On the other side, if the relative residual is small in norm, then _the solution is computed stably_. Indeed, for (here we are using 2-norm)
 
-$$\delta A=\frac{r\hat x^T}{\|\hat x\|^2}$$
+$$\delta A=\frac{r\hat x^T}{\|\hat x\|^2_2}$$
 
 (1) holds:
 
-$$b-(A+\delta A)\hat x=(b-A\hat x)-\delta A \hat x = r-\frac{r\hat x^T \hat x}{\|\hat x\|^2}
-= r-\frac{r \|\hat x^T \hat x\|}{\|\hat x\|^2}=r-r=0.$$
+$$b-(A+\delta A)\hat x=(b-A\hat x)-\delta A \hat x = r-\frac{r\hat x^T \hat x}{\|\hat x\|^2_2}
+= r-\frac{r \|\hat x^T \hat x\|_2}{\|\hat x\|^2}=r-r=0.$$
 
 Also,
 
-$$\frac{\|  \delta A\|}{\|A \|}  \leq  \frac{\|r\|\|\hat x \|}{\| A\| \cdot \|\hat x \|^2}=
-\frac{\|r\|}{\| A\| \cdot \|\hat x \|}.$$
+$$\frac{\|  \delta A\|_2}{\|A \|}  \leq  \frac{\|r\|_2\|\hat x \|_2}{\| A\| \cdot \|\hat x \|^2_2}=
+\frac{\|r\|_2}{\| A\| \cdot \|\hat x \|_2}.$$
 
 Let us compute residuals for the previous exmple of dimension $2$:
 
