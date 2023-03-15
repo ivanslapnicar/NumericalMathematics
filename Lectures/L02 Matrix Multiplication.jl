@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.22
+# v0.19.20
 
 using Markdown
 using InteractiveUtils
@@ -392,15 +392,183 @@ and relative error
 $$\frac{|fl(x\cdot y)-x\cdot y|}{|x\cdot y|}\leq O(n\varepsilon) \frac{|x|\cdot |y|}{|x\cdot y|}$$
 
 If vectors $x$ and $y$ are nearly perpendicular, relative error can be large.
+"""
 
+# ╔═╡ fc2fae1f-e550-47e1-bbff-38dde9f7f7e8
+md"
+Let us prove the __exact__ bound of (1). 
+
+__Lemma 1__ [MC, Section 2.7] If $n \varepsilon \leq 0.01$, then 
+
+$$
+|fl(x\cdot y)-x\cdot y| \leq 1.01 n\varepsilon  |x|\cdot |y|. \tag{2}$$
+
+To prove Lemma 1, we need the following result from [ASNA, p. 68]:
+
+__Lemma 2__ If $|\delta_i|\leq \varepsilon$ and $n\varepsilon \leq 0.01$, then 
+
+$$
+\prod_{i=1}^n (1+\delta_i) = 1+\eta_n, \qquad |\eta_n|\leq 1.01n\varepsilon.$$  
+
+_Proof:_ The proof uses the fact that $1+x\leq e^x$ for small $x\geq 0$, and the Taylor series of $e^x$.  $\square$
+"
+
+# ╔═╡ 22c2aed0-7bd4-4b07-88bb-5b526335172c
+md"
+_Proof of Lemma 1:_  Let us denote
+
+$$
+s_p=fl(\sum_{k=1}^n x_k\,  y_k).$$
+
+If we use the standard algorithm, for each $p=2:n$, we have
+
+$$
+s_p=fl(s_{p-1}+fl(x_p\, y_p))=(s_{p-1}+x_p\, y_p(1+\delta_p))(1+\epsilon_p),\quad
+|\delta_p|,|\epsilon_p|\leq \varepsilon.$$
+
+In particular,
+
+$$
+s_1=x_1\, y_1(1+\delta_1),\qquad |\delta_1|\leq \varepsilon,$$
+
+$$
+s_2=fl(s_1+fl(x_2\, y_2))=(s_1+x_2\, y_2(1+\delta_2))(1+\varepsilon_2),\quad 
+|\delta_2|,|\epsilon_2|\leq \varepsilon,$$
+
+$$
+s_3=fl(s_1+fl(x_3\, y_3))=(s_2+x_3\, y_3(1+\delta_3))(1+\varepsilon_3),\quad 
+|\delta_3|,|\epsilon_3|\leq \varepsilon.$$
+"
+
+# ╔═╡ 97b2e464-7e7b-40c9-9822-d22f0425f2e5
+md"
+Therefore,
+
+$$
+s_3=[(s_1+x_2\, y_2(1+\delta_2))(1+\varepsilon_2)+x_3\, y_3(1+\delta_3)](1+\varepsilon_3)$$
+
+or, with $\epsilon_1=0$,
+
+$$
+s_3=x_1\, y_1(1+\delta_1)(1+\epsilon_1)(1+\epsilon_2)(1+\epsilon_3)+
+x_2\, y_2 (1+\delta_2)(1+\epsilon_2)(1+\epsilon_3)+x_3\, y_3(1+\delta_3)(1+\epsilon_3).$$
+
+By induction, we have
+
+$$
+s_n=fl(x\cdot y)=\sum_{k=1}^n x_k\, y_k (1+\gamma_k),$$
+
+where
+
+$$
+(1+\gamma_k)=(1+\delta_k)\prod_{j=k}^n (1+\epsilon_j).$$
+
+Therefore,
+
+$$
+fl(x\cdot y)=x\cdot y+\sum_{k=1}^n x_k\, y_k \gamma_k,$$
+
+so 
+
+$$
+|fl(x\cdot y)-x\cdot y|\leq\sum_{k=1}^n |x_k| |y_k| |\gamma_k|.$$
+
+Since, by Lemma 2, $|\gamma_k|\leq 1.01 n\varepsilon$ for each $k$, the bound (2) follows. $\square$
+"
+
+# ╔═╡ 0657ebee-994d-406e-9e0b-df65ea6ece51
+md"""
+Alternative expressions for the bound of Lemma 2 are
+
+$$
+|fl(x\cdot y)-x\cdot y| \leq n\varepsilon  |x|\cdot |y| +O(\varepsilon^2)$$, 
+
+$$
+|fl(x\cdot y)-x\cdot y| \leq \phi(n)\varepsilon  |x|\cdot |y|,$$
+
+where $\phi(n)$ is a "modest" function of $n$, and
+
+$$
+|fl(x\cdot y)-x\cdot y| \leq c\, n\varepsilon  |x|\cdot |y|$$
+
+where $c$ is a constant of order unity.
+"""
+
+# ╔═╡ 1b3cf82e-3701-4ca3-bc8a-b01c8c8fcec9
+md"""
+> Explain the Wilkinson's "philosophy"!
+"""
+
+# ╔═╡ 5f49ada2-1f9f-4c02-a380-109c6e57a69b
+md"
+## `_axpy()`
+
+We have
+
+$$
+fl(y+\alpha x)=y+\alpha x+z,\quad |z|\leq\varepsilon(|y|+2|\alpha x|)+O(\varepsilon^2).$$
+"
+
+# ╔═╡ 05b0c707-14b6-4064-8deb-47e618f18ebd
+md"
+## Outer product
+
+We have
+
+$$
+fl(C+uv^T)=C+uv^T+E,\quad |E|\leq \varepsilon (|C|+2|uv^T|)+O(\varepsilon^2).$$
+"
+
+# ╔═╡ 826a3b41-ae0f-4bc5-b662-690a86ed00aa
+md"
+## Storing the matrix
+
+Since
+
+$$
+[fl(A)]_{ij}=a_{ij}(1+\epsilon_{ij}), \quad |\epsilon_{ij}|\leq \varepsilon,$$
+
+we have
+
+$$|fl(A)-A|\leq \varepsilon|A|,$$
+
+or
+
+$$\|fl(A)-A\|_1\leq \varepsilon\|A\|_1.$$
+"
+
+# ╔═╡ f262ab80-9d3f-42cc-b378-adfd2897da7b
+md"
+## Multiplying matrix with scalar
+
+$$
+fl(\alpha A)=\alpha A+E,\quad |E|\leq \varepsilon |\alpha A|.$$
+"
+
+# ╔═╡ ae46630e-a8c9-483a-bcf1-7c045439d501
+md"
+## Adding matrices
+
+$$fl(A+B)=(A+B)+E,\quad |E|\leq \varepsilon(|A|+|B|).$$
+"
+
+# ╔═╡ 4f3a4153-3f74-4d73-9f76-23f6fdf2c2cc
+md"
 ## Matrix multiplication
 
+For all three ways of multiplying matrices, we have
 
-From formula (1), for matrices $A$ and $B$ of order $n$, it follows
+$$
+fl(A\cdot B)=A\cdot B+E,\quad |E|\leq n\varepsilon |A|\cdot |B|+O(\varepsilon^2),$$
+
+or, norm-wise,
+
+$$\|fl(A\cdot B) -A\cdot B\|_1 \leq n\varepsilon \|A\|_1 \|B\|_1 +O(\varepsilon^2),$$
+
+or
 
 $$|fl(A\cdot B) -A\cdot B| \leq O(n\varepsilon) |A|\cdot |B|.$$
-
-"""
+"
 
 # ╔═╡ 1ff4efee-a106-46b4-855d-7b76265cb050
 begin
@@ -605,6 +773,17 @@ version = "5.1.1+0"
 # ╟─a7de05aa-0ed1-4e11-88de-de70d629d30b
 # ╠═209d4041-a0d9-455d-a28d-1a7cc632082f
 # ╟─3b096734-bd85-4e21-ad81-6c1ed99e2f43
+# ╟─fc2fae1f-e550-47e1-bbff-38dde9f7f7e8
+# ╟─22c2aed0-7bd4-4b07-88bb-5b526335172c
+# ╟─97b2e464-7e7b-40c9-9822-d22f0425f2e5
+# ╟─0657ebee-994d-406e-9e0b-df65ea6ece51
+# ╟─1b3cf82e-3701-4ca3-bc8a-b01c8c8fcec9
+# ╟─5f49ada2-1f9f-4c02-a380-109c6e57a69b
+# ╟─05b0c707-14b6-4064-8deb-47e618f18ebd
+# ╟─826a3b41-ae0f-4bc5-b662-690a86ed00aa
+# ╟─f262ab80-9d3f-42cc-b378-adfd2897da7b
+# ╟─ae46630e-a8c9-483a-bcf1-7c045439d501
+# ╟─4f3a4153-3f74-4d73-9f76-23f6fdf2c2cc
 # ╠═1ff4efee-a106-46b4-855d-7b76265cb050
 # ╠═1850009e-d407-46a7-be70-88fdb4a774be
 # ╠═b76c7b7c-2e9e-4985-a977-6ae52d0d4dcd
