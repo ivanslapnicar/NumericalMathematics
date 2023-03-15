@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.16.0
+# v0.19.22
 
 using Markdown
 using InteractiveUtils
@@ -7,8 +7,9 @@ using InteractiveUtils
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
     quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : missing
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
 end
@@ -27,7 +28,7 @@ md"""
 
 Let $\alpha$ approximate $a$. Then
 
-$$err=|a-\alpha| \\  relerr=\frac{err}{|a|}=\frac{|a-\alpha|}{|a|}.$$
+$$err=|a-\alpha|, \qquad  relerr=\frac{err}{|a|}=\frac{|a-\alpha|}{|a|}.$$
 """
 
 # ╔═╡ 5c635357-8163-4954-949a-999dc48998f0
@@ -74,11 +75,11 @@ __Mantissa__ $d$ has the form
 
 $$
 \begin{aligned}
-	d &= 0.d_1 \dots d_t = d_1 \beta^{-1} + d_2 \beta^{-2}
-	+ \dots + d_t \beta^{-t}\\
+	d &= d_0.d_1 \dots d_{t-1} = d_1 \beta^{-1} + d_2 \beta^{-2}
+	+ \dots + d_{t-1} \beta^{-(t-1)}\\
 d  &\in \{ 0,1\}\\
-	d_1 &= 1 \qquad \mbox{ normalized }   \\
-	d_1 &= 0 \qquad \mbox{ unnormalized }   \\
+	d_0&= 1 \qquad \mbox{ normalized }   \\
+	d_0 &= 0 \qquad \mbox{ unnormalized }   \\
 \end{aligned}$$
 
 Standard form for floating point numbers is normalized except at the bottom of the exponent range.
@@ -150,7 +151,10 @@ The MATLAB command `eps` and the Julia function `eps()` return $\epsilon = 2.220
 """
 
 # ╔═╡ 7c28c479-912d-4a12-bc38-d15c6a3f0501
-eps()
+eps(Float32)
+
+# ╔═╡ 305606ae-9f17-4ae4-9f99-facfa0e48afc
+2^(-23)
 
 # ╔═╡ f5a5a27d-27bc-49b5-b245-c32a1f3fe13c
 # What is this?
@@ -169,9 +173,12 @@ supertype(Float64)
 subtypes(AbstractFloat)
 
 # ╔═╡ 887cc5e4-ae65-4255-8a54-5425115e4618
-for T in (Float16, Float32, Float64, BigFloat)
+for T ∈ (Float16, Float32, Float64, BigFloat)
     println(eps(T))
 end
+
+# ╔═╡ a4ad32d3-103c-41e6-9cef-661c9fa95751
+
 
 # ╔═╡ b105ef44-00dc-4fe5-9732-499d14e51a51
 2^(-10), 2^(-23), 2^(-52), 2^(-255)
@@ -198,7 +205,7 @@ That is, suppose we have
 $$
 \tilde{x}= x(1+\delta_x), \quad \tilde{y} = y(1+\delta_y),$$
 
-where $x$ and $y$ are the exact real results of some computation and $\tilde{x}$ and $\tilde{y}$ are rounded floating point results with $|\delta_x| |\delta_y| \leq \delta$ for some small delta.  Suppose also that $x$ and $y$ have the same sign. Let
+where $x$ and $y$ are the exact real results of some computation and $\tilde{x}$ and $\tilde{y}$ are rounded floating point results with $|\delta_x|, |\delta_y| \leq \delta$ for some small delta.  Suppose also that $x$ and $y$ have the same sign. Let
 
 $$
 z=x-y,\quad  \tilde{z} = fl(\tilde{x} -\tilde{y}).$$
@@ -367,10 +374,10 @@ md"""
 """
 
 # ╔═╡ 1f8f4a15-0eca-4759-bee6-843306e35754
-bitstring(0)
+bitstring(Int32(0))
 
 # ╔═╡ 8ca8e4e7-6450-4aaf-b208-6c0aa95ccb12
-bitstring(1)
+bitstring(-1)
 
 # ╔═╡ f6f7081b-212a-4c7a-b91c-0d747f4b9fb2
 bitstring(0.0)
@@ -379,13 +386,22 @@ bitstring(0.0)
 bitstring(-0.0)
 
 # ╔═╡ 10dcdca1-71fe-42eb-8f04-6122b3a03666
-bitstring(1.0)
+bitstring(1.0) 
+
+# ╔═╡ 7ad44045-adef-46ee-a32d-671fcb07e62e
+bitstring(1023)
 
 # ╔═╡ f85ec710-1f59-4826-a376-6672bf0552ae
 bitstring(Float16(1.0))
 
 # ╔═╡ 9b7e4278-2f1a-4fff-a6f7-2249f45aaccf
 bitstring(2.0)
+
+# ╔═╡ 49950698-5645-481c-a95b-629d06e6328a
+bitstring(Inf)
+
+# ╔═╡ 0ebd92c3-5a26-4eeb-a445-06b52e6d29ba
+bitstring(floatmax())
 
 # ╔═╡ d0b306c4-6cbc-48dc-90ba-8ef4498f8d73
 md"""
@@ -404,6 +420,9 @@ end
 
 # ╔═╡ 88f1bf59-5eb4-4e2d-b28b-0d9b1004d5bd
 a₁/b₁
+
+# ╔═╡ ef3dd1aa-0c0a-4f99-a1d8-fb2266f4fcc0
+a₁/c₁
 
 # ╔═╡ 36c79f63-7a8c-46c9-afa5-95bbed8fd598
 begin
@@ -690,13 +709,17 @@ deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[Random]]
-deps = ["Serialization"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[Reexport]]
 git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
 uuid = "189a3867-3050-52da-a836-e630ba90ab69"
 version = "1.2.2"
+
+[[SHA]]
+uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+version = "0.7.0"
 
 [[Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
@@ -721,11 +744,13 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 # ╠═030a0e5f-f9e1-4696-af85-b890eaa129d7
 # ╟─82a6d40f-4c81-4ff1-8e02-3f427c413f61
 # ╠═7c28c479-912d-4a12-bc38-d15c6a3f0501
+# ╠═305606ae-9f17-4ae4-9f99-facfa0e48afc
 # ╠═f5a5a27d-27bc-49b5-b245-c32a1f3fe13c
 # ╟─aa042b72-246d-432a-9a1c-d014da8ef957
 # ╠═dac635a5-7f41-478c-bede-5894410a0b6a
 # ╠═8c7b5693-2913-4cd3-9491-d8e57f101de8
 # ╠═887cc5e4-ae65-4255-8a54-5425115e4618
+# ╠═a4ad32d3-103c-41e6-9cef-661c9fa95751
 # ╠═b105ef44-00dc-4fe5-9732-499d14e51a51
 # ╟─51356548-f58f-40a7-98b0-1b92ebeba3ed
 # ╟─3170458d-931a-41a1-8715-b41de07aa3c6
@@ -739,11 +764,15 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 # ╠═f6f7081b-212a-4c7a-b91c-0d747f4b9fb2
 # ╠═d7160016-c046-4ab8-b349-27f7a209d853
 # ╠═10dcdca1-71fe-42eb-8f04-6122b3a03666
+# ╠═7ad44045-adef-46ee-a32d-671fcb07e62e
 # ╠═f85ec710-1f59-4826-a376-6672bf0552ae
 # ╠═9b7e4278-2f1a-4fff-a6f7-2249f45aaccf
+# ╠═49950698-5645-481c-a95b-629d06e6328a
+# ╠═0ebd92c3-5a26-4eeb-a445-06b52e6d29ba
 # ╟─d0b306c4-6cbc-48dc-90ba-8ef4498f8d73
 # ╠═abe311d5-fbd1-40e2-8bce-2c341301deef
 # ╠═88f1bf59-5eb4-4e2d-b28b-0d9b1004d5bd
+# ╠═ef3dd1aa-0c0a-4f99-a1d8-fb2266f4fcc0
 # ╠═36c79f63-7a8c-46c9-afa5-95bbed8fd598
 # ╠═92490cef-70af-417e-8bc8-91b1be0635cc
 # ╟─afc32ff2-014a-43ee-8e6a-d35a57434622

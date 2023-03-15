@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.16.0
+# v0.19.22
 
 using Markdown
 using InteractiveUtils
@@ -271,6 +271,9 @@ end
 # Run 2 times, the second measurement is relevant.
 @time A₁*B₁
 
+# ╔═╡ f5f302ca-7545-4d35-9e06-db297b47d2af
+@which A₁*B₁
+
 # ╔═╡ 698da56b-ed97-4e26-8456-403080e095e3
 operations_in_second=(2*n^3)/0.003
 
@@ -362,14 +365,14 @@ fl(a \odot b)=(1+\varepsilon_\odot)(a\odot b),\qquad |\varepsilon_\odot|\leq \va
 
 ## Addition
 
-If we add fully accurately wto numbers which have (small) errors from previous computations, the equality
+If we add fully accurately two numbers which have (small) errors from previous computations, the equality
 
 $$a(1+\varepsilon_a)+b(1+\varepsilon_b)= (1+\varepsilon_{ab})(a+b)$$
 
 gives
 
 $$
-\varepsilon_{ab}=\frac{a\varepsilon_a+b\varepsilon_a}{a+b},$$
+\varepsilon_{ab}=\frac{a\varepsilon_a+b\varepsilon_b}{a+b},$$
 
 so
 
@@ -479,8 +482,16 @@ PlutoUI = "~0.7.9"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
+[[Artifacts]]
+uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
+
 [[Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+
+[[CompilerSupportLibraries_jll]]
+deps = ["Artifacts", "Libdl"]
+uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
+version = "1.0.1+0"
 
 [[Dates]]
 deps = ["Printf"]
@@ -500,7 +511,7 @@ version = "0.21.2"
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
 [[LinearAlgebra]]
-deps = ["Libdl"]
+deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[Logging]]
@@ -512,6 +523,11 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 
 [[Mmap]]
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
+
+[[OpenBLAS_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
+uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
+version = "0.3.20+0"
 
 [[Parsers]]
 deps = ["Dates"]
@@ -530,13 +546,17 @@ deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[Random]]
-deps = ["Serialization"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[Reexport]]
 git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
 uuid = "189a3867-3050-52da-a836-e630ba90ab69"
 version = "1.2.2"
+
+[[SHA]]
+uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+version = "0.7.0"
 
 [[Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
@@ -548,6 +568,11 @@ version = "0.2.0"
 
 [[Unicode]]
 uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+
+[[libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
+version = "5.1.1+0"
 """
 
 # ╔═╡ Cell order:
@@ -568,6 +593,7 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 # ╠═25d321c6-26bc-4d2d-ab74-8c048560e57c
 # ╠═533c1833-8b02-4d45-b1fc-ad0255d0380a
 # ╠═1783e655-bc2f-4442-a772-2b98f5ab2e96
+# ╠═f5f302ca-7545-4d35-9e06-db297b47d2af
 # ╠═698da56b-ed97-4e26-8456-403080e095e3
 # ╟─ea827322-031d-42b5-aafd-10c2d12fa469
 # ╠═d1dccfbf-7878-4b48-a376-f0bf9b61ad59
