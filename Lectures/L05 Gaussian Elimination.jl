@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.17.1
+# v0.19.22
 
 using Markdown
 using InteractiveUtils
@@ -200,6 +200,12 @@ U
 # ╔═╡ ddbe2df0-0d82-11eb-0a77-e9de7611ec9b
 L*U-A
 
+# ╔═╡ 087551ac-653e-4369-b92c-46c75a50a0e1
+G=lu(A,NoPivot())
+
+# ╔═╡ a3db7db7-4a34-4d9b-88be-0166c1386350
+G.L
+
 # ╔═╡ 946eb7cd-8a97-4aa8-880c-bfba8e6efae1
 md"""
 # Triangular systems
@@ -228,7 +234,7 @@ begin
 	        end
 	        b[i]=b[i]/L[i,i]
 	    end
-	    b
+	    return b
 	end
 end
 
@@ -275,6 +281,21 @@ function mylu₁(A₁::Array{T}) where T # Strang, p. 100
     A
 end
 
+# ╔═╡ 99e94d74-68f9-4dd2-a929-4f4c216b5aaa
+function mylu1(A₁::Array{T}) where T # Strang, p. 100
+    A=copy(A₁)
+    n,m=size(A)
+    for k=1:n-1
+        ρ=k+1:n
+        A[ρ,k]./=A[k,k]
+        A[ρ,ρ]-=A[ρ,k]*A[k,ρ]'
+    end
+    A
+end
+
+# ╔═╡ 68fc3fdc-bdca-41fe-b684-3e6548dddaa6
+mylu1(A)
+
 # ╔═╡ 0b44bb30-0d84-11eb-1d3a-dfc67cf3cf20
 mylu₁(A)
 
@@ -291,14 +312,23 @@ Compare execution times of LAPACK-based function `lu()` and our naïve function 
 Execute several times for more accurate timings.
 """
 
+# ╔═╡ 9490472a-5d0c-402f-8f5b-7c19f889717d
+m=512
+
 # ╔═╡ 5da85850-0d84-11eb-091b-df4a89e4d052
-A₁=rand(512,512);
+A₁=rand(m,m);
 
 # ╔═╡ 46868fc0-0d84-11eb-0bea-f9ee72af7795
 lu(A₁)
 
 # ╔═╡ 9ce0bb70-0d84-11eb-14ac-5335e9985dbf
 mylu₁(A₁);
+
+# ╔═╡ ca6b1c52-1c2f-4150-aee4-5b2800ce2e8b
+√1000000000
+
+# ╔═╡ 018b74c7-8c83-45c7-bb6e-65732f481c38
+0.66*(30000)^3/5000000000
 
 # ╔═╡ 09b70bcd-43ad-46b2-9664-2809351f9f70
 md"""
@@ -331,7 +361,7 @@ First a small test, $k=2$, $l=4$:
 
 # ╔═╡ 090a3f10-0d85-11eb-0181-fdc5aa091df7
 begin
-	k,l=2,4   # 32,16
+	k,l=64,8
 	Ab=[rand(k,k) for i=1:l, j=1:l]
 end
 
@@ -434,6 +464,12 @@ F₄.L*F₄.U==A[F₄.p,:]
 # ╔═╡ 90e4a320-0def-11eb-189e-7fc9c7b53942
 # There are rounding errors
 F₄.L*F₄.U-A[F₄.p,:]
+
+# ╔═╡ 09974812-bf56-4b3a-af9d-db61dab90b06
+F₄.p
+
+# ╔═╡ 744800eb-ac4f-4434-8f12-a0e131309adc
+F₄.P
 
 # ╔═╡ 630a82aa-6998-4325-a0c9-d44f60c0df31
 md"""
@@ -834,8 +870,16 @@ PlutoUI = "~0.7.9"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
+[[Artifacts]]
+uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
+
 [[Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+
+[[CompilerSupportLibraries_jll]]
+deps = ["Artifacts", "Libdl"]
+uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
+version = "1.0.1+0"
 
 [[Dates]]
 deps = ["Printf"]
@@ -855,7 +899,7 @@ version = "0.21.2"
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
 [[LinearAlgebra]]
-deps = ["Libdl"]
+deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[Logging]]
@@ -867,6 +911,11 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 
 [[Mmap]]
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
+
+[[OpenBLAS_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
+uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
+version = "0.3.20+0"
 
 [[Parsers]]
 deps = ["Dates"]
@@ -885,13 +934,17 @@ deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[Random]]
-deps = ["Serialization"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[Reexport]]
 git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
 uuid = "189a3867-3050-52da-a836-e630ba90ab69"
 version = "1.2.2"
+
+[[SHA]]
+uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+version = "0.7.0"
 
 [[Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
@@ -903,6 +956,11 @@ version = "0.2.0"
 
 [[Unicode]]
 uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+
+[[libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
+version = "5.1.1+0"
 """
 
 # ╔═╡ Cell order:
@@ -926,6 +984,8 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 # ╠═2a725e60-0d82-11eb-18ce-cd017246fc46
 # ╠═2d7fc570-0d82-11eb-06d0-b115bbbd897c
 # ╠═ddbe2df0-0d82-11eb-0a77-e9de7611ec9b
+# ╠═087551ac-653e-4369-b92c-46c75a50a0e1
+# ╠═a3db7db7-4a34-4d9b-88be-0166c1386350
 # ╟─946eb7cd-8a97-4aa8-880c-bfba8e6efae1
 # ╠═29d27f7f-d2e5-4d1f-a667-39fc266ffa17
 # ╠═6a7341a2-0d82-11eb-0831-05182f30ffe3
@@ -936,13 +996,18 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 # ╠═07fae3c0-0dfa-11eb-02a3-b7efa4490b1c
 # ╟─4225c750-b668-4331-b6b8-0509635e69c6
 # ╠═17427400-0d83-11eb-14e2-f5d29e1650e4
+# ╠═99e94d74-68f9-4dd2-a929-4f4c216b5aaa
+# ╠═68fc3fdc-bdca-41fe-b684-3e6548dddaa6
 # ╠═0b44bb30-0d84-11eb-1d3a-dfc67cf3cf20
 # ╠═13a09fb2-0d84-11eb-15d6-e1d3b4ba658e
 # ╠═1ccfd9c0-0d84-11eb-097b-2bfde3a9790f
 # ╟─6f3f3257-8dd9-4d3c-b18e-cdbb37d52e2a
+# ╠═9490472a-5d0c-402f-8f5b-7c19f889717d
 # ╠═5da85850-0d84-11eb-091b-df4a89e4d052
 # ╠═46868fc0-0d84-11eb-0bea-f9ee72af7795
 # ╠═9ce0bb70-0d84-11eb-14ac-5335e9985dbf
+# ╠═ca6b1c52-1c2f-4150-aee4-5b2800ce2e8b
+# ╠═018b74c7-8c83-45c7-bb6e-65732f481c38
 # ╟─09b70bcd-43ad-46b2-9664-2809351f9f70
 # ╠═e80e7d80-0d84-11eb-2423-23867085be67
 # ╟─9d740956-6b11-4c0f-bca9-58fcfa852a62
@@ -970,6 +1035,8 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 # ╠═573618c0-0def-11eb-0101-e1b09c384512
 # ╠═74b55dc0-0def-11eb-37e2-71ba59aa8295
 # ╠═90e4a320-0def-11eb-189e-7fc9c7b53942
+# ╠═09974812-bf56-4b3a-af9d-db61dab90b06
+# ╠═744800eb-ac4f-4434-8f12-a0e131309adc
 # ╟─630a82aa-6998-4325-a0c9-d44f60c0df31
 # ╠═18ad03b0-0d87-11eb-06f9-45ac1b7e3b04
 # ╠═1f3a42b0-0d87-11eb-1fef-8f0a35eb3cce
