@@ -262,7 +262,7 @@ end
 begin
 	import Random
 	Random.seed!(123)
-	n₁=512
+	n₁=1024
 	A₁=rand(n₁,n₁)
 	B₁=rand(n₁,n₁)
 end
@@ -275,7 +275,8 @@ end
 @which A₁*B₁
 
 # ╔═╡ 698da56b-ed97-4e26-8456-403080e095e3
-operations_in_second=(2*n^3)/0.003
+# ~ 5 Gflops
+operations_in_second=(2*n₁^3)/0.05
 
 # ╔═╡ ea827322-031d-42b5-aafd-10c2d12fa469
 md"""
@@ -418,7 +419,7 @@ md"
 _Proof of Lemma 1:_  Let us denote
 
 $$
-s_p=fl(\sum_{k=1}^n x_k\,  y_k).$$
+s_p=fl(\sum_{k=1}^p x_k\,  y_k).$$
 
 If we use the standard algorithm, for each $p=2:n$, we have
 
@@ -432,11 +433,11 @@ $$
 s_1=x_1\, y_1(1+\delta_1),\qquad |\delta_1|\leq \varepsilon,$$
 
 $$
-s_2=fl(s_1+fl(x_2\, y_2))=(s_1+x_2\, y_2(1+\delta_2))(1+\varepsilon_2),\quad 
+s_2=fl(s_1+fl(x_2\, y_2))=(s_1+x_2\, y_2(1+\delta_2))(1+\epsilon_2),\quad 
 |\delta_2|,|\epsilon_2|\leq \varepsilon,$$
 
 $$
-s_3=fl(s_1+fl(x_3\, y_3))=(s_2+x_3\, y_3(1+\delta_3))(1+\varepsilon_3),\quad 
+s_3=fl(s_2+fl(x_3\, y_3))=(s_2+x_3\, y_3(1+\delta_3))(1+\epsilon_3),\quad 
 |\delta_3|,|\epsilon_3|\leq \varepsilon.$$
 "
 
@@ -632,9 +633,6 @@ Here relative error is not easy to establish, so we need better measure.
 In the next lecture, we shall explain _vector and matrix norms_.
 """
 
-# ╔═╡ bf6a82b0-28a9-4df2-b967-7c87df059416
-
-
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -796,6 +794,5 @@ version = "5.1.1+0"
 # ╠═de747a60-3953-48ba-bf8c-4238beb07666
 # ╠═d43cea1b-5574-4341-aa91-c7ea2efc5e55
 # ╟─2b7f29bf-a440-4f07-868b-ae42f3624b05
-# ╠═bf6a82b0-28a9-4df2-b967-7c87df059416
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
