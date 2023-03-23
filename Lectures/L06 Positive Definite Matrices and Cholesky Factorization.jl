@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.16.0
+# v0.19.20
 
 using Markdown
 using InteractiveUtils
@@ -39,7 +39,7 @@ Induction yields the following algorithm:
 """
 
 # ╔═╡ a808c71a-97bb-4106-89fd-dcc0e902d2cb
-function mychol(A₁::Matrix{T}) where T
+function chol(A₁::Matrix{T}) where T
     A=copy(A₁)
     n,m=size(A)
     for k=1:n
@@ -80,17 +80,6 @@ L=C.U
 # Residual 
 L'*L-A
 
-# ╔═╡ 286a74e5-6a3b-41ee-a227-cb5d88dd027e
-# Our function
-L₁=mychol(A)
-
-# ╔═╡ 2e54b52f-2ba0-4de0-a7bf-73bf1c0d5b6f
-# Residual
-L₁'*L₁-A
-
-# ╔═╡ 4483ea9f-345a-4f24-8b1c-49252d6ae9d7
-L-L₁
-
 # ╔═╡ 9a8b96f8-4e81-4572-89b7-d3a50c3627ec
 md"
 ## Cholesky factorization with pivoting
@@ -119,7 +108,7 @@ md"
 "
 
 # ╔═╡ 78704bf8-d55b-45ff-ac33-976fde87ca49
-function mycholb(A₁::Matrix{T}) where T
+function chol(A₁::Matrix{Matrix{T}}) where T
     A=copy(A₁)
     n,m=size(A)
     for k=1:n
@@ -137,6 +126,17 @@ function mycholb(A₁::Matrix{T}) where T
     return triu(A)
 end
 
+# ╔═╡ 286a74e5-6a3b-41ee-a227-cb5d88dd027e
+# Our function
+L₁=chol(A)
+
+# ╔═╡ 2e54b52f-2ba0-4de0-a7bf-73bf1c0d5b6f
+# Residual
+L₁'*L₁-A
+
+# ╔═╡ 4483ea9f-345a-4f24-8b1c-49252d6ae9d7
+L-L₁
+
 # ╔═╡ 6c1a68b1-c396-43d5-844c-5e980d04d3f1
 # Generate block matrix
 begin
@@ -146,7 +146,7 @@ begin
 end
 
 # ╔═╡ bbe2bceb-9cbb-416e-bd60-d95e3417790f
-Lb=mycholb(Ab)
+Lb=chol(Ab)
 
 # ╔═╡ 291e0ce8-58dc-40e2-a0b9-12d67bf09713
 # Residual
@@ -177,12 +177,30 @@ LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
+[[Artifacts]]
+uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
+
+[[CompilerSupportLibraries_jll]]
+deps = ["Artifacts", "Libdl"]
+uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
+version = "1.0.1+0"
+
 [[Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
 [[LinearAlgebra]]
-deps = ["Libdl"]
+deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[[OpenBLAS_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
+uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
+version = "0.3.20+0"
+
+[[libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
+version = "5.1.1+0"
 """
 
 # ╔═╡ Cell order:

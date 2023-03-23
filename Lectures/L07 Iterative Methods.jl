@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.16.0
+# v0.19.20
 
 using Markdown
 using InteractiveUtils
@@ -18,11 +18,15 @@ md"""
 For large systems of linear equations, and in particular for sparse systems (few non-zero elements), and if the matrix is _strictly diagonally dominant_ , the solution can be computed using __iterative methods__
 (see [Numerička matematika, section 3.8](http://www.mathos.unios.hr/pim/Materijali/Num.pdf)):
 
+## Contraction
+
 __Definition.__ Function $F:\mathbb{R}^n\to \mathbb{R}^n$ is a __contraction__ if there is $q<1$ such that
 
 $$\| F(x)-F(y)\| < q\|x-y\|\qquad \forall x,y.$$
 
-__Banach Fixed Point Theorem.__
+## Fixed point theorem
+
+__Banach Fixed-Point Theorem.__
 If $F$ is a contraction, then the sequence defined by
 
 $$x_{k+1}=F(x_k)$$
@@ -136,7 +140,7 @@ L=inv(D)*tril(A,-1)
 U=inv(D)*triu(A,1)
 
 # ╔═╡ 5aba7e24-0424-45f2-9716-3b32a71fc610
-function myjacobi(A::Array,b::Array,x::Array)
+function Jacobi(A::Array,b::Array,x::Array)
     D=Diagonal(A)
     L=inv(D)*tril(A,-1)
     U=inv(D)*triu(A,1)
@@ -161,7 +165,7 @@ x₀=rand(n)
 
 # ╔═╡ 91b52c67-de20-4bfc-9da6-3e04ed73b990
 # x is the solution, d is norm of the difference of two final iterations
-x,d=myjacobi(A,b,x₀)
+x,d=Jacobi(A,b,x₀)
 
 # ╔═╡ 0d07f057-9012-42ad-bf52-31a0f14614df
 # Residual
@@ -172,7 +176,7 @@ r=A*x-b
 norm(r)/(norm(A)*norm(x))
 
 # ╔═╡ adbd72cb-4dcf-490b-bbcb-1d681358c455
-function mygaussseidel(A::Array,b::Array,x::Array)
+function GaussSeidel(A::Array,b::Array,x::Array)
     D=Diagonal(A)
     L=inv(D)*tril(A,-1)
     U=inv(D)*triu(A,1)
@@ -192,7 +196,7 @@ function mygaussseidel(A::Array,b::Array,x::Array)
 end
 
 # ╔═╡ 9ae4a166-f3ee-4850-89ff-4c0a41bae48c
-xᵧ,dᵧ=mygaussseidel(A,b,x₀)
+xᵧ,dᵧ=GaussSeidel(A,b,x₀)
 
 # ╔═╡ 4a832be5-26c0-46fa-bcbb-3afb4eb0cf2e
 # Residual
@@ -212,7 +216,7 @@ begin
 end
 
 # ╔═╡ 8794b613-ddab-4fa9-82e6-eec4192705dd
-@time mygaussseidel(A₁,b₁,x₁);
+@time GaussSeidel(A₁,b₁,x₁);
 
 # ╔═╡ 02d632a3-3ab8-4b02-ba94-709880df6313
 @time A\b;
@@ -237,8 +241,16 @@ PlutoUI = "~0.7.9"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
+[[Artifacts]]
+uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
+
 [[Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+
+[[CompilerSupportLibraries_jll]]
+deps = ["Artifacts", "Libdl"]
+uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
+version = "1.0.1+0"
 
 [[Dates]]
 deps = ["Printf"]
@@ -258,7 +270,7 @@ version = "0.21.2"
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
 [[LinearAlgebra]]
-deps = ["Libdl"]
+deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[Logging]]
@@ -270,6 +282,11 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 
 [[Mmap]]
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
+
+[[OpenBLAS_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
+uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
+version = "0.3.20+0"
 
 [[Parsers]]
 deps = ["Dates"]
@@ -288,13 +305,17 @@ deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[Random]]
-deps = ["Serialization"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[Reexport]]
 git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
 uuid = "189a3867-3050-52da-a836-e630ba90ab69"
 version = "1.2.2"
+
+[[SHA]]
+uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+version = "0.7.0"
 
 [[Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
@@ -306,13 +327,18 @@ version = "0.2.0"
 
 [[Unicode]]
 uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+
+[[libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
+version = "5.1.1+0"
 """
 
 # ╔═╡ Cell order:
 # ╠═c83e3f47-b1ea-443c-a235-457ed28bcb18
 # ╠═5f87bb8e-34f9-4734-841b-066e906a28b3
 # ╟─1a406352-1739-4709-85bc-6ca3ecb19253
-# ╠═610ef7a4-f0a6-42c8-a2cc-1a03cb155a22
+# ╟─610ef7a4-f0a6-42c8-a2cc-1a03cb155a22
 # ╟─1ea94870-1389-11eb-1619-47636ac1d230
 # ╠═583e17b2-e189-49ae-8c80-0014d53c40c2
 # ╠═4471d452-1389-11eb-39dc-67039a7b60e9

@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.16.0
+# v0.19.20
 
 using Markdown
 using InteractiveUtils
@@ -24,7 +24,9 @@ google (and others)
 
 * [55 billion pages](http://www.worldwidewebsize.com/), [4 billion searches daily](http://www.internetlivestats.com/google-search-statistics/)
 * __PageRank__
-* history, context - cookies, storing data (about You), [200+ parameters](http://backlinko.com/google-ranking-factors)
+* History, context - cookies, storing data (about You), [200+ parameters](http://backlinko.com/google-ranking-factors)
+
+The age of search was followed by the __age of recommendation__, and, since 2022, we have the __age of chat__ (?). 
 
 # Transition matrix (and graph)
 
@@ -37,7 +39,7 @@ Some programs:
 
 * https://gist.github.com/domluna/2b9358ccc89fee7d5e26
 
-We try example from  Moler's paper.
+We try the example from  Moler's paper.
 """
 
 # ╔═╡ d761f999-c402-49c4-bb4f-b52c23475db1
@@ -132,6 +134,11 @@ function PageRank(G₁::SparseMatrixCSC{Float64,Int64},steps::Int)
 	return x
 end
 
+# ╔═╡ a62cea43-948e-43d7-9df2-82ff096d04ba
+md"
+__We need to understand and use the CSC format.__
+"
+
 # ╔═╡ 739c238c-03db-4ee6-9fb7-f8e5b93282f8
 fieldnames(typeof(G))
 
@@ -216,8 +223,16 @@ PlutoUI = "~0.7.9"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
+[[Artifacts]]
+uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
+
 [[Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+
+[[CompilerSupportLibraries_jll]]
+deps = ["Artifacts", "Libdl"]
+uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
+version = "1.0.1+0"
 
 [[Dates]]
 deps = ["Printf"]
@@ -241,7 +256,7 @@ version = "0.21.2"
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
 [[LinearAlgebra]]
-deps = ["Libdl"]
+deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[Logging]]
@@ -253,6 +268,11 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 
 [[Mmap]]
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
+
+[[OpenBLAS_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
+uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
+version = "0.3.20+0"
 
 [[Parsers]]
 deps = ["Dates"]
@@ -271,13 +291,17 @@ deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[Random]]
-deps = ["Serialization"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[Reexport]]
 git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
 uuid = "189a3867-3050-52da-a836-e630ba90ab69"
 version = "1.2.2"
+
+[[SHA]]
+uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+version = "0.7.0"
 
 [[Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
@@ -293,6 +317,11 @@ version = "0.2.0"
 
 [[Unicode]]
 uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+
+[[libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
+version = "5.1.1+0"
 """
 
 # ╔═╡ Cell order:
@@ -312,6 +341,7 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 # ╠═9d3b7528-4035-4304-bee9-a9407bced36f
 # ╟─90edb7b5-c882-41a6-a48b-ba15373f2283
 # ╠═fece3020-0f09-11eb-0f69-237286bd58af
+# ╟─a62cea43-948e-43d7-9df2-82ff096d04ba
 # ╠═739c238c-03db-4ee6-9fb7-f8e5b93282f8
 # ╠═6c6a8ce2-5483-45ed-b5c8-61e924b3eb1c
 # ╠═cb04da5e-0f08-11eb-21b9-8fdaea539145
