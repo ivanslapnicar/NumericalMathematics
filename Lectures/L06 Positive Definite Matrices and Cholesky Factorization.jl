@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.20
+# v0.19.36
 
 using Markdown
 using InteractiveUtils
@@ -71,6 +71,9 @@ eigvals(A)
 # ╔═╡ dfea6e0a-a718-49ef-8e60-bd0ad6e204db
 # Built-in function
 C=cholesky(A)
+
+# ╔═╡ f3bc6841-205f-44ff-a5b7-2fabeb80d1e9
+C.L
 
 # ╔═╡ 396ba935-a1fc-4978-a64e-990bb1d78f44
 # Extract L from the structure
@@ -177,30 +180,34 @@ LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-[[Artifacts]]
+julia_version = "1.10.2"
+manifest_format = "2.0"
+project_hash = "ac1187e548c6ab173ac57d4e72da1620216bce54"
+
+[[deps.Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
 
-[[CompilerSupportLibraries_jll]]
+[[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.0.1+0"
+version = "1.1.0+0"
 
-[[Libdl]]
+[[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
-[[LinearAlgebra]]
-deps = ["Libdl", "libblastrampoline_jll"]
+[[deps.LinearAlgebra]]
+deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
-[[OpenBLAS_jll]]
+[[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.20+0"
+version = "0.3.23+4"
 
-[[libblastrampoline_jll]]
-deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+[[deps.libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.1.1+0"
+version = "5.8.0+1"
 """
 
 # ╔═╡ Cell order:
@@ -211,6 +218,7 @@ version = "5.1.1+0"
 # ╠═0f3ec098-91c5-42a2-a212-162b2e96d949
 # ╠═bae32bb1-e9de-470c-8f62-b383612b095b
 # ╠═dfea6e0a-a718-49ef-8e60-bd0ad6e204db
+# ╠═f3bc6841-205f-44ff-a5b7-2fabeb80d1e9
 # ╠═396ba935-a1fc-4978-a64e-990bb1d78f44
 # ╠═1ff3e65c-8253-47d7-9caa-466a1359a434
 # ╠═286a74e5-6a3b-41ee-a227-cb5d88dd027e
